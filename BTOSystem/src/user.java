@@ -6,6 +6,8 @@ private int age;
 private String maritalStatus;
 private String password;
 private boolean isLogin;
+
+
 public User(String name, String nric,int age, String maritalStatus,String password){
     this.name=name;
     this.nric=nric;
