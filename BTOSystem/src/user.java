@@ -1,3 +1,4 @@
+package BTOSystem.src;
 public abstract class User {
 private String name;
 private String nric;
