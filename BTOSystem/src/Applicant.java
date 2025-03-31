@@ -1,4 +1,4 @@
-package BTOSystem.src;
+// package BTOSystem.src;
 
 public class Applicant extends User {
     private boolean isVisible;
@@ -15,10 +15,6 @@ public class Applicant extends User {
 
     public void displayMenu() {
 
-    }
-
-    public boolean changePassword(String newPassword) {
-        this.password = newPassword;
     }
 
     public boolean getIsVisible(){

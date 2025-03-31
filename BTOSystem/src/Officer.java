@@ -1,4 +1,5 @@
-package BTOSystem.src;
+// package BTOSystem.src;
+
 public class Officer extends User {
 private Project assignedProject;
 private boolean registrationStatus;
