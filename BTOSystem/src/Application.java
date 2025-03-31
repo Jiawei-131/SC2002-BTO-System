@@ -1,4 +1,4 @@
-package BTOSystem.src;
+// package BTOSystem.src;
 
 public class Application {
     private String applicantNRIC;
