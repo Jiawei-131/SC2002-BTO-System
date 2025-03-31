@@ -4,7 +4,7 @@ public class Applicant extends User {
     private boolean isVisible;
     private Application application;
     private String flat;
-    private Enquiry enquiry;
+//    private Enquiry enquiry;
 
     public Applicant(String name, String nric, int age, String maritalStatus, String password, boolean isVisible) {
         super(name, nric, age, maritalStatus, password);
@@ -25,9 +25,9 @@ public class Applicant extends User {
         this.isVisible = isVisible;
     }
 
-    public void applyForProject(Project project) {
-        // TODO: create new Application instance with project
-    }
+//    public void applyForProject(Project project) {
+//        // TODO: create new Application instance with project
+//    }
     
     public void viewApplication() {
         // TODO: print application or smth

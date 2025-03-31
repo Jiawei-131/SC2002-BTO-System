@@ -1,11 +1,11 @@
-package BTOSystem.src;
+
 public abstract class User {
 private String name;
 private String nric;
 private int age;
 private String maritalStatus;
 private String password;
-private boolean isLogin;
+private boolean isLogin=false;
 
 
 public User(String name, String nric,int age, String maritalStatus,String password){
@@ -15,9 +15,13 @@ public User(String name, String nric,int age, String maritalStatus,String passwo
     this.maritalStatus=maritalStatus;
     this.password=password;
 }
-public boolean login()
+public void login()
 {
-return isLogin;
+	System.out.printf("Welcome %s ?",this.name);
+	this.isLogin=true;
+}
+public void logout() {
+	this.isLogin=false;
 }
 public void displayMenu()
 {

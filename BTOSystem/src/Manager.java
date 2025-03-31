@@ -1,7 +1,7 @@
 // package BTOSystem.src;
 
 public class Manager extends User {
-    private Project assignedProject;
+//    private Project assignedProject;
     private boolean hasProject;
 
     public Manager(String name, String nric, int age, String maritalStatus, String password, boolean isVisible) {
@@ -20,13 +20,13 @@ public class Manager extends User {
         // TODO: edit project
     }
 
-    public void deleteProject(Project project) {
-        // TODO: delete project and unassign project
-    }
-
-    public void toggleVisibility(Project project) {
-        project.setIsVisible(!project.isVisible);
-    }
+//    public void deleteProject(Project project) {
+//        // TODO: delete project and unassign project
+//    }
+//
+//    public void toggleVisibility(Project project) {
+//        project.setIsVisible(!project.isVisible);
+//    }
 
     public void viewAllProjects() {
         // TODO
@@ -57,11 +57,11 @@ public class Manager extends User {
         // TODO implement
     }
 
-    public String viewEnquiry(Enquiry[] enquiryList ) {
-        // TODO implement
-    }
-
-    public void replyEnquiry(Project assignedProject) {
-        // TODO implement
-    }
+//    public String viewEnquiry(Enquiry[] enquiryList ) {
+//        // TODO implement
+//    }
+//
+//    public void replyEnquiry(Project assignedProject) {
+//        // TODO implement
+//    }
 }
