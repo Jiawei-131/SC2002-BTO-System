@@ -1,15 +1,9 @@
-<<<<<<< Updated upstream
-// package BTOSystem.src;
 
-public class Officer extends User {
-=======
-package BTOSystem.src;
+ package BTOSystem.src;
 
-import javax.imageio.spi.IIOServiceProvider;
 
 public class Officer extends Applicant {
 private boolean isVisible;
->>>>>>> Stashed changes
 private Project assignedProject;
 private boolean registrationStatus;
 private boolean canRegister;
