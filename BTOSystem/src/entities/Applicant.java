@@ -1,4 +1,5 @@
-// package BTOSystem.src;
+package entities;
+
 
 public class Applicant extends User {
     private boolean isVisible;

@@ -1,3 +1,8 @@
+package controllers;
+
+import entities.Project;
+import entities.Applicant;
+
 public class ApplicationController {
     private Project project;
     

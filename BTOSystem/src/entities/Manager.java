@@ -1,4 +1,4 @@
-// package BTOSystem.src;
+package entities;
 
 public class Manager extends User {
 //    private Project assignedProject;

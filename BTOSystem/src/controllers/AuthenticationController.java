@@ -1,3 +1,7 @@
+package controllers;
+
+import entities.User;
+
 public class AuthenticationController {
     private User currentUser;
     

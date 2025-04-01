@@ -1,3 +1,5 @@
+package entities;
+
 public class Enquiry {
     private int enquiryID; // Getters and Setters?
     private String text;
