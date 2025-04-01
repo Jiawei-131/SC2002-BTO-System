@@ -7,6 +7,9 @@ private String maritalStatus;
 private String password;
 private boolean isLogin=false;
 
+public User() {
+	
+}
 
 public User(String name, String nric,int age, String maritalStatus,String password){
     this.name=name;
@@ -17,14 +20,16 @@ public User(String name, String nric,int age, String maritalStatus,String passwo
 }
 public void login()
 {
-	System.out.printf("Welcome %s ?",this.name);
+	System.out.printf("Welcome %s ?\n",this.name);
 	this.isLogin=true;
 }
 public void logout() {
+	System.out.printf("GoodBye %s ?\n",this.name);
 	this.isLogin=false;
 }
 public void displayMenu()
 {
+	System.out.println("bye");
 }
 public String getNric()
 {

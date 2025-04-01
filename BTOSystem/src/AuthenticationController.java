@@ -5,11 +5,11 @@ public class AuthenticationController {
     	
     }
     
-    public boolean logIn(User currentUser,String password)
+    public boolean logIn(User user,String password)
     {
-        if(currentUser.getPassword().equals(password)){
-        	currentUser.login();
-        	this.currentUser = currentUser;
+        if(user.getPassword().equals(password)){
+        	user.login();
+        	this.currentUser = user;
             return true;
         }
         return false;
