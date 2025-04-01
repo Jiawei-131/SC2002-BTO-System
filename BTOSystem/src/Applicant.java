@@ -14,7 +14,7 @@ public class Applicant extends User {
     }
 
     public void displayMenu() {
-
+    	System.out.println("hi");
     }
 
     public boolean getIsVisible(){
