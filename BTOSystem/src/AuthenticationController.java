@@ -1,10 +1,18 @@
 public class AuthenticationController {
-    private User currentUser;
+    private static User currentUser;
     
     public AuthenticationController() {
     	
     }
-    
+    public boolean isLoggedIn() {
+    	if(this.currentUser!=null)
+    	{
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
+    }
     public boolean logIn(User currentUser,String password)
     {
         if(currentUser.getPassword().equals(password)){
@@ -17,5 +25,6 @@ public class AuthenticationController {
     public void logOut()
     {
     	currentUser.logout();
+    	currentUser=null;
     }
 }
