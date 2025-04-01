@@ -5,31 +5,62 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.*;
 import java.util.*;
+import data.PasswordHasher;
+
 public class BTOSystem {
     public static void main(String[] args)
     {
-    	final String File_Path="data/LoginInfo.txt";
+    	int choice;
+    	PasswordHasher passwordHasher = new PasswordHasher(); 
+    	
+    	final String File_Path="LoginInfo.txt";
     	UserDatabase db= new UserDatabase(File_Path);
     	AuthenticationController ac = new AuthenticationController();
     	Scanner sc = new Scanner(System.in);
-//        List<User> users=new ArrayList<>();
-//        users.add(new Applicant("ggna","T003306J",24,"sINGLE","password",false));
-//        users.add(new Applicant("gg","T0033061J",24,"sINGLE","password",false));
+
         Map<String,String>users=db.readUsers();
         System.out.println("BTO Management System (BMS)");
         System.out.println("Please enter your NRIC:");
         String nric = sc.nextLine();
-        for(User user : user) {
-
-        	if(nric.equals(users.get(i).getNric()))
-        	{
-                System.out.println("Please enter your password:");
-        		String password = sc.nextLine();
-        		ac.logIn(users.get(i), password);
-        		break;
-        	}
-        	
+        
+        while(!users.containsKey(nric)) {
+        	System.out.println("NRIC not found");
+            System.out.println("1: Retry\n2: Exit");
+            choice = sc.nextInt();
+            if (choice == 2){
+                System.exit(0);
+            }
+            else{
+                System.out.println("Please enter your NRIC:");
+                sc.nextLine();
+                nric = sc.nextLine();
+            }
         }
+        
+        System.out.println("Please enter your password:");
+		String password = sc.nextLine();
+		String storedHash = users.get(nric);
+        String hashedPassword = passwordHasher.hashPassword(password);
+        while (!Objects.equals(users.get(nric), hashedPassword)) {
+            System.out.println("Incorrect password");
+            System.out.println("1: Retry\n2: Exit");
+            choice = sc.nextInt();
+            if (choice == 2){
+                System.exit(0);
+            }
+            else{
+                System.out.println("Please enter your password:");
+                sc.nextLine();
+                password = sc.nextLine();
+                hashedPassword = passwordHasher.hashPassword(password);
+            }
+        }
+        
+        System.out.println("hi");
+    
+     	
+        	
+        
         
     }
 }
