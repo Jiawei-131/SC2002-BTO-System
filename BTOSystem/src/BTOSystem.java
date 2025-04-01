@@ -41,7 +41,7 @@ public class BTOSystem {
 		String password = sc.nextLine();
 		String storedHash = users.get(nric);
         String hashedPassword = passwordHasher.hashPassword(password);
-        while (!Objects.equals(users.get(nric), hashedPassword)) {
+        while (!Objects.equals(users.get(nric), password)) {
             System.out.println("Incorrect password");
             System.out.println("1: Retry\n2: Exit");
             choice = sc.nextInt();

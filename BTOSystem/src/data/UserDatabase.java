@@ -14,7 +14,8 @@ public class UserDatabase {
     // Read all users from the file
     public Map<String, String> readUsers() {
         Map<String, String> users = new HashMap<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("../LoginInfo.txt"))) {
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("BTOSystem/src/data/LoginInfo.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
@@ -34,7 +35,7 @@ public class UserDatabase {
 
     // Write a new user to the file
     public void writeUser(String userID, String hashPassword) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("../LoginInfo.txt", true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("BTOSystem/src/LoginInfo.txt", true))) {
             writer.write(userID + "|"+  hashPassword);
             writer.newLine();
         } catch (IOException e) {
