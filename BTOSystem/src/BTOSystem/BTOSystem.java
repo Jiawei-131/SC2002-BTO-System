@@ -1,4 +1,4 @@
-
+package BTOSystem;
 import java.util.Scanner;
 import data.UserDatabase;
 import java.util.ArrayList;
@@ -6,85 +6,112 @@ import java.util.List;
 import java.io.*;
 import java.util.*;
 import data.PasswordHasher;
+import controllers.AuthenticationController;
+import entities.User;
+import view.View;
 
 public class BTOSystem {
     public static void main(String[] args)
     {
-    	int choice;
-    	PasswordHasher passwordHasher = new PasswordHasher(); 
+    	User currentUser = null;
+    	View view = new View();
     	
+    	int choice;
     	final String File_Path="LoginInfo.txt";
+
+    	PasswordHasher passwordHasher = new PasswordHasher(); 
     	UserDatabase db= new UserDatabase(File_Path);
     	AuthenticationController ac = new AuthenticationController();
     	Scanner sc = new Scanner(System.in);
 
         Map<String,String>users=db.readUsers();
-        
+        while(true) {
+        //login
         do {
-        	System.out.println("""
-            		BTO Management System (BMS)
-            		1. Login
-            		2. Register
-            		3. Exit
-            		Please enter a choice:
-            		""");
+        	view.menuView();
             choice = sc.nextInt();
-            
+            sc.nextLine();
             switch(choice) {
             case 1:
-            	System.out.println("Please enter your NRIC:");
+            	view.promptNric();
                 String nric = sc.nextLine();
                 
                 while(!users.containsKey(nric)) {
-                	System.out.println("NRIC not found");
-                    System.out.println("1: Retry\n2: Exit");
+                	view.promptRetryNric();
                     choice = sc.nextInt();
                     if (choice == 2){
+                    	view.exit();
                         System.exit(0);
                     }
-                    else{
-                        System.out.println("Please enter your NRIC:");
-                        sc.nextLine();
-                        nric = sc.nextLine();
-                    }
+                    view.promptNric();
+                    sc.nextLine();
+                    nric = sc.nextLine();
                 }
                 
-                System.out.println("Please enter your password:");
+                view.promptPassword();
         		String password = sc.nextLine();
-        		String storedHash = users.get(nric);
-                String hashedPassword = passwordHasher.hashPassword(password);
+        		String storedHash = users.get(nric); 
+                String hashedPassword = passwordHasher.hashPassword(password);  //Not used rn
                 while (!Objects.equals(users.get(nric), password)) {
-                    System.out.println("Incorrect password");
-                    System.out.println("1: Retry\n2: Exit");
+                	view.promptRetryPassword();
                     choice = sc.nextInt();
                     if (choice == 2){
+                    	view.exit();
                         System.exit(0);
                     }
-                    else{
-                        System.out.println("Please enter your password:");
-                        sc.nextLine();
-                        password = sc.nextLine();
-                        hashedPassword = passwordHasher.hashPassword(password);
-                    }
+                    view.promptPassword();
+                    sc.nextLine();
+                    password = sc.nextLine();
+                    hashedPassword = passwordHasher.hashPassword(password); //Not used rn
                 }
+                currentUser= db.getUserById(nric,ac);
+                currentUser.login();
+                choice=3;
                 break;
             case 2:
-            	
+            	view.register();
+            	//sc.nextLine();
             	break;
             case 3:
+            	view.exit();
             	System.exit(0);
             	break;
             default:
                 System.out.println("Please enter a valid choice.");
             	
             }
-        } while (choice != 3 && ac.);
+        } while (choice != 3 || currentUser == null);
+        do {
+        currentUser.displayMenu(view);
+        choice=sc.nextInt();
+        switch(choice) {
+        case 1:
+        	break;
+        case 2:
+        	break;
+        case 3:
+        	break;
+        case 4:
+        	break;
+        case 5:
+        	break;
+        case 6:
+        	break;
+        case 7:currentUser=currentUser.logout();	
+        	break;
+        default:
+        	System.out.println("Please enter a valid choice");
+        }
+        }
+        while(currentUser != null);
+        }
         
         
         
         
         
-        System.out.println("hi");
+        
+       
     
      	
         	

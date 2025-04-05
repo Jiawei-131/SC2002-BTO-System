@@ -1,5 +1,8 @@
 package entities;
 
+import controllers.AuthenticationController;
+import view.View;
+
 
 public class Applicant extends User {
     private boolean isVisible;
@@ -7,15 +10,15 @@ public class Applicant extends User {
     private String flat;
 //    private Enquiry enquiry;
 
-    public Applicant(String name, String nric, int age, String maritalStatus, String password, boolean isVisible) {
-        super(name, nric, age, maritalStatus, password);
+    public Applicant(String name, String nric, int age, String maritalStatus, String password, boolean isVisible,AuthenticationController ac) {
+        super(name, nric, age, maritalStatus, password,ac);
         this.isVisible = isVisible;
         // appliedProject and flat to be null on fresh instance (?)
 
     }
 
-    public void displayMenu() {
-    	System.out.println("hi");
+    public void displayMenu(View view) {
+    	view.applicantMenu();
     }
 
     public boolean getIsVisible(){

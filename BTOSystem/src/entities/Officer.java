@@ -1,18 +1,19 @@
 package entities;
 
-
-
+import controllers.AuthenticationController;
+import view.View;
 public class Officer extends Applicant {
 private boolean isVisible;
 //private Project assignedProject;
 private boolean registrationStatus;
 private boolean canRegister;
-public Officer(String name, String nric, int age, String maritalStatus, String password, boolean isVisible)
-{
-    super(name, nric, age, maritalStatus, password,isVisible);
-}
-public void displayMenu(){
 
+public Officer(String name, String nric, int age, String maritalStatus, String password, boolean isVisible,AuthenticationController ac)
+{
+    super(name, nric, age, maritalStatus, password,isVisible,ac);
+}
+public void displayMenu(View view){
+view.officerMenu();
 }
 //public void registerForProject(Project project)
 //{

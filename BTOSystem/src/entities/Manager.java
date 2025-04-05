@@ -1,15 +1,17 @@
 package entities;
 
+import controllers.AuthenticationController;
+import view.View;
 public class Manager extends User {
 //    private Project assignedProject;
     private boolean hasProject;
 
-    public Manager(String name, String nric, int age, String maritalStatus, String password, boolean isVisible) {
-        super(name, nric, age, maritalStatus, password);
+    public Manager(String name, String nric, int age, String maritalStatus, String password, boolean isVisible,AuthenticationController ac) {
+        super(name, nric, age, maritalStatus, password,ac);
     }
 
-    public void displayMenu() {
-        // TODO
+    public void displayMenu(View view) {
+        view.managerMenu();
     }
 
     public void createProject(String name, String neighbourhood, int roomType, int numberOfUnits, String openingDate, String closingDate, Manager manager, int availableSlots) {

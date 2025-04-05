@@ -5,9 +5,13 @@ import java.util.*;
 import java.time.LocalDateTime;
 import entities.User;
 import controllers.AuthenticationController;
+//import entities.User;
+import entities.Applicant;
+import entities.Officer;
+import entities.Manager;
+
 
 public class UserDatabase {
-
     private final String filePath;
 
     public UserDatabase(String filePath) {
@@ -45,37 +49,35 @@ public class UserDatabase {
         }
     }
     
-    public User getUserById(String nric, String role) {
-    	switch(role) {
-    	case "A":
-    		// applicant
-    		break;
-    	case "O":
-    		// officer
-    		break;
-    	case "M":
-    		// manager
-    		break;
-    	default:
-    		return null;
-    	}
-    	
-        try (BufferedReader reader = new BufferedReader(new FileReader("BTOSystem/src/UserDatabase.txt"))) {
+    public User getUserById(String nric,AuthenticationController ac) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("BTOSystem/src/data/UserDatabase.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
-                if (parts.length == 7 && parts[0].equals(patientId)) { // Check if ID matches
-                    String name = parts[1];
-                    String gender = parts[2];
-                    int age = Integer.parseInt(parts[3]);
-                    String dateOfBirth = parts[4];
-                    String contactInformation = parts[5];
-                    String bloodType = parts[6];
-                    return new Patient(patientId, name, gender, age, dateOfBirth, contactInformation, bloodType, authenticationManager);
+                if (parts.length == 7 && parts[1].equals(nric)) { // Check if ID matches
+                    String name = parts[0];
+                    int age = Integer.parseInt(parts[2]);  
+                    String maritalStatus = parts[3];
+                    String role=parts[4];
+                    String password=parts[5];
+                    boolean isVisible=Boolean.parseBoolean(parts[6]);
+                	switch(role) {
+                	case "A":
+                		// applicant                		
+                		return new Applicant(name,nric,age,maritalStatus,password,isVisible,ac);
+                	case "O":
+                		// officer.
+                		return new Officer(name,nric,age,maritalStatus,password,isVisible,ac);
+                	case "M":
+                		// manager
+                		return new Manager(name,nric,age,maritalStatus,password,isVisible,ac);
+                	default:
+                		return null;
+                	}
                 }
             }
         } catch (IOException e) {
-            throw new RuntimeException("Error reading patients from file: " + e.getMessage(), e);
+            throw new RuntimeException("Error reading Users from file: " + e.getMessage(), e);
         }
         return null; // Return null if no matching patient is found
     }

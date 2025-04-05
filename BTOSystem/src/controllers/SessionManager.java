@@ -1,3 +1,6 @@
+package controllers;
+
+import entities.User;
 
 public class SessionManager {
 	private User currentUser;
