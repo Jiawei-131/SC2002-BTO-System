@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.Scanner;
+
 import controllers.AuthenticationController;
 import view.View;
 public class Officer extends Applicant {
@@ -7,13 +9,58 @@ private boolean isVisible;
 //private Project assignedProject;
 private boolean registrationStatus;
 private boolean canRegister;
+private String role="Officer";
 
 public Officer(String name, String nric, int age, String maritalStatus, String password, boolean isVisible,AuthenticationController ac)
 {
     super(name, nric, age, maritalStatus, password,isVisible,ac);
 }
+
+public User handleChoice(int choice,View view,Scanner sc) {
+    do {
+    this.displayMenu(view);
+    choice=sc.nextInt();
+    switch(choice)
+    {	
+
+    case 1:do {
+    		view.projectMenu(this);
+			choice=sc.nextInt();
+			switch(choice)
+			{
+			case 1:
+	        break;
+	        case 2:
+	        break;
+	        case 3:
+	        break;
+	        case 4:
+	        break;
+	        case 5:
+	        break;
+			}}while(choice!=5);
+    break;
+    case 2:
+    break;
+    case 3:
+    break;
+    case 4:
+    break;
+    case 5:
+    break;
+    case 6:
+    break;
+    case 7:this.logout();
+    break;
+    default: System.out.println("Please enter a valid choice!");
+    }
+    }
+    while(this.isLogin()!=false);
+    return this;
+}
+
 public void displayMenu(View view){
-view.officerMenu();
+view.officerMenu(this);
 }
 //public void registerForProject(Project project)
 //{
@@ -58,5 +105,8 @@ public void setCanRegister(boolean canRegister)
 }
 public void updateApplicantStatus(Application application){
     
+}
+public String getRole() {
+	return this.role;
 }
 }

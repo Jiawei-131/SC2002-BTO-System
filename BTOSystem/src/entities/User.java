@@ -2,6 +2,7 @@ package entities;
 
 import controllers.AuthenticationController;
 import view.View;
+import java.util.Scanner;
 
 
 public abstract class User {
@@ -12,10 +13,16 @@ private String maritalStatus;
 private String password;
 private boolean isLogin=false;
 private AuthenticationController ac;
+private String role;
 
 public User() {
 	
 }
+
+public abstract void displayMenu(View view);
+public abstract String getRole();
+public abstract User handleChoice(int choice,View view,Scanner sc);
+
 
 public User(String name, String nric,int age, String maritalStatus,String password,AuthenticationController ac){
     this.name=name;
@@ -38,12 +45,11 @@ public User logout() {
 	ac.logOut(this);
 	this.isLogin=false;
 	return null;
-
 }
 
-public void displayMenu(View view)
+public boolean isLogin()
 {
-	
+	return isLogin;
 }
 
 public int getAge()
@@ -87,4 +93,5 @@ public void setMaritalStatus(String maritalStatus){
     this.maritalStatus=maritalStatus;
 }
 
+	
 }

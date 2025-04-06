@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.Scanner;
+
 import controllers.AuthenticationController;
 import view.View;
 
@@ -8,6 +10,7 @@ public class Applicant extends User {
     private boolean isVisible;
     private Application application;
     private String flat;
+    private String role="Applicant";
 //    private Enquiry enquiry;
 
     public Applicant(String name, String nric, int age, String maritalStatus, String password, boolean isVisible,AuthenticationController ac) {
@@ -16,9 +19,49 @@ public class Applicant extends User {
         // appliedProject and flat to be null on fresh instance (?)
 
     }
+    
+    public User handleChoice(int choice,View view,Scanner sc) {
+        do {
+        this.displayMenu(view);
+        choice=sc.nextInt();
+        switch(choice)
+        {	
 
+        case 1:
+        break;
+        case 2:
+        break;
+        case 3:
+        break;
+        case 4:
+        break;
+        case 5:do {
+    		view.enquiryMenu(this);
+			choice=sc.nextInt();
+			switch(choice)
+			{
+			case 1:
+	        break;
+	        case 2:
+	        break;
+	        case 3:
+	        break;
+	        case 4:
+	        break;
+	        case 5:
+	        break;
+			}}while(choice!=5);
+        break;
+        case 6:this.logout();
+        break;
+        default: System.out.println("Please enter a valid choice!");
+        }
+        }
+        while(this.isLogin()!=false);
+        return this;
+    }
     public void displayMenu(View view) {
-    	view.applicantMenu();
+    	view.applicantMenu(this);
     }
 
     public boolean getIsVisible(){
@@ -55,5 +98,8 @@ public class Applicant extends User {
 
     public void deleteEnquiry(int enquiryID) {
         // TODO: waiting on Enquiry
+    }
+    public String getRole() {
+    	return this.role;
     }
 }
