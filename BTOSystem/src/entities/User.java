@@ -1,7 +1,6 @@
 package entities;
 
 import controllers.AuthenticationController;
-import view.View;
 import java.util.Scanner;
 
 

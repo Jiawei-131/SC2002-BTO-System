@@ -10,9 +10,7 @@ import controllers.AuthenticationController;
 import controllers.PermissionController;
 import controllers.ChoiceController;
 import entities.User;
-import entities.Officer;
-import entities.Manager;
-import entities.Applicant;
+
 import view.View;
 
 public class BTOSystem {
