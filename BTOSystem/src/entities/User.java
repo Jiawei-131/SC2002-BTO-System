@@ -13,24 +13,28 @@ private String maritalStatus;
 private String password;
 private boolean isLogin=false;
 private AuthenticationController ac;
-private String role;
+private Role role;
 
 public User() {
 	
 }
 
 public abstract void displayMenu(View view);
-public abstract String getRole();
-public abstract User handleChoice(int choice,View view,Scanner sc);
+//public abstract User handleChoice(int choice,View view,Scanner sc);
 
 
-public User(String name, String nric,int age, String maritalStatus,String password,AuthenticationController ac){
+public User(String name, String nric,int age, String maritalStatus,String password,AuthenticationController ac,Role role){
     this.name=name;
     this.nric=nric;
     this.age=age;
     this.maritalStatus=maritalStatus;
     this.password=password;
     this.ac=ac;
+    this.role=role;
+    }
+
+public Role getRole() {
+	return this.role;
 }
 
 public void login()
@@ -92,6 +96,7 @@ public String getMaritalStatus(){
 public void setMaritalStatus(String maritalStatus){
     this.maritalStatus=maritalStatus;
 }
+
 
 	
 }

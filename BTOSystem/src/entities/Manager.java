@@ -8,57 +8,56 @@ public class Manager extends User {
 //    private Project assignedProject;
     private boolean hasProject;
 	private boolean isVisible;
-	private String role="Manager";
 	
-    public Manager(String name, String nric, int age, String maritalStatus, String password, boolean isVisible,AuthenticationController ac) {
-        super(name, nric, age, maritalStatus, password,ac);
+    public Manager(String name, String nric, int age, String maritalStatus, String password, boolean isVisible,AuthenticationController ac,Role role) {
+        super(name, nric, age, maritalStatus, password,ac,role);
         this.isVisible=isVisible;
     }
-
-    public User handleChoice(int choice,View view,Scanner sc) {
-        do {
-        this.displayMenu(view);
-        choice=sc.nextInt();
-        switch(choice)
-        {	
-
-        case 1:do {
-        		view.projectMenu(this);
-    			choice=sc.nextInt();
-    			switch(choice)
-    			{
-    			case 1:
-		        break;
-    	        case 2:
-    	        break;
-    	        case 3:
-    	        break;
-    	        case 4:
-    	        break;
-    	        case 5:
-    	        break;
-    			}}while(choice!=5);
-        break;
-        case 2:
-        break;
-        case 3:
-        break;
-        case 4:
-        break;
-        case 5:
-        break;
-        case 6:
-        break;
-        case 7:
-        break;
-        case 8:this.logout();
-        break;
-        default: System.out.println("Please enter a valid choice!");
-        }
-        }
-        while(this.isLogin()!=false);
-        return this;
-    }
+//
+//    public User handleChoice(int choice,View view,Scanner sc) {
+//        do {
+//        this.displayMenu(view);
+//        choice=sc.nextInt();
+//        switch(choice)
+//        {	
+//
+//        case 1:do {
+//        		view.projectMenu(this);
+//    			choice=sc.nextInt();
+//    			switch(choice)
+//    			{
+//    			case 1:
+//		        break;
+//    	        case 2:
+//    	        break;
+//    	        case 3:
+//    	        break;
+//    	        case 4:
+//    	        break;
+//    	        case 5:
+//    	        break;
+//    			}}while(choice!=5);
+//        break;
+//        case 2:
+//        break;
+//        case 3:
+//        break;
+//        case 4:
+//        break;
+//        case 5:
+//        break;
+//        case 6:
+//        break;
+//        case 7:
+//        break;
+//        case 8:this.logout();
+//        break;
+//        default: System.out.println("Please enter a valid choice!");
+//        }
+//        }
+//        while(this.isLogin()!=false);
+//        return this;
+//    }
     
     public void displayMenu(View view) {
         view.managerMenu(this);
@@ -109,9 +108,7 @@ public class Manager extends User {
         // TODO implement
     }
 
-    public String getRole() {
-    	return this.role;
-    }
+
 //    public String viewEnquiry(Enquiry[] enquiryList ) {
 //        // TODO implement
 //    }

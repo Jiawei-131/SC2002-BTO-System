@@ -10,11 +10,11 @@ public class Applicant extends User {
     private boolean isVisible;
     private Application application;
     private String flat;
-    private String role="Applicant";
+    private Role role;
 //    private Enquiry enquiry;
 
-    public Applicant(String name, String nric, int age, String maritalStatus, String password, boolean isVisible,AuthenticationController ac) {
-        super(name, nric, age, maritalStatus, password,ac);
+    public Applicant(String name, String nric, int age, String maritalStatus, String password, boolean isVisible,AuthenticationController ac,Role role) {
+        super(name, nric, age, maritalStatus, password,ac,role);
         this.isVisible = isVisible;
         // appliedProject and flat to be null on fresh instance (?)
 
@@ -99,7 +99,5 @@ public class Applicant extends User {
     public void deleteEnquiry(int enquiryID) {
         // TODO: waiting on Enquiry
     }
-    public String getRole() {
-    	return this.role;
-    }
+
 }

@@ -1,6 +1,7 @@
 package controllers;
 import java.util.*;
 import entities.User;	
+import entities.Role;
 
 public class PermissionController {
 	private Map<String,Set<String>> rolePermissions;
@@ -41,7 +42,7 @@ public class PermissionController {
 	}
 	
 	public boolean permissionCheck(User user,String permission) {
-		String role=user.getRole();
+		Role role=user.getRole();
 		
 		Set<String>permissions=rolePermissions.get(role);
 		return permissions != null && permissions.contains(permissions);

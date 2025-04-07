@@ -9,6 +9,7 @@ import controllers.AuthenticationController;
 import entities.Applicant;
 import entities.Officer;
 import entities.Manager;
+import entities.Role;
 
 
 public class UserDatabase {
@@ -64,13 +65,13 @@ public class UserDatabase {
                 	switch(role) {
                 	case "A":
                 		// applicant                		
-                		return new Applicant(name,nric,age,maritalStatus,password,isVisible,ac);
+                		return new Applicant(name,nric,age,maritalStatus,password,isVisible,ac,Role.APPLICANT);
                 	case "O":
                 		// officer.
-                		return new Officer(name,nric,age,maritalStatus,password,isVisible,ac);
+                		return new Officer(name,nric,age,maritalStatus,password,isVisible,ac,Role.OFFICER);
                 	case "M":
                 		// manager
-                		return new Manager(name,nric,age,maritalStatus,password,isVisible,ac);
+                		return new Manager(name,nric,age,maritalStatus,password,isVisible,ac,Role.MANAGER);
                 	default:
                 		return null;
                 	}

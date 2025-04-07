@@ -9,11 +9,11 @@ private boolean isVisible;
 //private Project assignedProject;
 private boolean registrationStatus;
 private boolean canRegister;
-private String role="Officer";
 
-public Officer(String name, String nric, int age, String maritalStatus, String password, boolean isVisible,AuthenticationController ac)
+
+public Officer(String name, String nric, int age, String maritalStatus, String password, boolean isVisible,AuthenticationController ac,Role role)
 {
-    super(name, nric, age, maritalStatus, password,isVisible,ac);
+    super(name, nric, age, maritalStatus, password,isVisible,ac,role);
 }
 
 public User handleChoice(int choice,View view,Scanner sc) {
@@ -106,7 +106,5 @@ public void setCanRegister(boolean canRegister)
 public void updateApplicantStatus(Application application){
     
 }
-public String getRole() {
-	return this.role;
-}
+
 }
