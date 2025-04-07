@@ -78,6 +78,45 @@ public class View {
 		}
 	}
 	
+	public static void approvalMenu(User user)
+	{
+		printHeader(user);	
+		System.out.println("""
+				1. Approve or reject HDB Officer’s registration as the HDB 
+				Manager in-charge of the project – update project’s remaining HDB 
+				Officer slots 
+				2. Approve or reject Applicant’s BTO application – approval is 
+				limited to the supply of the flats (number of units for the respective flat 
+				types) 
+				3. Approve or reject Applicant's request to withdraw the application. 
+				4. Logout
+				Please enter a choice:
+				""");
+	}
+	public static void projectMenu(User user)
+	{
+		printHeader(user);		
+		System.out.println("""
+				1. View All Project listings
+				2. Create BTO Project listings
+				3. Delete BTO Project listings
+				4. Edit BTO Project listings 
+				5. Back to Main Menu
+				Please enter a choice:
+				""");
+	}
+	public static void enquiryMenu(User user)
+	{
+		printHeader(user);	
+		System.out.println("""
+				1. Submit Enquiry
+				2. View Enquiry
+				3. Edit Enquiry
+				4. Delete Enquiry
+				5. Back to Main Menu
+				Please enter a choice:
+				""");
+	}
 	public static void invalidChoice()
 	{
 		System.out.println("Please enter a valid choice");
