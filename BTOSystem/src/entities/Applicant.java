@@ -60,8 +60,8 @@ public class Applicant extends User {
 //        while(this.isLogin()!=false);
 //        return this;
 //    }
-    public void displayMenu(View view) {
-    	view.applicantMenu(this);
+    public void displayMenu() {
+    	View.applicantMenu(this);
     }
 
     public boolean getIsVisible(){

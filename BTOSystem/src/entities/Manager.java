@@ -59,8 +59,8 @@ public class Manager extends User {
 //        return this;
 //    }
     
-    public void displayMenu(View view) {
-        view.managerMenu(this);
+    public void displayMenu() {
+        View.managerMenu(this);
     }
 
     public void createProject(String name, String neighbourhood, int roomType, int numberOfUnits, String openingDate, String closingDate, Manager manager, int availableSlots) {

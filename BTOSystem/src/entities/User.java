@@ -19,7 +19,7 @@ public User() {
 	
 }
 
-public abstract void displayMenu(View view);
+public abstract void displayMenu();
 //public abstract User handleChoice(int choice,View view,Scanner sc);
 
 

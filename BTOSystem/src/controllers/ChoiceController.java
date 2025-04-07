@@ -11,7 +11,7 @@ import view.View;
 
 public class ChoiceController {
 
-	public User choice(int choice,User currentUser,View view,Scanner sc) {
+	public User choice(int choice,User currentUser,Scanner sc) {
         switch(choice) {
         case 1: if (currentUser instanceof Officer) {
         	
@@ -22,7 +22,7 @@ public class ChoiceController {
         //Manager Project menu
 		else if (currentUser instanceof Manager) {
 			do {
-        		view.projectMenu(currentUser);
+        		View.projectMenu(currentUser);
     			choice=sc.nextInt();
     			sc.nextLine();
     			switch(choice)
@@ -32,20 +32,20 @@ public class ChoiceController {
 		        break;
 		        //Add projects, check if project already existed?
     	        case 2:	try { 
-    	        		view.prompt("BTO Name"); 
+    	        		View.prompt("BTO Name"); 
     	        		String btoName=sc.nextLine();
-    	        		view.prompt("Neighbourhood");
+    	        		View.prompt("Neighbourhood");
     	        		String neighbourhood=sc.nextLine();
-    	        		view.prompt("RoomType");
+    	        		View.prompt("RoomType");
     	        		int roomType=sc.nextInt();
-    	        		view.prompt("Number of Units");
+    	        		View.prompt("Number of Units");
     	        		int numOfUnit=sc.nextInt();
     	        		sc.nextLine();
-    	        		view.prompt("Opening Date");
+    	        		View.prompt("Opening Date");
     	        		String openDate=sc.nextLine();
-    	        		view.prompt("Closing Date");
+    	        		View.prompt("Closing Date");
     	        		String closeDate=sc.nextLine();
-    	        		view.prompt("Available slots");
+    	        		View.prompt("Available slots");
     	        		int availableSlots=sc.nextInt();
     	        		((Manager)currentUser).createProject(btoName, neighbourhood, roomType, numOfUnit, openDate, closeDate,((Manager)currentUser), availableSlots);
     	        	}

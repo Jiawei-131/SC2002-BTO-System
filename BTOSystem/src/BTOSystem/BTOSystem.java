@@ -19,7 +19,7 @@ public class BTOSystem {
     public static void main(String[] args)
     {
     	User currentUser = null;
-    	View view = new View();
+    	//View view = new View();
     	
     	int choice;
     	final String File_Path="LoginInfo.txt";
@@ -37,38 +37,38 @@ public class BTOSystem {
         while(true) {
         //login
         do {
-        	view.menuView();
+        	View.menuView();
             choice = sc.nextInt();
             sc.nextLine();
             switch(choice) {
             case 1:
-            	view.prompt("NRIC");
+            	View.prompt("NRIC");
                 String nric = sc.nextLine();
                 
                 while(!users.containsKey(nric)) {
-                	view.promptRetry("NRIC not found");
+                	View.promptRetry("NRIC not found");
                     choice = sc.nextInt();
                     if (choice == 2){
-                    	view.exit();
+                    	View.exit();
                         System.exit(0);
                     }
-                    view.prompt("NRIC");
+                    View.prompt("NRIC");
                     sc.nextLine();
                     nric = sc.nextLine();
                 }
                 
-                view.prompt("Password");
+                View.prompt("Password");
         		String password = sc.nextLine();
         		String storedHash = users.get(nric); 
                 String hashedPassword = passwordHasher.hashPassword(password);  //Not used rn
                 while (!Objects.equals(users.get(nric), password)) {
-                	view.promptRetry("Incorrect password");
+                	View.promptRetry("Incorrect password");
                     choice = sc.nextInt();
                     if (choice == 2){
-                    	view.exit();
+                    	View.exit();
                         System.exit(0);
                     }
-                    view.prompt("Password");
+                    View.prompt("Password");
                     sc.nextLine();
                     password = sc.nextLine();
                     hashedPassword = passwordHasher.hashPassword(password); //Not used rn
@@ -78,11 +78,11 @@ public class BTOSystem {
                 choice=3;
                 break;
             case 2:
-            	view.register(); // Do we need to have a register?
+            	View.register(); // Do we need to have a register?
             	//sc.nextLine();
             	break;
             case 3:
-            	view.exit();
+            	View.exit();
             	System.exit(0);
             	break;
             default:
@@ -91,9 +91,9 @@ public class BTOSystem {
             }
         } while (choice != 3 && currentUser == null);
         do {
-        currentUser.displayMenu(view);
+        currentUser.displayMenu();
         choice=sc.nextInt();
-        currentUser=cc.choice(choice, currentUser, view, sc);
+        currentUser=cc.choice(choice, currentUser, sc);
         }
         while(currentUser != null);
         }

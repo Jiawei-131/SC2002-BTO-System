@@ -7,7 +7,7 @@ public class View {
 	}
 	
 
-	public void menuView() {
+	public static void menuView() {
     	System.out.println("""
         		BTO Management System (BMS)
         		1. Login
@@ -31,7 +31,7 @@ public class View {
 		System.out.printf("Please enter your %s: \n",string);
 	}
 
-	public void promptRetry(String string) {
+	public static void promptRetry(String string) {
     	System.out.printf("%s\n",string);
         System.out.println("1: Retry\n2: Exit");
 	}
