@@ -13,11 +13,11 @@ public class ChoiceController {
 
 	public User choice(int choice,User currentUser,View view,Scanner sc) {
         switch(choice) {
-        case 1: if (currentUser instanceof Applicant) {
-        	((Applicant)currentUser).viewProjects();
+        case 1: if (currentUser instanceof Officer) {
+        	
         } 
-		else if (currentUser instanceof Officer) {
-            System.out.println("The current user is an HDB Officer.");
+		else if (currentUser instanceof Applicant) {
+			((Applicant)currentUser).viewProjects();
         } 
         //Manager Project menu
 		else if (currentUser instanceof Manager) {
@@ -64,82 +64,77 @@ public class ChoiceController {
     	        //Edit BTO Projects, check if exists
     	        case 4:
     	        break;
-    	        default: System.out.println("Please enter a valid input!");
+    	        default: View.invalidChoice();
     			}}while(choice!=5);
         }
     	break;
-    	case 2:if (currentUser instanceof Applicant) {
-	            	System.out.println("The current user is an Applicant.");
+    	case 2:if (currentUser instanceof Officer) {
+	            	System.out.println("The current user is an Officer.");
 		        } 
-        		else if (currentUser instanceof Officer) {
-		            System.out.println("The current user is an HDB Officer.");
+        		else if (currentUser instanceof Applicant) {
+		            System.out.println("The current user is an Applicant.");
 		        } 
     			else if (currentUser instanceof Manager) {
 		            System.out.println("The current user is an HDB Manager.");
 		        }
     	break;
-    	case 3:if (currentUser instanceof Applicant) {
+    	case 3:if (currentUser instanceof Officer) {
 		            System.out.println("The current user is an Applicant.");
 		        } 
-				else if (currentUser instanceof Officer) {
+				else if (currentUser instanceof Applicant) {
 		            System.out.println("The current user is an HDB Officer.");
 		        } 
 				else if (currentUser instanceof Manager) {
 		            System.out.println("The current user is an HDB Manager.");
 	        }
     	break;
-        case 4:if (currentUser instanceof Applicant) {
+        case 4:if (currentUser instanceof Officer) {
 		            System.out.println("The current user is an Applicant.");
 		        } 
-				else if (currentUser instanceof Officer) {
+				else if (currentUser instanceof Applicant) {
 		            System.out.println("The current user is an HDB Officer.");
 		        } 
 				else if (currentUser instanceof Manager) {
 		            System.out.println("The current user is an HDB Manager.");
 		        }
     	break;
-    	case 5:if (currentUser instanceof Applicant) {
+    	case 5:if (currentUser instanceof Officer) {
 		            System.out.println("The current user is an Applicant.");
 		        } 
-				else if (currentUser instanceof Officer) {
+				else if (currentUser instanceof Applicant) {
 		            System.out.println("The current user is an HDB Officer.");
 		        } 
 				else if (currentUser instanceof Manager) {
 		            System.out.println("The current user is an HDB Manager.");
 		        }
     	break;
-        case 6:if (currentUser instanceof Applicant) {
-		            System.out.println("The current user is an Applicant.");
-		        } 
-				else if (currentUser instanceof Officer) {
-		            System.out.println("The current user is an HDB Officer.");
-		        } 
-				else if (currentUser instanceof Manager) {
-		            view.approvalMenu(currentUser);
+        case 6: if (currentUser instanceof Manager) {
+		            View.approvalMenu(currentUser);
 		            sc.nextLine();
 		        }
+		        else {
+		        	currentUser=currentUser.logout();
+		        }
     	break;
-        case 7:	if (currentUser instanceof Applicant) {
-            currentUser=currentUser.logout();
-        } 
-		else if (currentUser instanceof Officer) {
-            currentUser=currentUser.logout();
-        } 
-		else if (currentUser instanceof Manager) {
+        case 7:	 if (currentUser instanceof Manager) {
             currentUser=currentUser.logout();	
             }
-        	break;
-        case 8:if (currentUser instanceof Applicant) {
-            System.out.println("The current user is an Applicant.");
-        } 
-		else if (currentUser instanceof Officer) {
-            System.out.println("The current user is an HDB Officer.");
-        } 
-		else if (currentUser instanceof Manager) {
-            currentUser=currentUser.logout();	
-            }
-        default:
+        else {
         	System.out.println("Please enter a valid choice");
+        }
+
+        	break;
+//        case 8:if (currentUser instanceof Officer) {
+//            System.out.println("The current user is an Applicant.");
+//        } 
+//		else if (currentUser instanceof Applicant) {
+//            System.out.println("The current user is an HDB Officer.");
+//        } 
+//		else if (currentUser instanceof Manager) {
+//            currentUser=currentUser.logout();	
+//            }
+        default:
+        	View.invalidChoice();
         }
 		return currentUser;
         }

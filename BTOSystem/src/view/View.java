@@ -55,9 +55,8 @@ public class View {
 				2. Apply for projects
 				3. View applied projects
 				4. Withdraw from BTO Application
-				5. Submit Enquiry
-				6. View/Edit/Delete Enquiry
-				7. Logout
+				5. Enquiries
+				6. Logout
 				Please enter a choice:
 				""");
 	}
@@ -68,10 +67,9 @@ public class View {
 				2. Create/edit/delete BTO Projects
 				3. Toggle Visibility
 				4. View pending and approved HDB Officer registration. 
-				5. Approval
-				6. View all enquiries
-				7. Reply to enquiries
-				8. Logout
+				5. Approvals
+				6. Enquiries
+				7. Logout
 				Please enter a choice:
 				""");
 	}
@@ -113,6 +111,10 @@ public class View {
 				5. Back to Main Menu
 				Please enter a choice:
 				""");
+	}
+	public static void invalidChoice()
+	{
+		System.out.println("Please enter a valid choice");
 	}
 
 }

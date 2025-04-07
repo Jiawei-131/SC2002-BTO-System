@@ -86,7 +86,7 @@ public class BTOSystem {
             	System.exit(0);
             	break;
             default:
-                System.out.println("Please enter a valid choice.");
+            	View.invalidChoice();
             	
             }
         } while (choice != 3 && currentUser == null);
