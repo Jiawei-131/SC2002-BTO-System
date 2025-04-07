@@ -1,5 +1,8 @@
 package view;
 
+import entities.Applicant;
+import entities.Manager;
+import entities.Officer;
 import entities.User;
 public class View {
 	
@@ -36,19 +39,8 @@ public class View {
         System.out.println("1: Retry\n2: Exit");
 	}
 	
-	public static void applicantMenu(User user) {
-		printHeader(user);	
-		System.out.println("""
-				1. View list of projects
-				2. Apply for projects
-				3. View applied projects
-				4. Withdraw from BTO Application
-				5. Enquiries
-				6. Logout
-				Please enter a choice:
-				""");
-	}
-	public static void officerMenu(User user) {
+	public static void menu(User user) {
+		if (user instanceof Officer) {
 			printHeader(user);		
 			System.out.println("""
 				1. View list of projects
@@ -59,8 +51,21 @@ public class View {
 				6. Logout
 				Please enter a choice:
 				""");
-	}
-	public static void managerMenu(User user) {
+        } 
+		else if (user instanceof Applicant) {
+			printHeader(user);	
+			System.out.println("""
+					1. View list of projects
+					2. Apply for projects
+					3. View applied projects
+					4. Withdraw from BTO Application
+					5. Enquiries
+					6. Logout
+					Please enter a choice:
+					""");
+        } 
+        //Manager Project menu
+		else if (user instanceof Manager) {
 			printHeader(user);			
 			System.out.println("""
 				1. Project Details
@@ -70,7 +75,9 @@ public class View {
 				5. Logout
 				Please enter a choice:
 				""");
+		}
 	}
+	
 	public static void approvalMenu(User user)
 	{
 		printHeader(user);	

@@ -10,7 +10,6 @@ public class Applicant extends User {
     private boolean isVisible;
     private Application application;
     private String flat;
-    private Role role;
 //    private Enquiry enquiry;
 
     public Applicant(String name, String nric, int age, String maritalStatus, String password, boolean isVisible,AuthenticationController ac,Role role) {
@@ -61,7 +60,7 @@ public class Applicant extends User {
 //        return this;
 //    }
     public void displayMenu() {
-    	View.applicantMenu(this);
+    	View.menu(this);
     }
 
     public boolean getIsVisible(){

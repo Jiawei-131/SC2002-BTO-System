@@ -60,7 +60,7 @@ public class Manager extends User {
 //    }
     
     public void displayMenu() {
-        View.managerMenu(this);
+        View.menu(this);
     }
 
     public void createProject(String name, String neighbourhood, int roomType, int numberOfUnits, String openingDate, String closingDate, Manager manager, int availableSlots) {

@@ -59,8 +59,8 @@ public Officer(String name, String nric, int age, String maritalStatus, String p
 //    return this;
 //}
 
-public void displayMenu(View view){
-view.officerMenu(this);
+public void displayMenu(){
+View.menu(this);
 }
 //public void registerForProject(Project project)
 //{
