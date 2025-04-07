@@ -65,6 +65,7 @@ public class Manager extends User {
 
     public void createProject(String name, String neighbourhood, int roomType, int numberOfUnits, String openingDate, String closingDate, Manager manager, int availableSlots) {
         // TODO: construct and assign project
+    	System.out.println("Project Created!");
     }
 
     public void editProject(String name, String neighbourhood, int roomType, int numberOfUnits, String openingDate, String closingDate, Manager manager, int availableSlots) {

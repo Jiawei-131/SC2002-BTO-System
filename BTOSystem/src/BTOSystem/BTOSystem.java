@@ -96,27 +96,57 @@ public class BTOSystem {
         choice=sc.nextInt();
         switch(choice) {
         case 1: if (currentUser instanceof Applicant) {
-        	
+        	((Applicant)currentUser).viewProjects();
         } 
 		else if (currentUser instanceof Officer) {
             System.out.println("The current user is an HDB Officer.");
         } 
+        //Manager Project menu
 		else if (currentUser instanceof Manager) {
 			do {
         		view.projectMenu(currentUser);
     			choice=sc.nextInt();
+    			sc.nextLine();
     			switch(choice)
     			{
-    			case 1:
+    			//Print all projects
+    			case 1: ((Manager)currentUser).viewAllProjects();
 		        break;
-    	        case 2:
+		        //Add projects, check if project already existed?
+    	        case 2:	try { 
+    	        		view.prompt("BTO Name"); 
+    	        		String btoName=sc.nextLine();
+    	        		view.prompt("Neighbourhood");
+    	        		String neighbourhood=sc.nextLine();
+    	        		view.prompt("RoomType");
+    	        		int roomType=sc.nextInt();
+    	        		view.prompt("Number of Units");
+    	        		int numOfUnit=sc.nextInt();
+    	        		sc.nextLine();
+    	        		view.prompt("Opening Date");
+    	        		String openDate=sc.nextLine();
+    	        		view.prompt("Closing Date");
+    	        		String closeDate=sc.nextLine();
+    	        		view.prompt("Available slots");
+    	        		int availableSlots=sc.nextInt();
+    	        		((Manager)currentUser).createProject(btoName, neighbourhood, roomType, numOfUnit, openDate, closeDate,((Manager)currentUser), availableSlots);
+    	        	}
+    	        catch(InputMismatchException e)
+    	        {
+    	        	System.out.println("Invalid input! Please enter the correct type of data");
+    	        	sc.nextLine();
+    	        }
+    	        catch (Exception e) {
+    	        	System.out.println("An unexpected error has occured"+e.getMessage());
+    	        }
     	        break;
+    	        //Delete BTO Projects , check if exists
     	        case 3:
     	        break;
+    	        //Edit BTO Projects, check if exists
     	        case 4:
     	        break;
-    	        case 5:
-    	        break;
+    	        default: System.out.println("Please enter a valid input!");
     			}}while(choice!=5);
         }
     	break;

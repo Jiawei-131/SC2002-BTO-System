@@ -20,46 +20,46 @@ public class Applicant extends User {
 
     }
     
-    public User handleChoice(int choice,View view,Scanner sc) {
-        do {
-        this.displayMenu(view);
-        choice=sc.nextInt();
-        switch(choice)
-        {	
-
-        case 1:
-        break;
-        case 2:
-        break;
-        case 3:
-        break;
-        case 4:
-        break;
-        case 5:do {
-    		view.enquiryMenu(this);
-			choice=sc.nextInt();
-			switch(choice)
-			{
-			case 1:
-	        break;
-	        case 2:
-	        break;
-	        case 3:
-	        break;
-	        case 4:
-	        break;
-	        case 5:
-	        break;
-			}}while(choice!=5);
-        break;
-        case 6:this.logout();
-        break;
-        default: System.out.println("Please enter a valid choice!");
-        }
-        }
-        while(this.isLogin()!=false);
-        return this;
-    }
+//    public User handleChoice(int choice,View view,Scanner sc) {
+//        do {
+//        this.displayMenu(view);
+//        choice=sc.nextInt();
+//        switch(choice)
+//        {	
+//
+//        case 1:
+//        break;
+//        case 2:
+//        break;
+//        case 3:
+//        break;
+//        case 4:
+//        break;
+//        case 5:do {
+//    		view.enquiryMenu(this);
+//			choice=sc.nextInt();
+//			switch(choice)
+//			{
+//			case 1:
+//	        break;
+//	        case 2:
+//	        break;
+//	        case 3:
+//	        break;
+//	        case 4:
+//	        break;
+//	        case 5:
+//	        break;
+//			}}while(choice!=5);
+//        break;
+//        case 6:this.logout();
+//        break;
+//        default: System.out.println("Please enter a valid choice!");
+//        }
+//        }
+//        while(this.isLogin()!=false);
+//        return this;
+//    }
     public void displayMenu(View view) {
     	view.applicantMenu(this);
     }
@@ -72,9 +72,14 @@ public class Applicant extends User {
         this.isVisible = isVisible;
     }
 
-//    public void applyForProject(Project project) {
-//        // TODO: create new Application instance with project
-//    }
+    public void applyForProject(Project project) {
+        // TODO: create new Application instance with project
+    }
+
+    
+    public void viewProjects() {
+        // TODO: print application or smth
+    }
     
     public void viewApplication() {
         // TODO: print application or smth
