@@ -88,6 +88,8 @@ public class BTOSystem {
             	
             }
         } while (choice != 3 && currentUser == null);
+        
+        
         do {
         currentUser.displayMenu();
         choice=sc.nextInt();

@@ -16,48 +16,48 @@ public Officer(String name, String nric, int age, String maritalStatus, String p
     super(name, nric, age, maritalStatus, password,isVisible,ac,role);
 }
 
-public User handleChoice(int choice,View view,Scanner sc) {
-    do {
-    this.displayMenu(view);
-    choice=sc.nextInt();
-    switch(choice)
-    {	
-
-    case 1:do {
-    		view.projectMenu(this);
-			choice=sc.nextInt();
-			switch(choice)
-			{
-			case 1:
-	        break;
-	        case 2:
-	        break;
-	        case 3:
-	        break;
-	        case 4:
-	        break;
-	        case 5:
-	        break;
-			}}while(choice!=5);
-    break;
-    case 2:
-    break;
-    case 3:
-    break;
-    case 4:
-    break;
-    case 5:
-    break;
-    case 6:
-    break;
-    case 7:this.logout();
-    break;
-    default: System.out.println("Please enter a valid choice!");
-    }
-    }
-    while(this.isLogin()!=false);
-    return this;
-}
+//public User handleChoice(int choice,View view,Scanner sc) {
+//    do {
+//    this.displayMenu(view);
+//    choice=sc.nextInt();
+//    switch(choice)
+//    {	
+//
+//    case 1:do {
+//    		view.projectMenu(this);
+//			choice=sc.nextInt();
+//			switch(choice)
+//			{
+//			case 1:
+//	        break;
+//	        case 2:
+//	        break;
+//	        case 3:
+//	        break;
+//	        case 4:
+//	        break;
+//	        case 5:
+//	        break;
+//			}}while(choice!=5);
+//    break;
+//    case 2:
+//    break;
+//    case 3:
+//    break;
+//    case 4:
+//    break;
+//    case 5:
+//    break;
+//    case 6:
+//    break;
+//    case 7:this.logout();
+//    break;
+//    default: System.out.println("Please enter a valid choice!");
+//    }
+//    }
+//    while(this.isLogin()!=false);
+//    return this;
+//}
 
 public void displayMenu(View view){
 view.officerMenu(this);
