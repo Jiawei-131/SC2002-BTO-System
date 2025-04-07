@@ -64,12 +64,10 @@ public class View {
 			printHeader(user);			
 			System.out.println("""
 				1. Project Details
-				2. Create/edit/delete BTO Projects
-				3. Toggle Visibility
-				4. View pending and approved HDB Officer registration. 
-				5. Approvals
-				6. Enquiries
-				7. Logout
+				2. Toggle Visibility
+				3. Approvals
+				4. Enquiries
+				5. Logout
 				Please enter a choice:
 				""");
 	}
