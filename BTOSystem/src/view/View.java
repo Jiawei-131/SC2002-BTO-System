@@ -43,11 +43,7 @@ public class View {
     	System.out.printf("%s\n",string);
         System.out.println("1: Retry\n2: Exit");
 	}
-//	1. View list of projects
-//	2. Apply for projects
-//	3. View applied projects
-//	4. Withdraw from BTO Application
-//	5. Generate Receipt
+
 	public static void menu(User user,List<String> menuOptions) {
 		printHeader(user);
 		for(String option :menuOptions)
@@ -56,40 +52,7 @@ public class View {
 		}
 	}
 		
-//		if (user instanceof Officer) {
-//	
-//			System.out.println("""
-//				1. Projects
-//				2. Enquiries
-//				3. Logout
-//				Please enter a choice:
-//				""");
-//        } 
-////		1. View list of projects
-////		2. Apply for projects
-////		3. View applied projects
-////		4. Withdraw from BTO Application
-//
-//		else if (user instanceof Applicant) {
-//			System.out.println("""
-//					1. Projects
-//					2. Enquiries
-//					3. Logout
-//					Please enter a choice:
-//					""");
-//        } 
-//        //Manager Project menu
-//		else if (user instanceof Manager) {			
-//			System.out.println("""
-//				1. Project Details
-//				2. Toggle Visibility
-//				3. Approvals
-//				4. Enquiries
-//				5. Logout
-//				Please enter a choice:
-//				""");
-//		}
-//	}
+
 	
 	public static void approvalMenu(User user)
 	{

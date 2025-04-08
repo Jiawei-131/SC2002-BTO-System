@@ -34,6 +34,7 @@ public class ManagerActionHandler implements ActionHandler {
 	public void handleEnquiryAction(int choice,User currentUser, Scanner sc) {
 		View.enquiryMenu(currentUser,((Manager)currentUser).getEnquiryOptions());
 	}
+	
     public void handleProjectAction(int choice,User currentUser, Scanner sc) {
     	do {
 		View.projectMenu(currentUser,((Manager)currentUser).getProjectOptions());

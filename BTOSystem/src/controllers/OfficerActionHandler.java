@@ -53,12 +53,14 @@ public class OfficerActionHandler implements ActionHandler{
         //Delete BTO Projects , check if exists
         case 3:
         break;
-        //Edit BTO Projects, check if exists
+        
         case 4:
+        break;
+        case 5://TODO Generate Receipt
         break;
         default: View.invalidChoice();
 		}}
-    	while(choice!=5);
+    	while(choice!=6);
     }
     
 
