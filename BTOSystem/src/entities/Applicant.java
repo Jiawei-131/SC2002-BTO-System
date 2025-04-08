@@ -73,8 +73,12 @@ public class Applicant extends User {
         this.isVisible = isVisible;
     }
 
-    public void applyForProject(Project project) {
+    public void applyForProject(String projectName, String flatType) {
         // TODO: create new Application instance with project
+    	ApplicationDatabase db = new ApplicationDatabase();
+    	Application application = new Application(this.nric, projectName, flatType);
+    	
+    	db.writeApplication(application);
     }
 
     
@@ -87,7 +91,7 @@ public class Applicant extends User {
     	// bad code but..
     	// TODO if able, refine code?
     	ApplicationDatabase db = new ApplicationDatabase();
-    	AuthenticationController ac = new AuthenticationController();
+
     	Application application = db.getApplicationByApplicantId(this.nric);
     	
     	return application;

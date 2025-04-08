@@ -1,1 +1,1 @@
-T1234567J|Pending|Bidadari Heights|4-Room|false|T2234567J
+T1234567J|Pending|Bidadari Heights|3-Room|false|T2234567J

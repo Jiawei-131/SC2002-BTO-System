@@ -15,9 +15,10 @@ public class ApplicationDatabase {
     }
 
     // Write a new application to the file
-    public void writeApplication(String applicantNRIC, String applicationStatus, String projectName, String flatType, boolean booked, String officerNRIC) {
+    public void writeApplication(Application application) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("BTOSystem/src/ApplicationDatabase.txt", true))) {
-            writer.write(applicantNRIC + "|"+  applicationStatus + "|"+  projectName + "|"+  flatType + "|"+  booked + "|"+  officerNRIC);
+        	String flatBooked = application.getFlatBooked() ? "true" : "false";
+            writer.write(application.getApplicantId() + "|"+  application.getApplicationStatus() + "|"+  application.getProjectName() + "|"+  application.getFlatType() + "|"+ flatBooked + "|"+  application.getManagingOfficer());
             writer.newLine();
         } catch (IOException e) {
             throw new RuntimeException("Error writing to file: " + e.getMessage(), e);

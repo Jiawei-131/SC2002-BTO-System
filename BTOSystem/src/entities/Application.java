@@ -32,6 +32,10 @@ public class Application {
         this.managingOfficerNRIC = officerNRIC;
     }
     
+    public String getApplicantId() {
+    		return this.applicantNRIC;
+    }
+    
     public String getProjectName() {
     	return this.projectName;
     }
