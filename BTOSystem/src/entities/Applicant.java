@@ -12,7 +12,7 @@ import view.View;
 
 public class Applicant extends User {
     private boolean isVisible;
-    private Application application;
+//    private Application application;
     private String flat;
 //    private Enquiry enquiry;
 
@@ -76,7 +76,8 @@ public class Applicant extends User {
     }
 
     public void requestWithdrawal() {
-        // TODO: depends on Application class
+        Application application = this.retrieveApplication();
+        application.setApplicationStatus("Withdraw Requested");
     }
 
     public void createEnquiry(String enquiry) {
