@@ -12,13 +12,24 @@ public class Application {
     private String managingOfficerNRIC;
     
 
-    public void Application(String nric, String projectName, String flatType) {
+    // new applications
+    public Application(String nric, String projectName, String flatType) {
         this.applicantNRIC = nric;
         this.projectName = projectName;
         this.flatType = flatType;
         this.applicationStatus = "Pending";
         this.flatBooked = false;
-        this.managingOfficerNRIC = null;
+        this.managingOfficerNRIC = "nil";
+    }
+    
+    // existing applications
+    public Application(String nric, String applicationStatus, String projectName, String flatType, boolean flatBooked, String officerNRIC) {
+        this.applicantNRIC = nric;
+        this.projectName = projectName;
+        this.flatType = flatType;
+        this.applicationStatus = applicationStatus;
+        this.flatBooked = flatBooked;
+        this.managingOfficerNRIC = officerNRIC;
     }
     
     public String getProjectName() {

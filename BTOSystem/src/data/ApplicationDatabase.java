@@ -24,35 +24,42 @@ public class ApplicationDatabase {
         }
     }
     
-    public Application getApplicationByApplicantNRIC(String nric,AuthenticationController ac) {
+    public Application getApplicationByApplicantId(String nric) {
         try (BufferedReader reader = new BufferedReader(new FileReader("BTOSystem/src/data/UserDatabase.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
-                if (parts.length == 7 && parts[1].equals(nric)) { // Check if ID matches
-                    String name = parts[0];
-                    int age = Integer.parseInt(parts[2]);  
-                    String maritalStatus = parts[3];
-                    String role=parts[4];
-                    String password=parts[5];
-                    boolean isVisible=Boolean.parseBoolean(parts[6]);
-//                	switch(role) {
-//                	case "A":
-//                		// applicant                		
-//                		return new Applicant(name,nric,age,maritalStatus,password,isVisible,ac,Role.APPLICANT);
-//                	case "O":
-//                		// officer.
-//                		return new Officer(name,nric,age,maritalStatus,password,isVisible,ac,Role.OFFICER);
-//                	case "M":
-//                		// manager
-//                		return new Manager(name,nric,age,maritalStatus,password,isVisible,ac,Role.MANAGER);
-//                	default:
-//                		return null;
-//                	}
+                if (parts.length == 6 && parts[0].equals(nric)) { // Check if applicantNRIC matches
+                    String applicationStatus = parts[1];
+                    String projectName = parts[2];  
+                    String flatType = parts[3];
+                    boolean flatBooked=Boolean.parseBoolean(parts[4]);
+                    String officerNRIC=parts[5];
+                    return new Application(nric, applicationStatus, projectName, flatType, flatBooked, officerNRIC);
                 }
             }
         } catch (IOException e) {
-            throw new RuntimeException("Error reading Users from file: " + e.getMessage(), e);
+            throw new RuntimeException("Error reading Applications from file: " + e.getMessage(), e);
+        }
+        return null; // Return null if no matching patient is found
+    }
+    
+    public Application getApplicationByOfficerId(String nric) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("BTOSystem/src/data/UserDatabase.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length == 6 && parts[5].equals(nric)) { // Check if applicantNRIC matches
+                    String applicationStatus = parts[1];
+                    String projectName = parts[2];  
+                    String flatType = parts[3];
+                    boolean flatBooked=Boolean.parseBoolean(parts[4]);
+                    String applicantNRIC=parts[0];
+                    return new Application(applicantNRIC, applicationStatus, projectName, flatType, flatBooked, nric);
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Error reading Applications from file: " + e.getMessage(), e);
         }
         return null; // Return null if no matching patient is found
     }

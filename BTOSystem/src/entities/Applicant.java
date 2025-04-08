@@ -1,8 +1,10 @@
 package entities;
 
 import java.util.Scanner;
+import data.*;
 
 import controllers.AuthenticationController;
+import data.UserDatabase;
 import view.View;
 
 
@@ -80,20 +82,29 @@ public class Applicant extends User {
         // TODO: print application or smth
     }
     
-    private retrieveApplication() {
+    private Application retrieveApplication() {
+
+    	// bad code but..
+    	// TODO if able, refine code?
+    	ApplicationDatabase db = new ApplicationDatabase();
+    	AuthenticationController ac = new AuthenticationController();
+    	Application application = db.getApplicationByApplicantId(this.nric);
     	
+    	return application;
     }
     
     public void viewApplication() {
         // TODO: print application or smth
+    	Application application = this.retrieveApplication();
     	
     	System.out.printf("""
+    			APPLICATION
     			Project Name: %s
     			Flat Type: %s
     			Status: %s
     			Managing Officer: %s
     			
-    			""", this.application.getProjectName(), )
+    			""", application.getProjectName(), application.getFlatType(), application.getApplicationStatus(), application.getManagingOfficer());
     	
     }
 
