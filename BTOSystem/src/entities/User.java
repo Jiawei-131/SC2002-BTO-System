@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public abstract class User {
 private String name;
-private String nric;
+protected String nric;
 private int age;
 private String maritalStatus;
 private String password;
