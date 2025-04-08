@@ -1,4 +1,6 @@
 package entities;
+import java.util.Arrays;
+import java.util.List;
 
 import java.util.Scanner;
 
@@ -106,5 +108,11 @@ public void setCanRegister(boolean canRegister)
 public void updateApplicantStatus(Application application){
     
 }
-
+public List<String> getMenuOptions() {
+    return Arrays.asList(
+        "1. Projects",
+        "2. Enquiries",
+        "3. Logout"
+    );
+}
 }
