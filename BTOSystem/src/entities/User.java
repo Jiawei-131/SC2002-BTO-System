@@ -39,7 +39,6 @@ public Role getRole() {
 public void login()
 {
 	ac.logIn(this, password);
-	System.out.printf("Welcome %s! \n",this.name);
 	this.isLogin=true;
 }
 

@@ -35,7 +35,7 @@ public class BTOSystem {
         while(true) {
         //login
         do {
-        	View.menuView();
+        	View.loginView();
             choice = sc.nextInt();
             sc.nextLine();
             switch(choice) {

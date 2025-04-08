@@ -10,7 +10,7 @@ public class View {
 	}
 	
 
-	public static void menuView() {
+	public static void loginView() {
     	System.out.println("""
         		BTO Management System (BMS)
         		1. Login
@@ -20,7 +20,10 @@ public class View {
         		""");
 	}
 	private static void printHeader(User user) {
-		System.out.printf("BTO Management System (%s)\n",user.getRole());
+        System.out.println("===================================");
+        System.out.println(" Welcome, " + user.getUsername());
+        System.out.printf(" Role: %s \n", user.getRole());
+        System.out.println("===================================");
 	}
 	
 	public static void register() {
@@ -38,35 +41,37 @@ public class View {
     	System.out.printf("%s\n",string);
         System.out.println("1: Retry\n2: Exit");
 	}
-	
+//	1. View list of projects
+//	2. Apply for projects
+//	3. View applied projects
+//	4. Withdraw from BTO Application
+//	5. Generate Receipt
 	public static void menu(User user) {
+		printHeader(user);	
 		if (user instanceof Officer) {
-			printHeader(user);		
+	
 			System.out.println("""
-				1. View list of projects
-				2. Apply for projects
-				3. View applied projects
-				4. Withdraw from BTO Application
-				5. Enquiries
-				6. Logout
+				1. Projects
+				2. Enquiries
+				3. Logout
 				Please enter a choice:
 				""");
         } 
+//		1. View list of projects
+//		2. Apply for projects
+//		3. View applied projects
+//		4. Withdraw from BTO Application
+
 		else if (user instanceof Applicant) {
-			printHeader(user);	
 			System.out.println("""
-					1. View list of projects
-					2. Apply for projects
-					3. View applied projects
-					4. Withdraw from BTO Application
-					5. Enquiries
-					6. Logout
+					1. Projects
+					2. Enquiries
+					3. Logout
 					Please enter a choice:
 					""");
         } 
         //Manager Project menu
-		else if (user instanceof Manager) {
-			printHeader(user);			
+		else if (user instanceof Manager) {			
 			System.out.println("""
 				1. Project Details
 				2. Toggle Visibility
