@@ -80,8 +80,21 @@ public class Applicant extends User {
         // TODO: print application or smth
     }
     
+    private retrieveApplication() {
+    	
+    }
+    
     public void viewApplication() {
         // TODO: print application or smth
+    	
+    	System.out.printf("""
+    			Project Name: %s
+    			Flat Type: %s
+    			Status: %s
+    			Managing Officer: %s
+    			
+    			""", this.application.getProjectName(), )
+    	
     }
 
     public void requestWithdrawal() {

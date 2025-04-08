@@ -1,16 +1,46 @@
 package entities;
 
+import controllers.AuthenticationController;
+import data.UserDatabase;
+
 public class Application {
     private String applicantNRIC;
     private String applicationStatus;
+    private String projectName;
     private String flatType;
     private boolean flatBooked;
+    private String managingOfficerNRIC;
+    
 
-    public void Application(String nric, String flatType) {
+    public void Application(String nric, String projectName, String flatType) {
         this.applicantNRIC = nric;
+        this.projectName = projectName;
         this.flatType = flatType;
         this.applicationStatus = "Pending";
         this.flatBooked = false;
+        this.managingOfficerNRIC = null;
+    }
+    
+    public String getProjectName() {
+    	return this.projectName;
+    }
+    
+    public void setProjectName(String projectName) {
+    	this.projectName = projectName;
+    }
+    
+    public String getManagingOfficer() {
+    	// bad code but..
+    	// TODO if able, refine code?
+    	UserDatabase db= new UserDatabase("LoginInfo.txt");
+    	AuthenticationController ac = new AuthenticationController();
+    	User officer = db.getUserById(this.managingOfficerNRIC, ac);
+    	
+    	return officer.getUsername();
+    }
+    
+    public void setManagingOfficer(String officerNRIC) {
+    	this.managingOfficerNRIC = officerNRIC;
     }
 
     public String getApplicationStatus() {
