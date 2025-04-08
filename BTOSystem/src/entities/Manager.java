@@ -19,7 +19,7 @@ public class Manager extends User {
 
     
     public void displayMenu() {
-        View.menu(this);
+        View.menu(this,this.getMenuOptions());
     }
 
     public void createProject(String name, String neighbourhood, int roomType, int numberOfUnits, String openingDate, String closingDate, Manager manager, int availableSlots) {
@@ -67,13 +67,34 @@ public class Manager extends User {
     public void generateReport(int filter) {
         // TODO implement
     }
-    public List<String> getMenuOptions() {
+    private List<String> getMenuOptions() {
         return Arrays.asList(
             "1. Project Details",
             "2. Toggle Visibility",
             "3. Approvals",
             "4. Enquiries",
-            "5. Logout"
+            "5. Logout",
+            "Please enter a choice:"
+        );
+    }
+    public List<String> getProjectOptions() {
+        return Arrays.asList(
+				"1. View All Project listings",
+				"2. Create BTO Project listings",
+				"3. Delete BTO Project listings",
+				"4. Edit BTO Project listings ",
+				"5. Back to Main Menu",
+				"Please enter a choice:"
+        );
+    }
+    public List<String> getEnquiryOptions() {
+        return Arrays.asList(
+				"1. Submit Enquiry",
+				"2. View Enquiry",
+				"3. Edit Enquiry",
+				"4. Delete Enquiry",
+				"5. Back to Main Menu",
+				"Please enter a choice:"
         );
     }
 //    public String viewEnquiry(Enquiry[] enquiryList ) {

@@ -4,6 +4,8 @@ import entities.Applicant;
 import entities.Manager;
 import entities.Officer;
 import entities.User;
+import java.util.List;
+
 public class View {
 	
 	public View() {
@@ -46,42 +48,48 @@ public class View {
 //	3. View applied projects
 //	4. Withdraw from BTO Application
 //	5. Generate Receipt
-	public static void menu(User user) {
-		printHeader(user);	
-		if (user instanceof Officer) {
-	
-			System.out.println("""
-				1. Projects
-				2. Enquiries
-				3. Logout
-				Please enter a choice:
-				""");
-        } 
-//		1. View list of projects
-//		2. Apply for projects
-//		3. View applied projects
-//		4. Withdraw from BTO Application
-
-		else if (user instanceof Applicant) {
-			System.out.println("""
-					1. Projects
-					2. Enquiries
-					3. Logout
-					Please enter a choice:
-					""");
-        } 
-        //Manager Project menu
-		else if (user instanceof Manager) {			
-			System.out.println("""
-				1. Project Details
-				2. Toggle Visibility
-				3. Approvals
-				4. Enquiries
-				5. Logout
-				Please enter a choice:
-				""");
+	public static void menu(User user,List<String> menuOptions) {
+		printHeader(user);
+		for(String option :menuOptions)
+		{
+			System.out.println(option);
 		}
 	}
+		
+//		if (user instanceof Officer) {
+//	
+//			System.out.println("""
+//				1. Projects
+//				2. Enquiries
+//				3. Logout
+//				Please enter a choice:
+//				""");
+//        } 
+////		1. View list of projects
+////		2. Apply for projects
+////		3. View applied projects
+////		4. Withdraw from BTO Application
+//
+//		else if (user instanceof Applicant) {
+//			System.out.println("""
+//					1. Projects
+//					2. Enquiries
+//					3. Logout
+//					Please enter a choice:
+//					""");
+//        } 
+//        //Manager Project menu
+//		else if (user instanceof Manager) {			
+//			System.out.println("""
+//				1. Project Details
+//				2. Toggle Visibility
+//				3. Approvals
+//				4. Enquiries
+//				5. Logout
+//				Please enter a choice:
+//				""");
+//		}
+//	}
 	
 	public static void approvalMenu(User user)
 	{
@@ -98,29 +106,21 @@ public class View {
 				Please enter a choice:
 				""");
 	}
-	public static void projectMenu(User user)
+	public static void projectMenu(User user,List<String> options)
 	{
 		printHeader(user);		
-		System.out.println("""
-				1. View All Project listings
-				2. Create BTO Project listings
-				3. Delete BTO Project listings
-				4. Edit BTO Project listings 
-				5. Back to Main Menu
-				Please enter a choice:
-				""");
+		for(String option :options)
+		{
+			System.out.println(option);
+		}
 	}
-	public static void enquiryMenu(User user)
+	public static void enquiryMenu(User user,List<String> options)
 	{
 		printHeader(user);	
-		System.out.println("""
-				1. Submit Enquiry
-				2. View Enquiry
-				3. Edit Enquiry
-				4. Delete Enquiry
-				5. Back to Main Menu
-				Please enter a choice:
-				""");
+		for(String option :options)
+		{
+			System.out.println(option);
+		}
 	}
 	public static void invalidChoice()
 	{

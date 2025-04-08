@@ -24,7 +24,7 @@ public class Applicant extends User {
     }
 
     public void displayMenu() {
-    	View.menu(this);
+    	View.menu(this,this.getMenuOptions());
     }
 
     public boolean getIsVisible(){
@@ -100,6 +100,26 @@ public class Applicant extends User {
             "1. Projects",
             "2. Enquiries",
             "3. Logout"
+        );     
+    }
+    public List<String> getProjectOptions() {
+        return Arrays.asList(
+        		"1. View list of projects",
+    		 	"2. Apply for projects",
+        		"3. View applied projects",
+        		"4. Withdraw from BTO Application",
+				"5. Back to Main Menu",
+				"Please enter a choice:"
+        );
+    }
+    public List<String> getEnquiryOptions() {
+        return Arrays.asList(
+				"1. Submit Enquiry",
+				"2. View Enquiry",
+				"3. Edit Enquiry",
+				"4. Delete Enquiry",
+				"5. Back to Main Menu",
+				"Please enter a choice:"
         );
     }
 

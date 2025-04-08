@@ -2,7 +2,7 @@ package controllers;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
+import entities.Applicant;
 import entities.Manager;
 import entities.User;
 import view.View;
@@ -14,6 +14,7 @@ public class ApplicantActionHandler implements ActionHandler {
         case 1: handleProjectAction(choice,currentUser,sc);
     	break;	
     	case 2: handleEnquiryAction(choice,currentUser,sc);
+    	break;
     	case 3: currentUser=currentUser.logout();
     	return currentUser;
     	default:View.invalidChoice();
@@ -23,11 +24,11 @@ public class ApplicantActionHandler implements ActionHandler {
 	}
 	
 	public void handleEnquiryAction(int choice,User currentUser, Scanner sc) {
-		View.enquiryMenu(currentUser);
+		View.enquiryMenu(currentUser,((Applicant)currentUser).getEnquiryOptions());
 	}
     public void handleProjectAction(int choice,User currentUser, Scanner sc) {
     	do {
-		View.projectMenu(currentUser);
+		View.projectMenu(currentUser,((Applicant)currentUser).getProjectOptions());
 		choice=sc.nextInt();
 		sc.nextLine();
 		switch(choice)

@@ -32,11 +32,11 @@ public class ManagerActionHandler implements ActionHandler {
 		View.approvalMenu(currentUser);
 	}
 	public void handleEnquiryAction(int choice,User currentUser, Scanner sc) {
-		View.enquiryMenu(currentUser);
+		View.enquiryMenu(currentUser,((Manager)currentUser).getEnquiryOptions());
 	}
     public void handleProjectAction(int choice,User currentUser, Scanner sc) {
     	do {
-		View.projectMenu(currentUser);
+		View.projectMenu(currentUser,((Manager)currentUser).getProjectOptions());
 		choice=sc.nextInt();
 		sc.nextLine();
 		switch(choice)
