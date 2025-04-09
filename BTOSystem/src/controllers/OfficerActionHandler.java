@@ -2,13 +2,13 @@ package controllers;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
+import data.UserDatabase;
 import entities.Officer;
 import entities.User;
 import view.View;
 
 public class OfficerActionHandler implements ActionHandler{
-	public User handleAction(int choice,User currentUser, Scanner sc){
+	public User handleAction(int choice,User currentUser, Scanner sc,UserDatabase db){
         switch(choice) {
       //Manager Officer menu
         case 1: handleProjectAction(choice,currentUser,sc);

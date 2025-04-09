@@ -50,6 +50,34 @@ public class UserDatabase {
         }
     }
     
+    public void updateUserPassword(String userID, String newPassword) {
+    	List<String> lines = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader("BTOSystem/src/data/LoginInfo.txt"))) {
+            String line;
+            
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split("\\|", 2);
+                if (parts[0].equals(userID)) {
+                    lines.add(userID + "|" + newPassword);  // Update line
+                } else {
+                    lines.add(line);  // Keep line unchanged
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("BTOSystem/src/data/LoginInfo.txt"))) {
+            for (String line : lines) {
+                writer.write(line);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Error writing to file: " + e.getMessage(), e);
+        }
+    }
+    
     public User getUserById(String nric,AuthenticationController ac) {
         try (BufferedReader reader = new BufferedReader(new FileReader("BTOSystem/src/data/UserDatabase.txt"))) {
             String line;

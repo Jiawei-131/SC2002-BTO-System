@@ -1,7 +1,11 @@
 package entities;
 
 import controllers.AuthenticationController;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import data.UserDatabase;
 
 
 public abstract class User {
@@ -78,13 +82,12 @@ public String getPassword()
     return password;
 }
 
-public boolean changePassword(String newPassword)
+public User changePassword(String newPassword,UserDatabase db)
 {
-    if(isLogin){
-        this.password=newPassword;
-        return true;
-    }
-    return false;
+	db.updateUserPassword(this.getNric(), newPassword);
+	System.out.println("Password is changed");
+	System.out.println("Please login again!");
+	return(this.logout());
 }
 
 public String getMaritalStatus(){
@@ -93,6 +96,14 @@ public String getMaritalStatus(){
 
 public void setMaritalStatus(String maritalStatus){
     this.maritalStatus=maritalStatus;
+}
+public List<String> getMenuOptions() {
+    return Arrays.asList(
+        "1. Projects",
+        "2. Enquiries",
+        "3. Change Password",
+        "4. Logout"
+    );
 }
 
 

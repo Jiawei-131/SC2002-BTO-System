@@ -67,13 +67,14 @@ public class Manager extends User {
     public void generateReport(int filter) {
         // TODO implement
     }
-    private List<String> getMenuOptions() {
+    public List<String> getMenuOptions() {
         return Arrays.asList(
             "1. Project Details",
             "2. Toggle Visibility",
             "3. Approvals",
             "4. Enquiries",
-            "5. Logout",
+            "5. Change Password",
+            "6. Logout",
             "Please enter a choice:"
         );
     }

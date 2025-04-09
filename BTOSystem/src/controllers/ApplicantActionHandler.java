@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.InputMismatchException;
+import data.UserDatabase;
 import java.util.Scanner;
 import entities.Applicant;
 import entities.Manager;
@@ -8,14 +9,21 @@ import entities.User;
 import view.View;
 
 public class ApplicantActionHandler implements ActionHandler {
-	public User handleAction(int choice,User currentUser, Scanner sc){
+	public User handleAction(int choice,User currentUser, Scanner sc,UserDatabase db){
+		String password;
         switch(choice) {
       //Manager Officer menu
         case 1: handleProjectAction(choice,currentUser,sc);
     	break;	
     	case 2: handleEnquiryAction(choice,currentUser,sc);
     	break;
-    	case 3: currentUser=currentUser.logout();
+    	case 3:	View.prompt("new password");
+        do {
+        password = sc.nextLine();
+        }while(!AuthenticationController.isValidPassword(password,currentUser));
+        currentUser=currentUser.changePassword(password, db);
+    	break;
+    	case 4: currentUser=currentUser.logout();
     	return currentUser;
     	default:View.invalidChoice();
         }

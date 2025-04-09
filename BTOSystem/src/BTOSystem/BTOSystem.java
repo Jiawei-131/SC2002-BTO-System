@@ -17,7 +17,6 @@ public class BTOSystem {
     public static void main(String[] args)
     {
     	User currentUser = null;
-    	//View view = new View();
     	
     	int choice;
     	final String File_Path="LoginInfo.txt";
@@ -30,7 +29,7 @@ public class BTOSystem {
     	Scanner sc = new Scanner(System.in);
 
     	
-    	//Implement password hashing when done?
+    	//TODO Implement password hashing when done?
         Map<String,String>users=db.readUsers();
         while(true) {
         //login
@@ -73,6 +72,14 @@ public class BTOSystem {
                 }
                 currentUser= db.getUserById(nric,ac);
                 currentUser.login();
+                if(AuthenticationController.isDefaultPassword(password)) {
+                    System.out.println("Users need to update their password when logging in for the first time");
+                    View.prompt("new password");
+                    do {
+                    password = sc.nextLine();
+                    }while(!AuthenticationController.isValidPassword(password,currentUser));
+                    currentUser=currentUser.changePassword(password, db);
+                }
                 choice=3;
                 break;
             case 2:
@@ -87,17 +94,19 @@ public class BTOSystem {
             	View.invalidChoice();
             	
             }
-        } while (choice != 3 && currentUser == null);
-        
-        
+        } while (choice != 3 || currentUser == null);
         do {
         currentUser.displayMenu();
         choice=sc.nextInt();
-        currentUser=cc.choice(choice, currentUser, sc);
+        sc.nextLine();
+        currentUser=cc.choice(choice, currentUser, sc,db);
         }
         while(currentUser != null);
         }
+        
+        
     }
+    
 }
     
         

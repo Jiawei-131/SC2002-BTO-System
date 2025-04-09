@@ -96,13 +96,13 @@ public class Applicant extends User {
         // TODO: waiting on Enquiry
     }
     
-    public List<String> getMenuOptions() {
-        return Arrays.asList(
-            "1. Projects",
-            "2. Enquiries",
-            "3. Logout"
-        );     
-    }
+//    public List<String> getMenuOptions() {
+//        return Arrays.asList(
+//            "1. Projects",
+//            "2. Enquiries",
+//            "3. Logout"
+//        );     
+//    }
     public List<String> getProjectOptions() {
         return Arrays.asList(
         		"1. View list of projects",
