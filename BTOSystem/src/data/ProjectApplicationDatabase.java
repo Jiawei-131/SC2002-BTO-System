@@ -18,16 +18,16 @@ public class ProjectApplicationDatabase {
     public void writeApplication(ProjectApplication application) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("BTOSystem/src/ProjectApplicationDatabase.txt", true))) {
         	String flatBooked = application.getFlatBooked() ? "true" : "false";
-            writer.write(application.getApplicantId() + "|"+  application.getApplicationStatus() + "|"+  application.getProjectName() + "|"+  application.getFlatType() + "|"+ flatBooked + "|"+  application.getManagingOfficer());
+            writer.write(application.getApplicantId() + "|"+  application.getApplicationStatus() + "|"+  application.getProjectName() + "|"+  application.getFlatType() + "|"+ flatBooked);
             writer.newLine();
         } catch (IOException e) {
             throw new RuntimeException("Error writing to file: " + e.getMessage(), e);
         }
     }
     
-    public void writeApplication(String applicantId, String applicationStatus, String projectName, String flatType, boolean flatBooked, String managingOfficer) {
+    public void writeApplication(String applicantId, String applicationStatus, String projectName, String flatType, boolean flatBooked) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("BTOSystem/src/ProjectApplicationDatabase.txt", true))) {
-            writer.write(applicantId + "|"+  applicationStatus + "|"+  projectName + "|"+  flatType + "|"+ Boolean.toString(flatBooked) + "|"+  managingOfficer);
+            writer.write(applicantId + "|"+  applicationStatus + "|"+  projectName + "|"+  flatType + "|"+ Boolean.toString(flatBooked));
             writer.newLine();
         } catch (IOException e) {
             throw new RuntimeException("Error writing to file: " + e.getMessage(), e);
@@ -39,33 +39,12 @@ public class ProjectApplicationDatabase {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
-                if (parts.length == 6 && parts[0].equals(nric)) { // Check if applicantNRIC matches
+                if (parts.length == 5 && parts[0].equals(nric)) { // Check if applicantNRIC matches
                     String applicationStatus = parts[1];
                     String projectName = parts[2];  
                     String flatType = parts[3];
                     boolean flatBooked=Boolean.parseBoolean(parts[4]);
-                    String officerNRIC=parts[5];
-                    return new ProjectApplication(nric, applicationStatus, projectName, flatType, flatBooked, officerNRIC);
-                }
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("Error reading Applications from file: " + e.getMessage(), e);
-        }
-        return null; // Return null if no matching patient is found
-    }
-    
-    public ProjectApplication getApplicationByOfficerId(String nric) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("BTOSystem/src/data/ProjectApplicationDatabase.txt"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("\\|");
-                if (parts.length == 6 && parts[5].equals(nric)) { // Check if applicantNRIC matches
-                    String applicationStatus = parts[1];
-                    String projectName = parts[2];  
-                    String flatType = parts[3];
-                    boolean flatBooked=Boolean.parseBoolean(parts[4]);
-                    String applicantNRIC=parts[0];
-                    return new ProjectApplication(applicantNRIC, applicationStatus, projectName, flatType, flatBooked, nric);
+                    return new ProjectApplication(nric, applicationStatus, projectName, flatType, flatBooked);
                 }
             }
         } catch (IOException e) {

@@ -64,13 +64,12 @@ public class Applicant extends User {
     	ProjectApplication application = this.retrieveApplication();
     	
     	System.out.printf("""
-    			APPLICATION
+    			Application Details
     			Project Name: %s
     			Flat Type: %s
     			Status: %s
-    			Managing Officer: %s
     			
-    			""", application.getProjectName(), application.getFlatType(), application.getApplicationStatus(), application.getManagingOfficer());
+    			""", application.getProjectName(), application.getFlatType(), application.getApplicationStatus());
     	
     }
 

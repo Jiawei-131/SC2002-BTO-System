@@ -1,15 +1,11 @@
 package entities;
 
-import controllers.AuthenticationController;
-import data.UserDatabase;
-
 public class ProjectApplication {
     private String applicantNRIC;
     private String applicationStatus;
     private String projectName;
     private String flatType;
     private boolean flatBooked;
-    private String managingOfficerNRIC;
     
 
     // new applications
@@ -19,17 +15,15 @@ public class ProjectApplication {
         this.flatType = flatType;
         this.applicationStatus = "Pending";
         this.flatBooked = false;
-        this.managingOfficerNRIC = "nil";
     }
     
     // existing applications
-    public ProjectApplication(String nric, String applicationStatus, String projectName, String flatType, boolean flatBooked, String officerNRIC) {
+    public ProjectApplication(String nric, String applicationStatus, String projectName, String flatType, boolean flatBooked) {
         this.applicantNRIC = nric;
         this.projectName = projectName;
         this.flatType = flatType;
         this.applicationStatus = applicationStatus;
         this.flatBooked = flatBooked;
-        this.managingOfficerNRIC = officerNRIC;
     }
     
     public String getApplicantId() {
@@ -42,20 +36,6 @@ public class ProjectApplication {
     
     public void setProjectName(String projectName) {
     	this.projectName = projectName;
-    }
-    
-    public String getManagingOfficer() {
-    	// bad code but..
-    	// TODO if able, refine code?
-    	UserDatabase db= new UserDatabase("LoginInfo.txt");
-    	AuthenticationController ac = new AuthenticationController();
-    	User officer = db.getUserById(this.managingOfficerNRIC, ac);
-    	
-    	return officer.getUsername();
-    }
-    
-    public void setManagingOfficer(String officerNRIC) {
-    	this.managingOfficerNRIC = officerNRIC;
     }
 
     public String getApplicationStatus() {
