@@ -80,16 +80,22 @@ public class UserDatabase {
     
     public User getUserById(String nric,AuthenticationController ac) {
         try (BufferedReader reader = new BufferedReader(new FileReader("BTOSystem/src/data/UserDatabase.txt"))) {
-            String line;
+            String line,password=null;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
-                if (parts.length == 7 && parts[1].equals(nric)) { // Check if ID matches
+                if (parts.length == 6 && parts[1].equals(nric)) { // Check if ID matches
                     String name = parts[0];
                     int age = Integer.parseInt(parts[2]);  
                     String maritalStatus = parts[3];
-                    String role=parts[4];
-                    String password=parts[5];
-                    boolean isVisible=Boolean.parseBoolean(parts[6]);
+                    String role=parts[4]; 
+                    boolean isVisible=Boolean.parseBoolean(parts[5]);
+                    BufferedReader reader1 = new BufferedReader(new FileReader("BTOSystem/src/data/LoginInfo.txt"));
+                    while ((line = reader1.readLine()) != null) {
+                    	parts = line.split("\\|");
+                    	if(parts.length == 2 && parts[0].equals(nric)) {
+                            password=parts[1];
+                        }
+                    }
                 	switch(role) {
                 	case "A":
                 		// applicant                		
