@@ -25,6 +25,15 @@ public class ProjectApplicationDatabase {
         }
     }
     
+    public void writeApplication(String applicantId, String applicationStatus, String projectName, String flatType, boolean flatBooked, String managingOfficer) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("BTOSystem/src/ProjectApplicationDatabase.txt", true))) {
+            writer.write(applicantId + "|"+  applicationStatus + "|"+  projectName + "|"+  flatType + "|"+ Boolean.toString(flatBooked) + "|"+  managingOfficer);
+            writer.newLine();
+        } catch (IOException e) {
+            throw new RuntimeException("Error writing to file: " + e.getMessage(), e);
+        }
+    }
+    
     public ProjectApplication getApplicationByApplicantId(String nric) {
         try (BufferedReader reader = new BufferedReader(new FileReader("BTOSystem/src/data/ProjectApplicationDatabase.txt"))) {
             String line;
