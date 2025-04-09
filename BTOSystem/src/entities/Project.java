@@ -14,12 +14,12 @@ public class Project {
 	private int availableSlots;
 	private boolean visibleToApplicant;
 	private List<Enquiry> enquiryList;
-	private List<Application> applicantList;
+	private List<ProjectApplication> applicantList;
 
 	// Constructor?
 	public Project(String name, String neighbourhood, int numberOfType1Units, int numberOfType2Units,
 			String openingDate, String closingDate, Manager manager, List<Officer> officersInCharge, int availableSlots,
-			boolean visibleToApplicant, List<Enquiry> enquiryList, List<Application> applicantList) {
+			boolean visibleToApplicant, List<Enquiry> enquiryList, List<ProjectApplication> applicantList) {
 		super();
 		this.name = name;
 		this.neighbourhood = neighbourhood;

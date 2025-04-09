@@ -63,7 +63,7 @@ public void setCanRegister(boolean canRegister)
 {
     this.canRegister=canRegister;
 }
-public void updateApplicantStatus(Application application){
+public void updateApplicantStatus(ProjectApplication application){
     
 }
 //public List<String> getMenuOptions() {

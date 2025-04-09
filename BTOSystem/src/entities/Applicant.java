@@ -6,7 +6,6 @@ import java.util.List;
 import data.*;
 
 import controllers.AuthenticationController;
-import data.UserDatabase;
 import view.View;
 
 
@@ -37,8 +36,8 @@ public class Applicant extends User {
 
     public void applyForProject(String projectName, String flatType) {
         // TODO: create new Application instance with project
-    	ApplicationDatabase db = new ApplicationDatabase();
-    	Application application = new Application(this.nric, projectName, flatType);
+    	ProjectApplicationDatabase db = new ProjectApplicationDatabase();
+    	ProjectApplication application = new ProjectApplication(this.nric, projectName, flatType);
     	
     	db.writeApplication(application);
     }
@@ -49,20 +48,20 @@ public class Applicant extends User {
     }
 
     
-    private Application retrieveApplication() {
+    private ProjectApplication retrieveApplication() {
 
     	// bad code but..
     	// TODO if able, refine code?
-    	ApplicationDatabase db = new ApplicationDatabase();
+    	ProjectApplicationDatabase db = new ProjectApplicationDatabase();
 
-    	Application application = db.getApplicationByApplicantId(this.nric);
+    	ProjectApplication application = db.getApplicationByApplicantId(this.nric);
     	
     	return application;
     }
     
     public void viewApplication() {
         // TODO: print application or smth
-    	Application application = this.retrieveApplication();
+    	ProjectApplication application = this.retrieveApplication();
     	
     	System.out.printf("""
     			APPLICATION
@@ -76,7 +75,7 @@ public class Applicant extends User {
     }
 
     public void requestWithdrawal() {
-        Application application = this.retrieveApplication();
+        ProjectApplication application = this.retrieveApplication();
         application.setApplicationStatus("Withdraw Requested");
     }
 

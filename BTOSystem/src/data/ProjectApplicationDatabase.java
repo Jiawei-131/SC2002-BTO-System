@@ -9,14 +9,14 @@ import controllers.AuthenticationController;
 import entities.*;
 
 
-public class ApplicationDatabase {
-    public ApplicationDatabase() {
+public class ProjectApplicationDatabase {
+    public ProjectApplicationDatabase() {
     	
     }
 
     // Write a new application to the file
-    public void writeApplication(Application application) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("BTOSystem/src/ApplicationDatabase.txt", true))) {
+    public void writeApplication(ProjectApplication application) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("BTOSystem/src/ProjectApplicationDatabase.txt", true))) {
         	String flatBooked = application.getFlatBooked() ? "true" : "false";
             writer.write(application.getApplicantId() + "|"+  application.getApplicationStatus() + "|"+  application.getProjectName() + "|"+  application.getFlatType() + "|"+ flatBooked + "|"+  application.getManagingOfficer());
             writer.newLine();
@@ -25,8 +25,8 @@ public class ApplicationDatabase {
         }
     }
     
-    public Application getApplicationByApplicantId(String nric) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("BTOSystem/src/data/UserDatabase.txt"))) {
+    public ProjectApplication getApplicationByApplicantId(String nric) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("BTOSystem/src/data/ProjectApplicationDatabase.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
@@ -36,7 +36,7 @@ public class ApplicationDatabase {
                     String flatType = parts[3];
                     boolean flatBooked=Boolean.parseBoolean(parts[4]);
                     String officerNRIC=parts[5];
-                    return new Application(nric, applicationStatus, projectName, flatType, flatBooked, officerNRIC);
+                    return new ProjectApplication(nric, applicationStatus, projectName, flatType, flatBooked, officerNRIC);
                 }
             }
         } catch (IOException e) {
@@ -45,8 +45,8 @@ public class ApplicationDatabase {
         return null; // Return null if no matching patient is found
     }
     
-    public Application getApplicationByOfficerId(String nric) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("BTOSystem/src/data/UserDatabase.txt"))) {
+    public ProjectApplication getApplicationByOfficerId(String nric) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("BTOSystem/src/data/ProjectApplicationDatabase.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
@@ -56,7 +56,7 @@ public class ApplicationDatabase {
                     String flatType = parts[3];
                     boolean flatBooked=Boolean.parseBoolean(parts[4]);
                     String applicantNRIC=parts[0];
-                    return new Application(applicantNRIC, applicationStatus, projectName, flatType, flatBooked, nric);
+                    return new ProjectApplication(applicantNRIC, applicationStatus, projectName, flatType, flatBooked, nric);
                 }
             }
         } catch (IOException e) {

@@ -48,19 +48,19 @@ public class Manager extends User {
         // TODO implement
     }
 
-    public void approveApplication(Application application) {
+    public void approveApplication(ProjectApplication application) {
         // TODO implement
     }
 
-    public void rejectApplication(Application application) {
+    public void rejectApplication(ProjectApplication application) {
         // TODO implement
     }
 
-    public void approveApplicantWithdrawal(Application application) {
+    public void approveApplicantWithdrawal(ProjectApplication application) {
         // TODO implement
     }
     
-    public void rejectApplicantWithdrawal(Application application) {
+    public void rejectApplicantWithdrawal(ProjectApplication application) {
         // TODO implement
     }
 

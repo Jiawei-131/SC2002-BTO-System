@@ -3,7 +3,7 @@ package entities;
 import controllers.AuthenticationController;
 import data.UserDatabase;
 
-public class Application {
+public class ProjectApplication {
     private String applicantNRIC;
     private String applicationStatus;
     private String projectName;
@@ -13,7 +13,7 @@ public class Application {
     
 
     // new applications
-    public Application(String nric, String projectName, String flatType) {
+    public ProjectApplication(String nric, String projectName, String flatType) {
         this.applicantNRIC = nric;
         this.projectName = projectName;
         this.flatType = flatType;
@@ -23,7 +23,7 @@ public class Application {
     }
     
     // existing applications
-    public Application(String nric, String applicationStatus, String projectName, String flatType, boolean flatBooked, String officerNRIC) {
+    public ProjectApplication(String nric, String applicationStatus, String projectName, String flatType, boolean flatBooked, String officerNRIC) {
         this.applicantNRIC = nric;
         this.projectName = projectName;
         this.flatType = flatType;
