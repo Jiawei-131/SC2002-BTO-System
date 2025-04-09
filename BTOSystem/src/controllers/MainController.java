@@ -13,7 +13,7 @@ public class MainController {
 public static void mainMenu(Scanner sc,Map<String,String>users,PasswordHasher passwordHasher,UserDatabase db,AuthenticationController ac,ChoiceController cc)
 {
 	User currentUser = null;
-int choice;
+	int choice;
 	do {
 		users=db.readUsers();
     	View.loginView();
@@ -28,8 +28,8 @@ int choice;
             	View.promptRetry("NRIC not found");
                 choice = sc.nextInt();
                 if (choice == 2){
-                	View.exit();
-                    System.exit(0);
+	                	View.exit();
+	                    System.exit(0);
                 }
                 View.prompt("NRIC");
                 sc.nextLine();
@@ -56,16 +56,12 @@ int choice;
             currentUser.login();
             if(AuthenticationController.isDefaultPassword(password)) {
                 System.out.println("Users need to update their password when logging in for the first time");
-                View.prompt("new password");
-                do {
-                password = sc.nextLine();
-                }while(!AuthenticationController.isValidPassword(password,currentUser));
-                currentUser=currentUser.changePassword(password, db);
+                currentUser=ac.resetPassword(currentUser, db, nric, password, sc);
             }
             choice=3;
             break;
         case 2:
-        	View.register(); // Do we need to have a register?
+        	View.register(); //TODO Do we need to have a register?
         	//sc.nextLine();
         	break;
         case 3:
@@ -82,7 +78,7 @@ int choice;
     currentUser.displayMenu();
     choice=sc.nextInt();
     sc.nextLine();
-    currentUser=cc.choice(choice, currentUser, sc,db);
+    currentUser=cc.choice(choice, currentUser, sc,db,ac);
     }
     while(currentUser != null);
     }

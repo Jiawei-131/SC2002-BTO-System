@@ -48,17 +48,18 @@ public class ManagerActionHandler implements ActionHandler {
 		case 1: ((Manager)currentUser).viewAllProjects();
         break;
         //Add projects, check if project already existed?
-        case 2:	try { 
+        case 2:	
+//        	try { 
         	createProject(currentUser,sc);
-        	}
-        catch(InputMismatchException e)
-        {
-        	System.out.println("Invalid input! Please enter the correct type of data");
-        	sc.nextLine();
-        }
-        catch (Exception e) {
-        	System.out.println("An unexpected error has occured"+e.getMessage());
-        }
+//        	}
+//        catch(InputMismatchException e)
+//        {
+//        	System.out.println("Invalid input! Please enter the correct type of data");
+//        	sc.nextLine();
+//        }
+//        catch (Exception e) {
+//        	System.out.println("An unexpected error has occured"+e.getMessage());
+//        }
         break;
         //Delete BTO Projects , check if exists
         case 3:

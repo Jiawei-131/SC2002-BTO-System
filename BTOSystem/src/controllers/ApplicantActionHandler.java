@@ -10,19 +10,14 @@ import view.View;
 
 public class ApplicantActionHandler implements ActionHandler {
 	public User handleAction(int choice,User currentUser, Scanner sc,UserDatabase db){
-		String password;
+		String password=null;
         switch(choice) {
       //Manager Officer menu
         case 1: handleProjectAction(choice,currentUser,sc);
     	break;	
     	case 2: handleEnquiryAction(choice,currentUser,sc);
     	break;
-    	case 3:	View.prompt("new password");
-        do {
-        password = sc.nextLine();
-        }while(!AuthenticationController.isValidPassword(password,currentUser));
-        currentUser=currentUser.changePassword(password, db);
-    	break;
+    	case 3:	return(AuthenticationController.resetPassword(currentUser, db, currentUser.getNric(), currentUser.getPassword(), sc));
     	case 4: currentUser=currentUser.logout();
     	return currentUser;
     	default:View.invalidChoice();

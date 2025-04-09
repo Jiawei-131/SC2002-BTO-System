@@ -33,27 +33,21 @@ public class AuthenticationController {
     {
     	return "password".equals(password);
     }
-    public static boolean isValidPassword(String password,User user) {
+    
+    private static boolean isValidPassword(String password,User user) {
     	if(password.length()<8 || password.equals(user.getPassword())) {
     		System.out.println("Please enter a valid password");
     	return false;
     	}
     	return true;
     }
-//    public static User checkFirstLogin(String password, Scanner sc, User user,UserDatabase db) {
-//        if (Objects.equals(password, "password")){
-//            System.out.println("Users need to update their password when logging in for the first time");
-//            View.prompt("new password");
-//            password = sc.nextLine();
-//            while (password.length() < 8) {
-//                System.out.println("Password must be at least 8 characters");
-//                password = sc.nextLine();
-//            }
-//            user.changePassword(password,db);
-//            System.out.println("Password updated successfully");
-//            System.out.println("Please login again with your new password");
-//            return(user.logout());
-//        }
-//        return user;
-//    }
+    
+    public static User resetPassword(User currentUser,UserDatabase db,String nric,String password,Scanner sc) {
+        View.prompt("new password");
+        do {
+        password = sc.nextLine();
+        }while(!AuthenticationController.isValidPassword(password,currentUser));
+        return(currentUser.changePassword(password, db));
+    }
+
 }

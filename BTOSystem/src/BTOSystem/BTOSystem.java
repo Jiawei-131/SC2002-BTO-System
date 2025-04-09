@@ -1,8 +1,6 @@
 package BTOSystem;
-import java.util.Scanner;
 import data.UserDatabase;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.io.*;
 import java.util.*;
 import data.PasswordHasher;
@@ -33,9 +31,22 @@ public class BTOSystem {
     	//TODO Implement password hashing when done?
         Map<String,String>users=db.readUsers();
         while(true) {
+        try {
+
         //login
         MainController.mainMenu(sc,users,passwordHasher,db,ac,cc);
         }
+
+        catch(InputMismatchException e)
+        {
+        	System.out.println("Invalid input! Please enter the correct type of data");
+        	sc.nextLine();
+        }
+        catch (Exception e) {
+        	System.out.println("An unexpected error has occured"+e.getMessage());
+        }
+        }
+
     }
         
 
