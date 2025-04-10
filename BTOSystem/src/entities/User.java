@@ -42,13 +42,14 @@ public Role getRole() {
 
 public void login()
 {
-	ac.logIn(this, password);
+//	ac.logIn(this, password);
+	System.out.println("Login successful");
 	this.isLogin=true;
 }
 
 public User logout() {
 	System.out.printf("GoodBye %s !\n",this.name);
-	ac.logOut(this);
+//	ac.logOut(this);
 	this.isLogin=false;
 	return null;
 }

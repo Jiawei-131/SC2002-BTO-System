@@ -21,6 +21,15 @@ public class View {
         		Please enter a choice:
         		""");
 	}
+	public static void validPassword()
+	{
+    	System.out.println("""
+        		Please enter a valid password that fufils these requirements
+        		1. Length more than 8
+        		2. Not default password
+        		3. Not your old password
+        		""");
+	}
 	private static void printHeader(User user) {
         System.out.println("===================================");
         System.out.println(" Welcome, " + user.getUsername());

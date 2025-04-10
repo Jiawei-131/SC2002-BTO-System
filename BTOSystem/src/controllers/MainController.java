@@ -21,43 +21,7 @@ public static void mainMenu(Scanner sc,Map<String,String>users,PasswordHasher pa
         sc.nextLine();
         switch(choice) {
         case 1:
-        	View.prompt("NRIC");
-            String nric = sc.nextLine();
-            
-            while(!users.containsKey(nric)) {
-            	View.promptRetry("NRIC not found");
-                choice = sc.nextInt();
-                if (choice == 2){
-	                	View.exit();
-	                    System.exit(0);
-                }
-                View.prompt("NRIC");
-                sc.nextLine();
-                nric = sc.nextLine();
-            }
-            
-            View.prompt("Password");
-    		String password = sc.nextLine();
-    		String storedHash = users.get(nric); 
-            String hashedPassword = passwordHasher.hashPassword(password);  //Not used rn
-            while (!Objects.equals(users.get(nric), password)) {
-            	View.promptRetry("Incorrect password");
-                choice = sc.nextInt();
-                if (choice == 2){
-                	View.exit();
-                    System.exit(0);
-                }
-                View.prompt("Password");
-                sc.nextLine();
-                password = sc.nextLine();
-                hashedPassword = passwordHasher.hashPassword(password); //Not used rn
-            }
-            currentUser= db.getUserById(nric,ac);
-            currentUser.login();
-            if(AuthenticationController.isDefaultPassword(password)) {
-                System.out.println("Users need to update their password when logging in for the first time");
-                currentUser=ac.resetPassword(currentUser, db, nric, password, sc);
-            }
+        	currentUser=LoginController.loginProcess(choice, sc, users, passwordHasher, db, ac);
             choice=3;
             break;
         case 2:
@@ -78,7 +42,7 @@ public static void mainMenu(Scanner sc,Map<String,String>users,PasswordHasher pa
     currentUser.displayMenu();
     choice=sc.nextInt();
     sc.nextLine();
-    currentUser=cc.choice(choice, currentUser, sc,db,ac);
+    currentUser=cc.choice(choice, currentUser, sc,db);
     }
     while(currentUser != null);
     }
