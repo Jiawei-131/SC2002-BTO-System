@@ -30,10 +30,5 @@ public class ChoiceController {
 		return currentUser;
 
         }
-	
-	
-	
-
-
 }
 

@@ -1,7 +1,7 @@
 package controllers;
 
 import entities.User;
-
+//Probably not gna use
 public class SessionManager {
 	private User currentUser;
 	public void setCurrentUser(User user)

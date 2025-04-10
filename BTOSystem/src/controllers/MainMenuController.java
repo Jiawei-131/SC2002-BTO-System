@@ -8,10 +8,11 @@ import data.PasswordHasher;
 import data.UserDatabase;
 import entities.User;
 
-public class MainController {
+public class MainMenuController {
 	
 public static void mainMenu(Scanner sc,Map<String,String>users,PasswordHasher passwordHasher,UserDatabase db,AuthenticationController ac,ChoiceController cc)
 {
+	
 	User currentUser = null;
 	int choice;
 	do {

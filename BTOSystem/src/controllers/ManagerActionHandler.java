@@ -22,7 +22,8 @@ public class ManagerActionHandler implements ActionHandler {
     	break;
         case 4:handleEnquiryAction(choice,currentUser,sc);
     	break;
-    	case 5:currentUser=currentUser.logout();
+        case 5:return(AuthenticationController.resetPassword(currentUser, db, currentUser.getNric(), currentUser.getPassword(), sc));
+    	case 6:currentUser=currentUser.logout();
     	return currentUser;
     	default:View.invalidChoice();
         }

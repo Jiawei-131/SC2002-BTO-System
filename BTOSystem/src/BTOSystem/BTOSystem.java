@@ -7,17 +7,13 @@ import data.PasswordHasher;
 import controllers.AuthenticationController;
 import controllers.PermissionController;
 import controllers.ChoiceController;
-import controllers.MainController;
+import controllers.MainMenuController;
 import entities.User;
-
 import view.View;
 
 public class BTOSystem {
     public static void main(String[] args)
     {
-    	
-    	
-
     	final String File_Path="LoginInfo.txt";
     	
     	PasswordHasher passwordHasher = new PasswordHasher(); 
@@ -31,20 +27,21 @@ public class BTOSystem {
     	//TODO Implement password hashing when done?
         Map<String,String>users=db.readUsers();
         while(true) {
-        try {
-
-        //login
-        MainController.mainMenu(sc,users,passwordHasher,db,ac,cc);
-        }
-
-        catch(InputMismatchException e)
-        {
-        	System.out.println("Invalid input! Please enter the correct type of data");
-        	sc.nextLine();
-        }
-        catch (Exception e) {
-        	System.out.println("An unexpected error has occured"+e.getMessage());
-        }
+        	MainMenuController.mainMenu(sc,users,passwordHasher,db,ac,cc);
+//        try {
+//
+//        //login
+//        MainMenuController.mainMenu(sc,users,passwordHasher,db,ac,cc);
+//        }
+//
+//        catch(InputMismatchException e)
+//        {
+//        	System.out.println("Invalid input! Please enter the correct type of data");
+//        	sc.nextLine();
+//        }
+//        catch (Exception e) {
+//        	System.out.println("An unexpected error has occured"+e.getMessage());
+//        }
         }
 
     }

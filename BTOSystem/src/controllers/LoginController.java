@@ -16,13 +16,14 @@ public class LoginController {
 		View.prompt("NRIC");
         String nric = sc.nextLine();
         while(!users.containsKey(nric)||!AuthenticationController.checkNRIC(nric)) {
-        	if(!users.containsKey(nric))
-        	{
-        	View.promptRetry("NRIC not found");
-        	}
-        	else if(!AuthenticationController.checkNRIC(nric))
+
+        	if(!AuthenticationController.checkNRIC(nric))
         	{
         		View.promptRetry("Invalid NRIC");
+        	}
+        	else if(!users.containsKey(nric))
+        	{
+        	View.promptRetry("NRIC not found");
         	}
             choice = sc.nextInt();
             switch(choice) {
@@ -58,12 +59,14 @@ public class LoginController {
             default:View.invalidChoice();
             }
         }
+        
+        
         currentUser= db.getUserById(nric,ac);
         currentUser.login();
-            if(AuthenticationController.isDefaultPassword(password)) {
+        if(AuthenticationController.isDefaultPassword(password)) {
                 System.out.println("Users need to update their password when logging in for the first time");
                 currentUser=AuthenticationController.resetPassword(currentUser, db, nric, password, sc);
-            }
+        	}
 
         return currentUser;
 	}

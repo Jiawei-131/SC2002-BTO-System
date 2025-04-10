@@ -14,21 +14,6 @@ public class AuthenticationController {
     	
     }
     
-//    public boolean logIn(User user,String password)
-//    {
-//        if(user.getPassword().equals(password)){
-//        	//this.currentUser = user;
-//        	System.out.println("Login successful");
-////        	user.login();
-//            return true;
-//        }
-//        return false;
-//    }
-//    public void logOut(User user)
-//    {
-//    	currentUser.logout();
-//    }
-    
     private static boolean passwordCheck(String password,User user)
     {
     	if(!Objects.equals(password, user.getPassword()))
@@ -66,7 +51,7 @@ public class AuthenticationController {
     
     public static boolean checkNRIC(String nric)
     {
-    	if((nric.contains("T")||nric.contains("S")) && nric.length()==9)
+    	if((nric.charAt(0)=='T'||(nric.charAt(0))=='S') && nric.length()==9)
     	{
     		return true;
     	}

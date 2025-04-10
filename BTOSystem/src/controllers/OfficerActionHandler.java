@@ -15,7 +15,8 @@ public class OfficerActionHandler implements ActionHandler{
     	break;
     	case 2:	handleEnquiryAction(choice,currentUser,sc);
     	break;
-    	case 3: currentUser=currentUser.logout();
+    	case 3:return(AuthenticationController.resetPassword(currentUser, db, currentUser.getNric(), currentUser.getPassword(), sc));
+    	case 4: currentUser=currentUser.logout();
     	return currentUser;
     	default:View.invalidChoice();
         }
