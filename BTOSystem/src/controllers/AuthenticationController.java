@@ -51,7 +51,7 @@ public class AuthenticationController {
     
     public static boolean checkNRIC(String nric)
     {
-    	if((nric.charAt(0)=='T'||(nric.charAt(0))=='S') && nric.length()==9)
+    	if(nric.matches("^[ST]\\d{7}[A-Z]$"))
     	{
     		return true;
     	}

@@ -23,11 +23,13 @@ public class BTOSystem {
     	ChoiceController cc=new ChoiceController();
     	Scanner sc = new Scanner(System.in);
 
-    	
+    	 Map<String,String>users;
     	//TODO Implement password hashing when done?
-        Map<String,String>users=db.readUsers();
         while(true) {
+        	users=db.readUsers();
         	MainMenuController.mainMenu(sc,users,passwordHasher,db,ac,cc);
+        	
+        	
 //        try {
 //
 //        //login

@@ -16,7 +16,6 @@ public static void mainMenu(Scanner sc,Map<String,String>users,PasswordHasher pa
 	User currentUser = null;
 	int choice;
 	do {
-		users=db.readUsers();
     	View.loginView();
         choice = sc.nextInt();
         sc.nextLine();
