@@ -2,6 +2,8 @@ package entities;
 
 import java.util.List;
 
+import data.ProjectApplicationDatabase;
+
 public class Project {
 	public String name;
 	public String neighbourhood;
@@ -43,44 +45,38 @@ public class Project {
 		System.out.println("Available Slots: " + availableSlots);
 	}
 
-	public void viewEnquiry(Enquiry enquiry) {
-	    // First check if the enquiry is visible to the current user
-//	    if (enquiry == null) {
-//	        System.out.println("Enquiry not found.");
-//	        return;
-//	    }
-//
-//	    // Check user type Applicant, Officer, or Manager
-//	    User currentUser = getCurrentUser(); // ?
-//	    
-//	    if (currentUser instanceof Manager || currentUser instanceof Officer) {
-//	        // Managers and Officers can view all enquiries
-//	        displayEnquiryDetails(enquiry);
-//	    } 
-//	    else if (currentUser instanceof Applicant) {
-//	        // Applicants can only view their own enquiries that are marked as visible
-//	        if (enquiry.getVisibleToApplicant() && isEnquiryFromApplicant(enquiry, (Applicant)currentUser)) {
-//	            displayEnquiryDetails(enquiry);
-//	        } else {
-//	            System.out.println("You don't have permission to view this enquiry.");
-//	        }
-//	    }
-//	    else {
-//	        System.out.println("Unknown user type. Access denied.");
-//	    }
+	public void viewEnquiry(Enquiry enquiry, User currentUser) {
+	    if (enquiry == null) {
+	        System.out.println("Enquiry not found.");
+	        return;
+	    }
+	    if (currentUser instanceof Manager || currentUser instanceof Officer) {
+	        displayEnquiryDetails(enquiry);
+	    } 
+	    else if (currentUser instanceof Applicant) {
+	        if (enquiry.isVisibleToApplicant()) {
+	            displayEnquiryDetails(enquiry);
+	        } else {
+	            System.out.println("You don't have permission to view this enquiry.");
+	        }
+	    }
+	    else {
+	        System.out.println("Unknown user type. Access denied.");
+	    }
 	}
-
-//	private void displayEnquiryDetails(Enquiry enquiry) { ???
-//	    System.out.println("Enquiry ID: " + enquiry.getEnquiryID());
-//	    System.out.println("Question: " + enquiry.getText());
-//	    System.out.println("Status: " + enquiry.getStatus());
-//	    if (enquiry.getReply() != null) {
-//	        System.out.println("Reply: " + enquiry.getReply());
-//	    } else {
-//	        System.out.println("Reply: Not yet answered");
-//	    }
-//	}
-//	
+	private void displayEnquiryDetails(Enquiry enquiry) {
+	    System.out.println("---------------------");
+	    System.out.println("Enquiry Details:");
+	    System.out.println("ID: " + enquiry.getEnquiryID());
+	    System.out.println("Question: " + enquiry.getText());
+	    System.out.println("Status: " + enquiry.getStatus());
+	    if (enquiry.getReply() != null) {
+	        System.out.println("Reply: " + enquiry.getReply());
+	    } else {
+	        System.out.println("Reply: Not yet answered");
+	    }
+	    System.out.println("---------------------");
+	}
 	public void addManager(Manager manager) {
 		this.manager = manager;
 	}
@@ -116,34 +112,30 @@ public class Project {
 	
 	// Check if Eligible
 	// Applicant should Pass in Age and Marriage Status
-	public boolean isEligible(Applicant applicant) { // do we need isEligible for 2 room and 3 room ?
-		// Able to apply for a project – cannot apply for multiple projects
-	    // Check if applicant has already applied for any project
-	    
-	    // Check age requirement
-//	    int applicantAge = applicant.getAge();
-//	    boolean isMarried = applicant.isMarried();
-//	    
-//	    if (isMarried) {
-//	    	// Married, 21 years old and above, can apply for any flat types
-//	        if (applicantAge < 21) {
-//	            return false;
-//	        }
-//	    } else {
-//	    	// Singles, 35 years old and above, can ONLY apply for 2-Room
-//	        // Single applicants must be 35 or older
-//	        if (applicantAge < 35) {
-//	            return false;
-//	        }
-//	        // Singles can ONLY apply for 2-Room
-//	        if (this.numberOfType2Units > 0) { // if project has 3-Room units
-//	            return false;
-//	        }
-//	    }
-	    
-	    return true;
-	}
-
+	 public boolean isEligible(Applicant applicant) {
+	        // Check if applicant has existing application
+	        ProjectApplicationDatabase appDB = new ProjectApplicationDatabase();
+	        if (appDB.getApplicationByApplicantId(applicant.getNric()) != null) {
+	            return false;
+	        }
+	        int applicantAge = applicant.getAge();
+	        boolean isMarried = applicant.getMaritalStatus().equalsIgnoreCase("married");
+	        if (isMarried) {
+	            if (applicantAge < 21) {
+	                return false;
+	            }
+	        } else {
+	            if (applicantAge < 35) {
+	                return false;
+	            }
+	            // Singles can only apply for 2-Room
+	            if (this.numberOfType2Units > 0) {
+	                return false;
+	            }
+	        }
+	        
+	        return true;
+	    }
 	// Getters and Setters for Type1 and Type2 units
 	public int getNumberOfType1Units() {
 		return numberOfType1Units;
