@@ -1,3 +1,5 @@
 test|T1234567J|24|Single|A|true
 test1|T2234567J|24|Single|O|true
 test2|T3234567J|24|Single|M|true
+iamgroot|T1234568J|24|Single|A|true
+iamnotgroot|T1234569J|25|Single|A|true

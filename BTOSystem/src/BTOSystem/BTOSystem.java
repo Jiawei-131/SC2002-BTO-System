@@ -14,7 +14,7 @@ import view.View;
 public class BTOSystem {
     public static void main(String[] args)
     {
-    	final String File_Path="LoginInfo.txt";
+    	final String File_Path="BTOSystem/src/data/";
     	
     	PasswordHasher passwordHasher = new PasswordHasher(); 
     	UserDatabase db= new UserDatabase(File_Path);

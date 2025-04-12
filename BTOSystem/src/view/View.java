@@ -30,6 +30,10 @@ public class View {
         		3. Not your old password
         		""");
 	}
+	public static void validNRIC()
+	{
+    	System.out.println("Please enter a valid NRIC");
+	}
 	private static void printHeader(User user) {
         System.out.println("===================================");
         System.out.println(" Welcome, " + user.getUsername());
@@ -38,7 +42,7 @@ public class View {
 	}
 	
 	public static void register() {
-    	System.out.println("Sorry no registration allowed !");
+    	System.out.println("Enter your NRIC");
 	}
 	public static void exit() {
     	System.out.println("Goodbye!");

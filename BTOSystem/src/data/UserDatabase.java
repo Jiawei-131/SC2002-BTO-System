@@ -14,15 +14,19 @@ import entities.Role;
 
 public class UserDatabase {
     private final String filePath;
+    private String filePathLogin;
+    private String filePathUserDatabase;
 
     public UserDatabase(String filePath) {
         this.filePath = filePath;
+        this.filePathLogin=filePath+"LoginInfo.txt";
+        this.filePathUserDatabase=filePath+"UserDatabase.txt";
     }
     // Read all users from the file
     public Map<String, String> readUsers() {
         Map<String, String> users = new HashMap<>();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("BTOSystem/src/data/LoginInfo.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePathLogin))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
@@ -42,9 +46,18 @@ public class UserDatabase {
 
     // Write a new user to the file
     public void writeUser(String userID, String hashPassword) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("BTOSystem/src/LoginInfo.txt", true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePathLogin, true))) {
             writer.write(userID + "|"+  hashPassword);
             writer.newLine();
+        } catch (IOException e) {
+            throw new RuntimeException("Error writing to file: " + e.getMessage(), e);
+        }
+    }
+    public void writeUser(String name, String userID,int age,String maritalStatus,String role,boolean isVisible) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePathUserDatabase, true))) {
+            writer.write(name + "|"+  userID+ "|"+  age+ "|"+  maritalStatus+ "|"+  role+ "|"+  isVisible);
+            writer.newLine();
+            
         } catch (IOException e) {
             throw new RuntimeException("Error writing to file: " + e.getMessage(), e);
         }
@@ -52,7 +65,7 @@ public class UserDatabase {
     
     public void updateUserPassword(String userID, String newPassword) {
     	List<String> lines = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("BTOSystem/src/data/LoginInfo.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePathLogin))) {
             String line;
             
             while ((line = br.readLine()) != null) {

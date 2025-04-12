@@ -13,13 +13,14 @@ public class Applicant extends User {
     private boolean isVisible;
 //    private Application application;
     private String flat;
-//    private Enquiry enquiry;
+    private Enquiry enquiry;
+    private String appliedProject;
 
     public Applicant(String name, String nric, int age, String maritalStatus, String password, boolean isVisible,AuthenticationController ac,Role role) {
         super(name, nric, age, maritalStatus, password,ac,role);
         this.isVisible = isVisible;
+        this.appliedProject=null;
         // appliedProject and flat to be null on fresh instance (?)
-
     }
 
     public void displayMenu() {
@@ -40,6 +41,7 @@ public class Applicant extends User {
     	ProjectApplication application = new ProjectApplication(this.nric, projectName, flatType);
     	
     	db.writeApplication(application);
+    	appliedProject=projectName;
     }
 
     
@@ -47,7 +49,7 @@ public class Applicant extends User {
         // TODO: print application or smth
     }
 
-    
+
     private ProjectApplication retrieveApplication() {
 
     	// bad code but..
@@ -78,20 +80,24 @@ public class Applicant extends User {
         application.setApplicationStatus("Withdraw Requested");
     }
 
-    public void createEnquiry(String enquiry) {
+    public void createEnquiry(String text) {
         // TODO: waiting on Enquiry class
+    	enquiry=new Enquiry(text,this.nric,this.appliedProject);
     }
 
     public void viewEnquiry() {
         // TODO: idk what this is
+    	enquiry.displayDetails(this);
     }
 
-    public void editEnquiry(int enquiryID, String enquiry) {
+    public void editEnquiry(int enquiryID, String newText) {
         // TODO: waiting on Enquiry
+    	enquiry.editEnquiry(newText);
     }
 
     public void deleteEnquiry(int enquiryID) {
         // TODO: waiting on Enquiry
+    	enquiry.deleteEnquiry();
     }
     
 //    public List<String> getMenuOptions() {
