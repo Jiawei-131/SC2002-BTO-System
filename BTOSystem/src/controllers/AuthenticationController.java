@@ -62,7 +62,7 @@ public class AuthenticationController {
     public static boolean isValidPassword(String password,User user) {
     	if(password.length()<8 || password.equals(user.getPassword())||isDefaultPassword(password)) {
     		View.validPassword();
-    	return false;
+    		return false;
     	}
     	return true;
     }

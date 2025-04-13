@@ -18,7 +18,6 @@ public class View {
         		1. Login
         		2. Register
         		3. Exit
-        		Please enter a choice:
         		""");
 	}
 	public static void validPassword()
@@ -79,7 +78,6 @@ public class View {
 				types) 
 				3. Approve or reject Applicant's request to withdraw the application. 
 				4. Logout
-				Please enter a choice:
 				""");
 	}
 	public static void projectMenu(User user,List<String> options)

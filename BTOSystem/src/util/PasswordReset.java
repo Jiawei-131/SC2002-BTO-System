@@ -13,7 +13,7 @@ public interface PasswordReset {
         	password=GetInput.getLineInput(sc, "your old Password");
         }while(!AuthenticationController.passwordCheck(password,currentUser));
         do {
-        	GetInput.getLineInput(sc, "your new Password");
+        	password=GetInput.getLineInput(sc, "your new Password");
         }while(!AuthenticationController.isValidPassword(password,currentUser));
         return(AuthenticationController.resetPassword(currentUser, db, password));
 	}
