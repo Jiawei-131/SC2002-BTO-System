@@ -1,110 +1,179 @@
 package entities;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Enquiry {
-    private int enquiryID;
-    private String text;
-    private String status;
-    private String reply;
-
-    private String applicantNRIC;
-    private String projectName;
-    private boolean visibleToApplicant;
-    private boolean visibleToManager;
-
-    private static int nextID = 1;
+    private static final String ENQUIRY_DB_FILE = "BTOSystem/src/data/EnquiryDatabase.txt";
     
-    public Enquiry(String text, String applicantNRIC, String projectName) {
-        this.enquiryID = nextID++;
-        this.text = text;
-        this.status = "Pending";
-        this.reply = null;
+    private String enquiryID;
+    private String projectName;
+    private String applicantNric;
+    private String text;
+    private String reply;
+    private String status; // "PENDING", "ANSWERED", "REJECTED"
+    private boolean visibleToApplicant;
 
-        this.applicantNRIC = applicantNRIC;
+    public Enquiry(String enquiryID, String projectName, String applicantNric, String text) {
+        this.enquiryID = enquiryID;
         this.projectName = projectName;
+        this.applicantNric = applicantNric;
+        this.text = text;
+        this.reply = null;
+        this.status = "PENDING";
         this.visibleToApplicant = true;
-        this.visibleToManager = true;
+        saveToDatabase();
     }
 
-    public void editEnquiry(String newText) {
-        if (this.status.equals("Pending")) {
-            this.text = newText;
-            System.out.println("Enquiry updated successfully.");
-        } else {
-            System.out.println("Cannot edit enquiry that has been replied to.");
+    private void saveToDatabase() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ENQUIRY_DB_FILE, true))) {
+            writer.write(String.format("%s|%s|%s|%s|%s|%s|%b\n",
+                enquiryID,
+                projectName,
+                applicantNric,
+                text,
+                (reply != null) ? reply : "null",
+                status,
+                visibleToApplicant));
+        } catch (IOException e) {
+            System.err.println("Error saving enquiry to database: " + e.getMessage());
         }
     }
 
-    public void deleteEnquiry() {
-        this.visibleToApplicant = false;
-        this.visibleToManager = false;
-        System.out.println("Enquiry marked as deleted.");
-    }
+    public void updateInDatabase() {
+        List<String> enquiries = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(ENQUIRY_DB_FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length > 0 && parts[0].equals(enquiryID)) {
+                    line = String.format("%s|%s|%s|%s|%s|%s|%b",
+                        enquiryID,
+                        projectName,
+                        applicantNric,
+                        text,
+                        (reply != null) ? reply : "null",
+                        status,
+                        visibleToApplicant);
+                }
+                enquiries.add(line);
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading enquiries from database: " + e.getMessage());
+            return;
+        }
 
-    public void replyEnquiry(String reply, User responder) {
-        if (responder instanceof Officer || responder instanceof Manager) {
-            this.reply = reply;
-            this.status = "Answered";
-            System.out.println("Reply submitted successfully.");
-        } else {
-            System.out.println("Only Officers or Managers can reply to enquiries.");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ENQUIRY_DB_FILE))) {
+            for (String enquiry : enquiries) {
+                writer.write(enquiry + "\n");
+            }
+        } catch (IOException e) {
+            System.err.println("Error updating enquiries in database: " + e.getMessage());
         }
     }
 
-    public void closeEnquiry() {
-        this.status = "Closed";
-        System.out.println("Enquiry closed.");
+    public static List<Enquiry> loadAllEnquiries() {
+        List<Enquiry> enquiries = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(ENQUIRY_DB_FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length == 7) {
+                    Enquiry enquiry = new Enquiry(
+                        parts[0], // enquiryID
+                        parts[1], // projectName
+                        parts[2], // applicantNric
+                        parts[3]  // text
+                    );
+                    if (!parts[4].equals("null")) {
+                        enquiry.setReply(parts[4]);
+                    }
+                    enquiry.setStatus(parts[5]);
+                    enquiry.setVisibleToApplicant(Boolean.parseBoolean(parts[6]));
+                    enquiries.add(enquiry);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error loading enquiries from database: " + e.getMessage());
+        }
+        return enquiries;
     }
 
-    public String displayDetails(User viewer) {
-        if (!isVisibleTo(viewer)) {
-            return "You don't have permission to view this enquiry.";
+    public static List<Enquiry> getEnquiriesForProject(String projectName) {
+        List<Enquiry> projectEnquiries = new ArrayList<>();
+        for (Enquiry enquiry : loadAllEnquiries()) {
+            if (enquiry.getProjectName().equals(projectName)) {
+                projectEnquiries.add(enquiry);
+            }
         }
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("Enquiry ID: ").append(enquiryID).append("\n");
-        sb.append("Project: ").append(projectName).append("\n");
-        sb.append("Status: ").append(status).append("\n");
-        sb.append("Question: ").append(text).append("\n");
-        
-        if (reply != null) {
-            sb.append("Reply: ").append(reply).append("\n");
-        }
-        
-        return sb.toString();
+        return projectEnquiries;
     }
 
-    private boolean isVisibleTo(User user) {
-        if (user instanceof Applicant) {
-            return visibleToApplicant && user.getNric().equals(applicantNRIC);
-        } else if (user instanceof Officer || user instanceof Manager) {
-            return visibleToManager;
+    public void deleteFromDatabase() {
+        List<String> enquiries = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(ENQUIRY_DB_FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length > 0 && !parts[0].equals(enquiryID)) {
+                    enquiries.add(line);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading enquiries from database: " + e.getMessage());
+            return;
         }
-        return false;
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ENQUIRY_DB_FILE))) {
+            for (String enquiry : enquiries) {
+                writer.write(enquiry + "\n");
+            }
+        } catch (IOException e) {
+            System.err.println("Error updating enquiries in database: " + e.getMessage());
+        }
     }
 
-    // Getters and Setters TBC
-    public int getEnquiryID() {
+    // Getters and Setters
+
+    public String getEnquiryID() {
         return enquiryID;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public String getApplicantNric() {
+        return applicantNric;
     }
 
     public String getText() {
         return text;
     }
 
-    public String getStatus() {
-        return status;
+    public void setText(String text) {
+        this.text = text;
+        updateInDatabase();
     }
 
     public String getReply() {
         return reply;
     }
 
-    public String getApplicantNRIC() {
-        return applicantNRIC;
+    public void setReply(String reply) {
+        this.reply = reply;
+        this.status = "ANSWERED";
+        updateInDatabase();
     }
 
-    public String getProjectName() {
-        return projectName;
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+        updateInDatabase();
     }
 
     public boolean isVisibleToApplicant() {
@@ -113,13 +182,18 @@ public class Enquiry {
 
     public void setVisibleToApplicant(boolean visibleToApplicant) {
         this.visibleToApplicant = visibleToApplicant;
+        updateInDatabase();
     }
 
-    public boolean isVisibleToManager() {
-        return visibleToManager;
-    }
-
-    public void setVisibleToManager(boolean visibleToManager) {
-        this.visibleToManager = visibleToManager;
+    public void displayDetails() {
+        System.out.println("Enquiry ID: " + enquiryID);
+        System.out.println("Project: " + projectName);
+        System.out.println("From: " + applicantNric);
+        System.out.println("Question: " + text);
+        System.out.println("Status: " + status);
+        if (reply != null) {
+            System.out.println("Reply: " + reply);
+        }
+        System.out.println("Visible to applicant: " + visibleToApplicant);
     }
 }

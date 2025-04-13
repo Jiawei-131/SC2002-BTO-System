@@ -82,22 +82,22 @@ public class Applicant extends User {
 
     public void createEnquiry(String text) {
         // TODO: waiting on Enquiry class
-    	enquiry=new Enquiry(text,this.nric,this.appliedProject);
+//    	enquiry=new Enquiry(text,this.nric,this.appliedProject);
     }
 
     public void viewEnquiry() {
         // TODO: idk what this is
-    	enquiry.displayDetails(this);
+//    	enquiry.displayDetails(this);
     }
 
     public void editEnquiry(int enquiryID, String newText) {
         // TODO: waiting on Enquiry
-    	enquiry.editEnquiry(newText);
+//    	enquiry.editEnquiry(newText);
     }
 
     public void deleteEnquiry(int enquiryID) {
         // TODO: waiting on Enquiry
-    	enquiry.deleteEnquiry();
+//    	enquiry.deleteEnquiry();
     }
     
     public List<String> getProjectOptions() {
