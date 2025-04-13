@@ -51,20 +51,20 @@ public static void mainMenu(Scanner sc,Map<String,String>users,PasswordHasher pa
 
 
 private static void register(UserDatabase db, Scanner sc, Map<String, String> users) {
-    String name = inputLoop("your Name", sc, s -> s, AuthenticationController::validName);
-    String nric = inputLoop("your NRIC", sc, s -> s, s ->
+    String name = GetInput.inputLoop("your Name", sc, s -> s, AuthenticationController::validName);
+    String nric = GetInput.inputLoop("your NRIC", sc, s -> s, s ->
         AuthenticationController.checkNRIC(s) && AuthenticationController.nricExists(s, users)
     );
-    int age = inputLoop("your Age", sc, Integer::parseInt, AuthenticationController::ageCheck);
+    int age = GetInput.inputLoop("your Age", sc, Integer::parseInt, AuthenticationController::ageCheck);
     
-    int maritalStatusChoice = inputLoop("""
+    int maritalStatusChoice = GetInput.inputLoop("""
             Marital Status:
             1. Single
             2. Married
             """, sc, Integer::parseInt, i -> i == 1 || i == 2);
     String maritalStatus = (maritalStatusChoice == 1) ? "Single" : "Married";
     
-    String password = inputLoop("your Password", sc, s -> s, AuthenticationController::isValidPassword);
+    String password = GetInput.inputLoop("your Password", sc, s -> s, AuthenticationController::isValidPassword);
 
     db.writeUser(nric, password);
     db.writeUser(name, nric, age, maritalStatus, "A", true);
@@ -72,19 +72,6 @@ private static void register(UserDatabase db, Scanner sc, Map<String, String> us
     System.out.println("Registration Successful");
 }
 
-// Generic input loop method
-private static <T> T inputLoop(String prompt, Scanner sc, Function<String, T> parser, Predicate<T> validator) {
-    while (true) {
-        String line = GetInput.getLineInput(sc, prompt);
-        try {
-            T value = parser.apply(line);
-            if (validator.test(value)) {
-                return value;
-            }
-        } catch (Exception e) {
-            System.out.println("Invalid format. Please try again.");
-        }
-    }
-}
+
 
 }

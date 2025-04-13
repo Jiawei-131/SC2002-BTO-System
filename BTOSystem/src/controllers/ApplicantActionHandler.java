@@ -33,7 +33,7 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
 		int enquiryID;
 		Applicant applicant	=(Applicant)currentUser;
     	do {
-    	View.enquiryMenu(applicant,applicant.getEnquiryOptions());
+    	View.menu(applicant,applicant.getEnquiryOptions());
     	choice = GetInput.getIntInput(sc, "your choice");
 		switch(choice)
 		{
@@ -61,7 +61,7 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
     public void handleProjectAction(int choice,User currentUser, Scanner sc) {
     	do {
     	Applicant applicant	=(Applicant)currentUser;
-		View.projectMenu(applicant,applicant.getProjectOptions());
+		View.menu(applicant,applicant.getProjectOptions());
 		choice = GetInput.getIntInput(sc, "your choice");
 		switch(choice)
 		{

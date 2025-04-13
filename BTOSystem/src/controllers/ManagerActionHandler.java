@@ -1,5 +1,6 @@
 package controllers;
 
+import java.time.LocalDate;
 import java.util.InputMismatchException;
 
 import java.util.Scanner;
@@ -19,13 +20,12 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
         switch(choice) {
       //Manager Officer menu
         case 1 -> handleProjectAction(choice,currentUser,sc);
-    	case 2 -> System.out.println("Test");
-    	case 3-> handleApprovalAction(choice,currentUser,sc);
-        case 4->handleEnquiryAction(choice,currentUser,sc);
-        case 5->{
+    	case 2 -> handleApprovalAction(choice,currentUser,sc);
+    	case 3-> handleEnquiryAction(choice,currentUser,sc);
+        case 4->{
         	return(PasswordReset.resetPassword(sc, currentUser, db));
         }
-    	case 6->{
+        case 5->{
     		return currentUser.logout();
     	}
     	default->View.invalidChoice();
@@ -34,57 +34,112 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
 
 	}
 	
+	
+	/*	1. Approve or reject HDB Officer’s registration as the HDB 
+			Manager in-charge of the project – update project’s remaining HDB 
+			Officer slots 
+		2. Approve or reject Applicant’s BTO application – approval is 
+			limited to the supply of the flats (number of units for the respective flat 
+			types) 
+		3. Approve or reject Applicant's request to withdraw the application. 
+		4. Logout
+			"""*/
 	private void handleApprovalAction(int choice,User currentUser, Scanner sc) {
-		View.approvalMenu(currentUser);
+		Manager manager	=(Manager)currentUser;
+		do {
+			View.menu(currentUser,manager.getApprovalOption());
+			choice=GetInput.getIntInput(sc, "your choice");
+			switch(choice) {
+				case 1,2 ->approveReject(sc,manager);//TODO Print list of officer applying and key in who to approve?
+				case 3 ->System.out.println("Not Done");//TODO Print list of Applicant withdraw and key in who to approve?
+				default-> View.invalidChoice();
+			}
+		}while(choice!=4);
+		
 	}
+
+	/*	"1. View enquiry of all projects",
+		"2. View enquiries of my project",
+		"3. Reply to enquiry",
+		"4. Delete enquiry",
+		"5. Back to Main Menu" */
 	public void handleEnquiryAction(int choice,User currentUser, Scanner sc) {
-		View.enquiryMenu(currentUser,((Manager)currentUser).getEnquiryOptions());
+		Manager manager	=(Manager)currentUser;
+		do {
+			View.menu(currentUser,manager.getEnquiryOptions());
+			choice=GetInput.getIntInput(sc, "your choice");
+			switch(choice) {
+			case 1,2 ->System.out.println("Not Done");
+			case 3 ->System.out.println("Not Done");
+			case 4 ->System.out.println("Not Done");
+			default-> View.invalidChoice();
+			}
+		}while(choice!=5);
+		
+		
 	}
 	
+	
+	/*	"1. View All Project listings",
+	  	"2. View My Project listings",
+		"3. Toggle Visibility of Project",
+		"4. Create BTO Project listings",
+		"5. Delete BTO Project listings",
+		"6. Edit BTO Project listings ",
+		"7. Generate report",
+		"8. Back to Main Menu", */
     public void handleProjectAction(int choice,User currentUser, Scanner sc) {
+    	Manager manager	=(Manager)currentUser;
     	do {
-		View.projectMenu(currentUser,((Manager)currentUser).getProjectOptions());
+		View.menu(currentUser,manager.getProjectOptions());
 		choice=GetInput.getIntInput(sc, "your choice");
 		switch(choice)
 		{
 		//Print all projects
-		case 1: ((Manager)currentUser).viewAllProjects();
-        break;
+		case 1,2-> manager.viewProjects(choice);
         //Add projects, check if project already existed?
-        case 2:	
-//        	try { 
-        	createProject(currentUser,sc);
-//        	}
-//        catch(InputMismatchException e)
-//        {
-//        	System.out.println("Invalid input! Please enter the correct type of data");
-//        	sc.nextLine();
-//        }
-//        catch (Exception e) {
-//        	System.out.println("An unexpected error has occured"+e.getMessage());
-//        }
-        break;
+        case 3-> manager.toggleVisibility();
         //Delete BTO Projects , check if exists
-        case 3:
-        break;
+        case 4->createProject(currentUser,sc);
         //Edit BTO Projects, check if exists
-        case 4:
-        break;
-        default: View.invalidChoice();
+        case 5 ->manager.deleteProject();
+        case 6 ->System.out.println("Not Done");
+        case 7 ->System.out.println("Not Done");
+        case 8 ->System.out.println("Not Done");
+        default-> View.invalidChoice();
 		}}
-    	while(choice!=5);
+    	while(choice!=8);
     }
     
     private void createProject(User currentUser,Scanner sc) {
  		String btoName=GetInput.getLineInput(sc, "the BTO Name");
  		String neighbourhood=GetInput.getLineInput(sc, "the neighbourhood");
- 		int roomType=GetInput.getIntInput(sc, "the RoomType");
- 		int numOfUnit=GetInput.getIntInput(sc, "the Number of Units");
- 		String openDate=GetInput.getLineInput(sc, "the Opening Date");
- 		String closeDate=GetInput.getLineInput(sc, "the Closing Date");
- 		int availableSlots=GetInput.getIntInput(sc, "the Available slots");
- 		((Manager)currentUser).createProject(btoName, neighbourhood, roomType, numOfUnit, openDate, closeDate,((Manager)currentUser), availableSlots);
+ 		int unitType1=GetInput.getIntInput(sc, "the Number of 2 Room Units");
+ 		int unitType2=GetInput.getIntInput(sc, "the Number of 3 Room Units");
+ 		String openDate=GetInput.inputLoop("the Opening Date in DD-MM-YYYY format", sc, s->s, i->i.matches("^\\d{2}-\\d{2}-\\d{4}$"));
+ 		String closeDate=GetInput.inputLoop("the Closing Date in DD-MM-YYYY format", sc, s->s, i->i.matches("^\\d{2}-\\d{2}-\\d{4}$"));
+ 		int availableSlots = GetInput.inputLoop("the Number of HDB Officer slots", sc, Integer::parseInt, i->i<=10);
+ 	    int isVisibleChoice = GetInput.inputLoop("""
+ 	            the visibility to applicants
+ 	            1. Yes
+ 	            2. No
+ 	            """, sc, Integer::parseInt, i -> i == 1 || i == 2);
+ 	   boolean isVisible = (isVisibleChoice == 1) ? true : false;
+ 		((Manager)currentUser).createProject(btoName, neighbourhood, unitType1,unitType2, openDate, closeDate,((Manager)currentUser), availableSlots,isVisible);
     }
     
+    private void approveReject(Scanner sc,Manager manager)
+    {
+ 	    int choice = GetInput.inputLoop("""
+ 	            your choice
+ 	            1. Approve
+ 	            2. Reject
+ 	            """, sc, Integer::parseInt, i -> i == 1 || i == 2);
+ 	   if (choice == 1) {
+ 		    manager.approveApplication(null);
+ 		} else {
+ 		    manager.rejectApplication(null);
+ 		}
+    }
 
 }

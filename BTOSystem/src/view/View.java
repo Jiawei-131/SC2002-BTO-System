@@ -64,38 +64,6 @@ public class View {
 		}
 	}
 		
-
-	
-	public static void approvalMenu(User user)
-	{
-		printHeader(user);	
-		System.out.println("""
-				1. Approve or reject HDB Officer’s registration as the HDB 
-				Manager in-charge of the project – update project’s remaining HDB 
-				Officer slots 
-				2. Approve or reject Applicant’s BTO application – approval is 
-				limited to the supply of the flats (number of units for the respective flat 
-				types) 
-				3. Approve or reject Applicant's request to withdraw the application. 
-				4. Logout
-				""");
-	}
-	public static void projectMenu(User user,List<String> options)
-	{
-		printHeader(user);		
-		for(String option :options)
-		{
-			System.out.println(option);
-		}
-	}
-	public static void enquiryMenu(User user,List<String> options)
-	{
-		printHeader(user);	
-		for(String option :options)
-		{
-			System.out.println(option);
-		}
-	}
 	public static void invalidChoice()
 	{
 		System.out.println("Please enter a valid choice");

@@ -66,22 +66,16 @@ public void setCanRegister(boolean canRegister)
 public void updateApplicantStatus(ProjectApplication application){
     
 }
-//public List<String> getMenuOptions() {
-//    return Arrays.asList(
-//        "1. Projects",
-//        "2. Enquiries",
-//        "3. Logout"
-//    );
-//}
+
 public List<String> getProjectOptions() {
     return Arrays.asList(
     		"1. View list of projects",
-		 	"2. Apply for projects",
+		 	"2. Apply for project",
     		"3. View applied projects",
     		"4. Withdraw from BTO Application",
     		"5. Generate Receipt",
-			"6. Back to Main Menu",
-			"Please enter a choice:"
+    		"6. Check Status",
+			"7. Back to Main Menu"
     );
 }
 public List<String> getEnquiryOptions() {
@@ -90,8 +84,7 @@ public List<String> getEnquiryOptions() {
 			"2. View Enquiry",
 			"3. Edit Enquiry",
 			"4. Delete Enquiry",
-			"5. Back to Main Menu",
-			"Please enter a choice:"
+			"5. Back to Main Menu"
     );
 }
 }

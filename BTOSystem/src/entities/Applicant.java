@@ -100,18 +100,11 @@ public class Applicant extends User {
     	enquiry.deleteEnquiry();
     }
     
-//    public List<String> getMenuOptions() {
-//        return Arrays.asList(
-//            "1. Projects",
-//            "2. Enquiries",
-//            "3. Logout"
-//        );     
-//    }
     public List<String> getProjectOptions() {
         return Arrays.asList(
         		"1. View list of projects",
-    		 	"2. Apply for projects",
-        		"3. View applied projects",
+    		 	"2. Apply for project",
+        		"3. View applied project",
         		"4. Withdraw from BTO Application",
 				"5. Back to Main Menu"
         );

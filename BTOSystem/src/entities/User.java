@@ -106,7 +106,7 @@ public List<String> getMenuOptions() {
         "4. Logout"
     );
 }
-
-
+public abstract List<String> getProjectOptions();
+public abstract List<String> getEnquiryOptions();
 	
 }

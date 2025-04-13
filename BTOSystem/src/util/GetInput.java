@@ -2,6 +2,7 @@ package util;
 
 import view.View;
 import java.util.Scanner;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public interface GetInput {
@@ -20,12 +21,22 @@ public interface GetInput {
 	    View.prompt(prompt);
 	    return sc.nextLine();
 	}
-	static public String promptUntilValid(Scanner sc,String prompt,Predicate<String> validator)
-	{
-	    String input;
-	    do {
-	        input=getLineInput(sc,prompt);
-	    } while (!validator.test(input));
-	    return input;
+	
+	// Generic input loop method
+	static public  <T> T inputLoop(String prompt, Scanner sc, Function<String, T> parser, Predicate<T> validator) {
+	    while (true) {
+	        String line = GetInput.getLineInput(sc, prompt);
+	        try {
+	            T value = parser.apply(line);
+	            if (validator.test(value)) {
+	                return value;
+	            }
+	            else {
+	            	System.out.println("Invalid input!");
+	            }
+	        } catch (Exception e) {
+	            System.out.println("Invalid format. Please try again.");
+	        }
+	    }
 	}
 }
