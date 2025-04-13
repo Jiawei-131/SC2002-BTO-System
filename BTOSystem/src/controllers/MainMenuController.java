@@ -12,8 +12,9 @@ import data.PasswordHasher;
 import data.UserDatabase;
 import entities.Role;
 import entities.User;
+import util.GetInput;
 
-public class MainMenuController {
+public class MainMenuController implements GetInput {
 	
 public static void mainMenu(Scanner sc,Map<String,String>users,PasswordHasher passwordHasher,UserDatabase db,AuthenticationController ac,ChoiceController cc)
 {
@@ -23,30 +24,25 @@ public static void mainMenu(Scanner sc,Map<String,String>users,PasswordHasher pa
 	do {
 		users=db.readUsers();
     	View.loginView();
-        choice = sc.nextInt();
-        sc.nextLine();
+        choice = GetInput.getIntInput(sc,"your Choice");
         switch(choice) {
-        case 1:
+        case 1->{
         	currentUser=LoginController.loginProcess(choice, sc, users, passwordHasher, db, ac);
             choice=3;
-            break;
-        case 2:
-        	register(db,sc,users);
-        	break;
-        case 3:
+        }
+        case 2->register(db,sc,users);
+        case 3->{
         	View.exit();
         	System.exit(0);
-        	break;
-        default:
-        	View.invalidChoice();
+        }
+        default->View.invalidChoice();
         	
         }
     } while (choice != 3 || currentUser == null);
 	
     do {
     currentUser.displayMenu();
-    choice=sc.nextInt();
-    sc.nextLine();
+    choice=GetInput.getIntInput(sc,"your Choice");
     currentUser=cc.choice(choice, currentUser, sc,db);
     }
     while(currentUser != null);
@@ -55,11 +51,11 @@ public static void mainMenu(Scanner sc,Map<String,String>users,PasswordHasher pa
 
 
 private static void register(UserDatabase db, Scanner sc, Map<String, String> users) {
-    String name = inputLoop("Name", sc, s -> s, AuthenticationController::validName);
-    String nric = inputLoop("NRIC", sc, s -> s, s ->
+    String name = inputLoop("your Name", sc, s -> s, AuthenticationController::validName);
+    String nric = inputLoop("your NRIC", sc, s -> s, s ->
         AuthenticationController.checkNRIC(s) && AuthenticationController.nricExists(s, users)
     );
-    int age = inputLoop("Age", sc, Integer::parseInt, AuthenticationController::ageCheck);
+    int age = inputLoop("your Age", sc, Integer::parseInt, AuthenticationController::ageCheck);
     
     int maritalStatusChoice = inputLoop("""
             Marital Status:
@@ -68,7 +64,7 @@ private static void register(UserDatabase db, Scanner sc, Map<String, String> us
             """, sc, Integer::parseInt, i -> i == 1 || i == 2);
     String maritalStatus = (maritalStatusChoice == 1) ? "Single" : "Married";
     
-    String password = inputLoop("Password", sc, s -> s, AuthenticationController::isValidPassword);
+    String password = inputLoop("your Password", sc, s -> s, AuthenticationController::isValidPassword);
 
     db.writeUser(nric, password);
     db.writeUser(name, nric, age, maritalStatus, "A", true);
@@ -79,8 +75,7 @@ private static void register(UserDatabase db, Scanner sc, Map<String, String> us
 // Generic input loop method
 private static <T> T inputLoop(String prompt, Scanner sc, Function<String, T> parser, Predicate<T> validator) {
     while (true) {
-        View.prompt(prompt);
-        String line = sc.nextLine();
+        String line = GetInput.getLineInput(sc, prompt);
         try {
             T value = parser.apply(line);
             if (validator.test(value)) {

@@ -28,24 +28,7 @@ public class BTOSystem {
         while(true) {
         	users=db.readUsers();
         	MainMenuController.mainMenu(sc,users,passwordHasher,db,ac,cc);
-        	
-        	
-//        try {
-//
-//        //login
-//        MainMenuController.mainMenu(sc,users,passwordHasher,db,ac,cc);
-//        }
-//
-//        catch(InputMismatchException e)
-//        {
-//        	System.out.println("Invalid input! Please enter the correct type of data");
-//        	sc.nextLine();
-//        }
-//        catch (Exception e) {
-//        	System.out.println("An unexpected error has occured"+e.getMessage());
-//        }
         }
-
     }
         
 

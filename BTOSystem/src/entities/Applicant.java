@@ -113,8 +113,7 @@ public class Applicant extends User {
     		 	"2. Apply for projects",
         		"3. View applied projects",
         		"4. Withdraw from BTO Application",
-				"5. Back to Main Menu",
-				"Please enter a choice:"
+				"5. Back to Main Menu"
         );
     }
     public List<String> getEnquiryOptions() {
@@ -123,8 +122,7 @@ public class Applicant extends User {
 				"2. View Enquiry",
 				"3. Edit Enquiry",
 				"4. Delete Enquiry",
-				"5. Back to Main Menu",
-				"Please enter a choice:"
+				"5. Back to Main Menu"
         );
     }
 

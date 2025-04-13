@@ -9,23 +9,26 @@ import entities.Applicant;
 import entities.Manager;
 import entities.Officer;
 import entities.User;
+import util.ActionHandler;
+import util.GetInput;
+import util.PasswordReset;
 import view.View;
 
-public class ManagerActionHandler implements ActionHandler {
+public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInput {
 	public User handleAction(int choice,User currentUser, Scanner sc,UserDatabase db){
         switch(choice) {
       //Manager Officer menu
-        case 1: handleProjectAction(choice,currentUser,sc);
-    	break;
-    	case 2:
-    	case 3: handleApprovalAction(choice,currentUser,sc);
-    	break;
-        case 4:handleEnquiryAction(choice,currentUser,sc);
-    	break;
-        case 5:return(AuthenticationController.resetPassword(currentUser, db, currentUser.getNric(), currentUser.getPassword(), sc));
-    	case 6:currentUser=currentUser.logout();
-    	return currentUser;
-    	default:View.invalidChoice();
+        case 1 -> handleProjectAction(choice,currentUser,sc);
+    	case 2 -> System.out.println("Test");
+    	case 3-> handleApprovalAction(choice,currentUser,sc);
+        case 4->handleEnquiryAction(choice,currentUser,sc);
+        case 5->{
+        	return(PasswordReset.resetPassword(sc, currentUser, db));
+        }
+    	case 6->{
+    		return currentUser.logout();
+    	}
+    	default->View.invalidChoice();
         }
 		return currentUser;
 
@@ -41,8 +44,7 @@ public class ManagerActionHandler implements ActionHandler {
     public void handleProjectAction(int choice,User currentUser, Scanner sc) {
     	do {
 		View.projectMenu(currentUser,((Manager)currentUser).getProjectOptions());
-		choice=sc.nextInt();
-		sc.nextLine();
+		choice=GetInput.getIntInput(sc, "your choice");
 		switch(choice)
 		{
 		//Print all projects
@@ -74,21 +76,13 @@ public class ManagerActionHandler implements ActionHandler {
     }
     
     private void createProject(User currentUser,Scanner sc) {
- 		View.prompt("BTO Name"); 
- 		String btoName=sc.nextLine();
- 		View.prompt("Neighbourhood");
- 		String neighbourhood=sc.nextLine();
- 		View.prompt("RoomType");
- 		int roomType=sc.nextInt();
- 		View.prompt("Number of Units");
- 		int numOfUnit=sc.nextInt();
- 		sc.nextLine();
- 		View.prompt("Opening Date");
- 		String openDate=sc.nextLine();
- 		View.prompt("Closing Date");
- 		String closeDate=sc.nextLine();
- 		View.prompt("Available slots");
- 		int availableSlots=sc.nextInt();
+ 		String btoName=GetInput.getLineInput(sc, "the BTO Name");
+ 		String neighbourhood=GetInput.getLineInput(sc, "the neighbourhood");
+ 		int roomType=GetInput.getIntInput(sc, "the RoomType");
+ 		int numOfUnit=GetInput.getIntInput(sc, "the Number of Units");
+ 		String openDate=GetInput.getLineInput(sc, "the Opening Date");
+ 		String closeDate=GetInput.getLineInput(sc, "the Closing Date");
+ 		int availableSlots=GetInput.getIntInput(sc, "the Available slots");
  		((Manager)currentUser).createProject(btoName, neighbourhood, roomType, numOfUnit, openDate, closeDate,((Manager)currentUser), availableSlots);
     }
     

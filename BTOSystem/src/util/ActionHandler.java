@@ -1,4 +1,4 @@
-package controllers;
+package util;
 import java.util.Scanner;
 import data.UserDatabase;
 import entities.User;

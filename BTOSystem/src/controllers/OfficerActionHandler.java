@@ -5,20 +5,24 @@ import java.util.Scanner;
 import data.UserDatabase;
 import entities.Officer;
 import entities.User;
+import util.ActionHandler;
+import util.GetInput;
+import util.PasswordReset;
 import view.View;
 
-public class OfficerActionHandler implements ActionHandler{
+public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInput{
 	public User handleAction(int choice,User currentUser, Scanner sc,UserDatabase db){
         switch(choice) {
       //Manager Officer menu
-        case 1: handleProjectAction(choice,currentUser,sc);
-    	break;
-    	case 2:	handleEnquiryAction(choice,currentUser,sc);
-    	break;
-    	case 3:return(AuthenticationController.resetPassword(currentUser, db, currentUser.getNric(), currentUser.getPassword(), sc));
-    	case 4: currentUser=currentUser.logout();
-    	return currentUser;
-    	default:View.invalidChoice();
+        case 1-> handleProjectAction(choice,currentUser,sc);
+    	case 2->	handleEnquiryAction(choice,currentUser,sc);
+    	case 3->{
+    		return(PasswordReset.resetPassword(sc, currentUser, db));
+    	}
+    	case 4->{
+        	return currentUser.logout();	
+    	}
+    	default->View.invalidChoice();
         }
 		return currentUser;
 
@@ -28,11 +32,11 @@ public class OfficerActionHandler implements ActionHandler{
 	public void handleEnquiryAction(int choice,User currentUser, Scanner sc) {
 		View.enquiryMenu(currentUser,((Officer)currentUser).getEnquiryOptions());
 	}
+	
     public void handleProjectAction(int choice,User currentUser, Scanner sc) {
     	do {
 		View.projectMenu(currentUser,((Officer)currentUser).getProjectOptions());
-		choice=sc.nextInt();
-		sc.nextLine();
+		choice=GetInput.getIntInput(sc, "your choice");
 		switch(choice)
 		{
 		//Print all projects

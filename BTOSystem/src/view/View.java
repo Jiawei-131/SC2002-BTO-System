@@ -49,7 +49,7 @@ public class View {
 	}
 	public static void prompt(String string)
 	{
-		System.out.printf("Please enter your %s: \n",string);
+		System.out.printf("Please enter %s: \n",string);
 	}
 
 	public static void promptRetry(String string) {

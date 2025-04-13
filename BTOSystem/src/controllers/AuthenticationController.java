@@ -14,7 +14,7 @@ public class AuthenticationController {
     	
     }
     
-    private static boolean passwordCheck(String password,User user)
+    public static boolean passwordCheck(String password,User user)
     {
     	if(!Objects.equals(password, user.getPassword()))
 		{
@@ -74,15 +74,7 @@ public class AuthenticationController {
     	return true;
     }
     
-    public static User resetPassword(User currentUser,UserDatabase db,String nric,String password,Scanner sc) {
-        do {
-    	View.prompt("old password");
-        password = sc.nextLine();
-        }while(!AuthenticationController.passwordCheck(password,currentUser));
-        do {
-        View.prompt("new password");
-        password = sc.nextLine();
-        }while(!AuthenticationController.isValidPassword(password,currentUser));
+    public static User resetPassword(User currentUser,UserDatabase db,String password) {
         return(currentUser.changePassword(password, db));
     }
     
