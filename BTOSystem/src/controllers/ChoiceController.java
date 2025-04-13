@@ -9,12 +9,15 @@ import entities.Manager;
 import entities.Officer;
 import entities.User;
 import util.ActionHandler;
+import util.GetInput;
 import view.View;
 
 public class ChoiceController {
 	
 	//ManagerActionHandler handler = new ManagerActionHandler();
 	public User choice(int choice,User currentUser,Scanner sc,UserDatabase db) {
+	    currentUser.displayMenu(currentUser.getMenuOptions());
+	    choice=GetInput.getIntInput(sc,"your Choice");
 		ActionHandler handler = null;
 		if (currentUser instanceof Officer) {
 			handler=new OfficerActionHandler();

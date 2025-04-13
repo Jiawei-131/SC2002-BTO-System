@@ -22,7 +22,7 @@ public User() {
 	
 }
 
-public abstract void displayMenu();
+public abstract void displayMenu(List<String> options);
 //public abstract User handleChoice(int choice,View view,Scanner sc);
 
 

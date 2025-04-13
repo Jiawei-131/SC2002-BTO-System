@@ -10,7 +10,7 @@ import util.GetInput;
 import util.PasswordReset;
 import view.View;
 
-public class OfficerActionHandler extends ApplicantActionHandler implements ActionHandler,PasswordReset,GetInput {
+public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInput {
 	public User handleAction(int choice,User currentUser, Scanner sc,UserDatabase db){
         switch(choice) {
       // Officer || Applicant ? menu
@@ -35,7 +35,7 @@ public class OfficerActionHandler extends ApplicantActionHandler implements Acti
 	
     public void handleProjectAction(int choice,User currentUser, Scanner sc) {
     	do {
-		View.menu(currentUser,((Officer)currentUser).getProjectOptions());
+		currentUser.displayMenu(currentUser.getProjectOptions());
 		choice=GetInput.getIntInput(sc, "your choice");
 		switch(choice)
 		{
@@ -55,7 +55,7 @@ public class OfficerActionHandler extends ApplicantActionHandler implements Acti
         break;
         default: View.invalidChoice();
 		}}
-    	while(choice!=6);
+    	while(choice!=7);
     }
     
 

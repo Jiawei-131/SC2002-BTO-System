@@ -47,7 +47,7 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
 	private void handleApprovalAction(int choice,User currentUser, Scanner sc) {
 		Manager manager	=(Manager)currentUser;
 		do {
-			View.menu(currentUser,manager.getApprovalOption());
+			manager.displayMenu(manager.getApprovalOption());
 			choice=GetInput.getIntInput(sc, "your choice");
 			switch(choice) {
 				case 1,2 ->approveReject(sc,manager);//TODO Print list of officer applying and key in who to approve?
@@ -66,7 +66,7 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
 	public void handleEnquiryAction(int choice,User currentUser, Scanner sc) {
 		Manager manager	=(Manager)currentUser;
 		do {
-			View.menu(currentUser,manager.getEnquiryOptions());
+			manager.displayMenu(manager.getEnquiryOptions());
 			choice=GetInput.getIntInput(sc, "your choice");
 			switch(choice) {
 			case 1,2 ->System.out.println("Not Done");
@@ -91,7 +91,7 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
     public void handleProjectAction(int choice,User currentUser, Scanner sc) {
     	Manager manager	=(Manager)currentUser;
     	do {
-		View.menu(currentUser,manager.getProjectOptions());
+		manager.displayMenu(manager.getProjectOptions());
 		choice=GetInput.getIntInput(sc, "your choice");
 		switch(choice)
 		{

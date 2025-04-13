@@ -41,8 +41,6 @@ public static void mainMenu(Scanner sc,Map<String,String>users,PasswordHasher pa
     } while (choice != 3 || currentUser == null);
 	
     do {
-    currentUser.displayMenu();
-    choice=GetInput.getIntInput(sc,"your Choice");
     currentUser=cc.choice(choice, currentUser, sc,db);
     }
     while(currentUser != null);

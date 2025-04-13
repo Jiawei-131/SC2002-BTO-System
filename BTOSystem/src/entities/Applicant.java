@@ -23,8 +23,8 @@ public class Applicant extends User {
         // appliedProject and flat to be null on fresh instance (?)
     }
 
-    public void displayMenu() {
-    	View.menu(this,this.getMenuOptions());
+    public void displayMenu(List<String> options) {
+    	View.menu(this,options);
     }
 
     public boolean getIsVisible(){

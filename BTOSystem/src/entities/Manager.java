@@ -18,8 +18,8 @@ public class Manager extends User {
         this.isVisible=isVisible;
     }
  
-    public void displayMenu() {
-        View.menu(this,this.getMenuOptions());
+    public void displayMenu(List<String> options) {
+        View.menu(this,options);
     }
 
     public void createProject(String name, String neighbourhood, int unitType1, int unitType2, String openingDate, String closingDate, Manager manager, int availableSlots,boolean isVisible) {

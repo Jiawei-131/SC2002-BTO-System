@@ -22,6 +22,11 @@ public Officer(String name, String nric, int age, String maritalStatus, String p
 public void displayMenu(){
 View.menu(this,this.getMenuOptions());
 }
+
+public void displayChoice()
+{
+	View.menu(this, getRoleOptions());
+}
 //public void registerForProject(Project project)
 //{
 ////     Able to register to join a project if the following criteria are meant: 
@@ -65,6 +70,11 @@ public void setCanRegister(boolean canRegister)
 }
 public void updateApplicantStatus(ProjectApplication application){
     
+}
+
+public List<String> getRoleOptions()
+{
+	return Arrays.asList("1. Applicant","2. Officer");
 }
 
 public List<String> getProjectOptions() {
