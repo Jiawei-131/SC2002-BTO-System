@@ -12,9 +12,9 @@ import data.PasswordHasher;
 import data.UserDatabase;
 import entities.Role;
 import entities.User;
-import util.GetInput;
+import util.*;
 
-public class MainMenuController implements GetInput {
+public class MainMenuController implements GetInput,FilePath {
 	
 public static void mainMenu(Scanner sc,Map<String,String>users,PasswordHasher passwordHasher,UserDatabase db,AuthenticationController ac,ChoiceController cc)
 {
@@ -64,8 +64,8 @@ private static void register(UserDatabase db, Scanner sc, Map<String, String> us
     
     String password = GetInput.inputLoop("your Password", sc, s -> s, AuthenticationController::isValidPassword);
 
-    db.writeUser(nric, password);
-    db.writeUser(name, nric, age, maritalStatus, "A", true);
+    db.writeFile(loginFilePath,nric, password);
+    db.writeFile(userDatabaseFilePath,name, nric, String.valueOf(age), maritalStatus, "A","true");
 
     System.out.println("Registration Successful");
 }

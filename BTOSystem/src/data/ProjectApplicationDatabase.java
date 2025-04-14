@@ -3,39 +3,34 @@ package data;
 import java.io.*;
 import java.util.*;
 import java.time.LocalDateTime;
-import entities.User;
 import controllers.AuthenticationController;
 //import entities.User;
 import entities.*;
+import util.*;
 
 
-public class ProjectApplicationDatabase {
+public class ProjectApplicationDatabase implements FilePath,Database {
     public ProjectApplicationDatabase() {
     	
     }
 
     // Write a new application to the file
     public void writeApplication(ProjectApplication application) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("BTOSystem/src/data/ProjectApplicationDatabase.txt", true))) {
         	String flatBooked = application.getFlatBooked() ? "true" : "false";
-            writer.write(application.getApplicantId() + "|"+  application.getApplicationStatus() + "|"+  application.getProjectName() + "|"+  application.getFlatType() + "|"+ flatBooked);
-            writer.newLine();
-        } catch (IOException e) {
-            throw new RuntimeException("Error writing to file: " + e.getMessage(), e);
-        }
+            writeFile(projectApplicationDatabaseFilePath,application.getApplicantId(),application.getApplicationStatus(),application.getProjectName(),application.getFlatType(), flatBooked);
     }
-    
-    public void writeApplication(String applicantId, String applicationStatus, String projectName, String flatType, boolean flatBooked) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("BTOSystem/src/data/ProjectApplicationDatabase.txt", true))) {
-            writer.write(applicantId + "|"+  applicationStatus + "|"+  projectName + "|"+  flatType + "|"+ Boolean.toString(flatBooked));
-            writer.newLine();
-        } catch (IOException e) {
-            throw new RuntimeException("Error writing to file: " + e.getMessage(), e);
-        }
-    }
+//    
+//    public void writeApplication(String applicantId, String applicationStatus, String projectName, String flatType, boolean flatBooked) {
+//        try (BufferedWriter writer = new BufferedWriter(new FileWriter("BTOSystem/src/data/ProjectApplicationDatabase.txt", true))) {
+//            writer.write(applicantId + "|"+  applicationStatus + "|"+  projectName + "|"+  flatType + "|"+ Boolean.toString(flatBooked));
+//            writer.newLine();
+//        } catch (IOException e) {
+//            throw new RuntimeException("Error writing to file: " + e.getMessage(), e);
+//        }
+//    }
     
     public ProjectApplication getApplicationByApplicantId(String nric) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("BTOSystem/src/data/ProjectApplicationDatabase.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(projectApplicationDatabaseFilePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");

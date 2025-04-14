@@ -2,33 +2,29 @@ package data;
 
 import java.io.*;
 import entities.*;
+import util.*;
 
 
-public class OfficerApplicationDatabase {
+public class OfficerApplicationDatabase implements FilePath,Database {
 	public OfficerApplicationDatabase() {
 		
 	}
 	
-	public void writeApplication(String applicantId, String applicationStatus, String projectName) {
-		try (BufferedWriter writer = new BufferedWriter(new FileWriter("BTOSystem/src/OfficerApplicationDatabase.txt", true))) {
-            writer.write(applicantId + "|" +  applicationStatus + "|"+  projectName);
-            writer.newLine();
-        } catch (IOException e) {
-            throw new RuntimeException("Error writing to file: " + e.getMessage(), e);
-        }
-	}
+//	public void writeApplication(String applicantId, String applicationStatus, String projectName) {
+//		try (BufferedWriter writer = new BufferedWriter(new FileWriter("BTOSystem/src/OfficerApplicationDatabase.txt", true))) {
+//            writer.write(applicantId + "|" +  applicationStatus + "|"+  projectName);
+//            writer.newLine();
+//        } catch (IOException e) {
+//            throw new RuntimeException("Error writing to file: " + e.getMessage(), e);
+//        }
+//	}
 	
 	public void writeApplication(OfficerApplication application) {
-		try (BufferedWriter writer = new BufferedWriter(new FileWriter("BTOSystem/src/OfficerApplicationDatabase.txt", true))) {
-            writer.write(application.getApplicantId() + "|"+  application.getApplicationStatus() + "|"+  application.getProjectName());
-            writer.newLine();
-        } catch (IOException e) {
-            throw new RuntimeException("Error writing to file: " + e.getMessage(), e);
-        }
+            writeFile(officerApplicationDatabaseFilePath,application.getApplicantId(),application.getApplicationStatus(),application.getProjectName());
 	}
 	
 	public OfficerApplication getApplicationByApplicantId(String applicantId) {
-		try (BufferedReader reader = new BufferedReader(new FileReader("BTOSystem/src/data/OfficerApplicationDatabase.txt"))) {
+		try (BufferedReader reader = new BufferedReader(new FileReader(officerApplicationDatabaseFilePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
@@ -45,7 +41,7 @@ public class OfficerApplicationDatabase {
 	}
 	
 	public OfficerApplication getApplicationByProjectName(String projectName) {
-		try (BufferedReader reader = new BufferedReader(new FileReader("BTOSystem/src/data/OfficerApplicationDatabase.txt"))) {
+		try (BufferedReader reader = new BufferedReader(new FileReader(officerApplicationDatabaseFilePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");

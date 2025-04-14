@@ -14,9 +14,9 @@ public class ApplicationController {
 
 
     // TBC
-	public void showEligibleProjects(Applicant applicant) {
-        if (project.getIsVisible() && project.isEligible(applicant)) {
-            project.displayProjects();
-        }
-    }
+//	public void showEligibleProjects(Applicant applicant) {
+//        if (project.getIsVisible() && project.isEligible(applicant)) {
+//            project.displayProjects();
+//        }
+//    }
 }

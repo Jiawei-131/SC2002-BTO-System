@@ -20,6 +20,9 @@ public class ChoiceController {
 	    choice=GetInput.getIntInput(sc,"your Choice");
 		ActionHandler handler = null;
 		if (currentUser instanceof Officer) {
+//			((Officer)currentUser).displayChoice();
+//			choice=GetInput.getIntInput(sc,"Enter your choice");
+//			handler=(choice==1)?new OfficerActionHandler():new ApplicantActionHandler();
 			handler=new OfficerActionHandler();
         } 
       //Manager Applicant menu

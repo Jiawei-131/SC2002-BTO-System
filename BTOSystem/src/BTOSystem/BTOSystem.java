@@ -4,20 +4,17 @@ import data.UserDatabase;
 import java.io.*;
 import java.util.*;
 import data.PasswordHasher;
-import controllers.AuthenticationController;
-import controllers.PermissionController;
-import controllers.ChoiceController;
-import controllers.MainMenuController;
+import controllers.*;
 import entities.User;
 import view.View;
+import util.*;
 
-public class BTOSystem {
+public class BTOSystem implements FilePath {
     public static void main(String[] args)
     {
-    	final String File_Path="BTOSystem/src/data/";
     	
     	PasswordHasher passwordHasher = new PasswordHasher(); 
-    	UserDatabase db= new UserDatabase(File_Path);
+    	UserDatabase db= new UserDatabase();
     	AuthenticationController ac = new AuthenticationController();
     	PermissionController pc= new PermissionController();
     	ChoiceController cc=new ChoiceController();
