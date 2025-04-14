@@ -46,14 +46,14 @@ public class Applicant extends User {
 
     
     public void viewProjects() {
-        // TODO: print application or smth
-    	List<Project> projects = Project.loadAllProjects();
-    	System.out.println(projects.size());
-    	for (Project project : projects) {
-    		if (project.isVisibleToApplicant()) {
-        		project.displayProjectDetails();
-    		}
-    	}
+        // TODO: currently project implementation will cause infinite loop of reading and writing. do not run this code until that is fixed.
+//    	List<Project> projects = Project.loadAllProjects();
+//    	System.out.println(projects.size());
+//    	for (Project project : projects) {
+//    		if (project.isVisibleToApplicant()) {
+//        		project.displayProjectDetails();
+//    		}
+//    	}
     }
 
 
