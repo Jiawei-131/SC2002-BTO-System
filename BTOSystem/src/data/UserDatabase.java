@@ -22,6 +22,14 @@ public class UserDatabase {
         this.filePathLogin=filePath+"LoginInfo.txt";
         this.filePathUserDatabase=filePath+"UserDatabase.txt";
     }
+    
+    // added by ggna for my use can remove or smth if dont need anymore
+    public UserDatabase() {
+    	this.filePath = "BTOSystem/src/data/";
+        this.filePathLogin=this.filePath + "LoginInfo.txt";
+        this.filePathUserDatabase=this.filePath + "UserDatabase.txt";
+    }
+    
     // Read all users from the file
     public Map<String, String> readUsers() {
         Map<String, String> users = new HashMap<>();

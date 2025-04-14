@@ -47,6 +47,13 @@ public class Applicant extends User {
     
     public void viewProjects() {
         // TODO: print application or smth
+    	List<Project> projects = Project.loadAllProjects();
+    	System.out.println(projects.size());
+    	for (Project project : projects) {
+    		if (project.isVisibleToApplicant()) {
+        		project.displayProjectDetails();
+    		}
+    	}
     }
 
 
