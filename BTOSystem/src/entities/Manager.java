@@ -26,7 +26,7 @@ public class Manager extends User {
     		, Manager manager,int availableSlots,boolean isVisible,double type1SellingPrice,double type2SellingPrice) 
     {
     	new Project(name, neighbourhood,unitType1,type1SellingPrice, unitType2,type2SellingPrice,
-    			openingDate, closingDate,null,availableSlots,true);
+    			openingDate, closingDate,manager,availableSlots,true);
     	System.out.println("Project Created!");
     }
 
