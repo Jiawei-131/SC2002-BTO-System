@@ -115,17 +115,20 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
  		String btoName=GetInput.getLineInput(sc, "the BTO Name");
  		String neighbourhood=GetInput.getLineInput(sc, "the neighbourhood");
  		int unitType1=GetInput.getIntInput(sc, "the Number of 2 Room Units");
+ 		int unitType1Price=GetInput.getIntInput(sc, "the Number of 2 Room Units");
  		int unitType2=GetInput.getIntInput(sc, "the Number of 3 Room Units");
+ 		int unitType2Price=GetInput.getIntInput(sc, "the Number of 3 Room Units");
  		String openDate=GetInput.inputLoop("the Opening Date in DD-MM-YYYY format", sc, s->s, i->i.matches("^\\d{2}-\\d{2}-\\d{4}$"));
  		String closeDate=GetInput.inputLoop("the Closing Date in DD-MM-YYYY format", sc, s->s, i->i.matches("^\\d{2}-\\d{2}-\\d{4}$"));
- 		int availableSlots = GetInput.inputLoop("the Number of HDB Officer slots", sc, Integer::parseInt, i->i<=10);
+ 		int availableSlots = GetInput.inputLoop("the Number of HDB Officer slots", sc, Integer::parseInt, i->i<=10 && i>0);
  	    int isVisibleChoice = GetInput.inputLoop("""
  	            the visibility to applicants
  	            1. Yes
  	            2. No
  	            """, sc, Integer::parseInt, i -> i == 1 || i == 2);
  	   boolean isVisible = (isVisibleChoice == 1) ? true : false;
- 		((Manager)currentUser).createProject(btoName, neighbourhood, unitType1,unitType2, openDate, closeDate,((Manager)currentUser), availableSlots,isVisible);
+ 		((Manager)currentUser).createProject(btoName, neighbourhood, unitType1,unitType2, openDate, closeDate,
+ 				((Manager)currentUser), availableSlots,isVisible,unitType1Price,unitType2Price);
     }
     
     private void approveReject(Scanner sc,Manager manager)

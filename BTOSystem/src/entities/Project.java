@@ -47,7 +47,7 @@ public class Project {
                   int numberOfType1Units, double type1SellingPrice,
                   int numberOfType2Units, double type2SellingPrice,
                   String openingDate, String closingDate,
-                  Manager manager, int officerSlot) {
+                  Manager manager, int officerSlot,boolean save) {
         this();
         this.name = name;
         this.neighbourhood = neighbourhood;
@@ -61,7 +61,10 @@ public class Project {
         this.officerSlot = Math.min(officerSlot, MAX_OFFICERS);
         this.visibleToApplicant = true;
         
-        saveToDatabase();
+        if(save)
+        {
+            saveToDatabase();
+        }
     }
 
     // Database Operations
@@ -175,7 +178,7 @@ public class Project {
             Project project = new Project(
                 name, neighbourhood, type1Units, type1Price,
                 type2Units, type2Price, openingDate, closingDate,
-                manager, officerSlot
+                manager, officerSlot,false
             );
             
             // Deserialize officers
