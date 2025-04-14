@@ -22,19 +22,13 @@ public class Manager extends User {
         View.menu(this,options);
     }
 
-    public void createProject(String name, String neighbourhood, int unitType1, int unitType2, String openingDate, String closingDate, Manager manager, int availableSlots,boolean isVisible) {
-        // TODO: construct and assign project
-//    	assignedProject = new Project(name, neighbourhood,unitType1, unitType2,
-//    			openingDate, closingDate,manager,null,availableSlots,
-//    			false, null, null);
-//    	System.out.println("Project Created!");
+    public void createProject(String name, String neighbourhood, int unitType1, int unitType2, String openingDate, String closingDate
+    		, Manager manager,int availableSlots,boolean isVisible,double type1SellingPrice,double type2SellingPrice) 
+    {
+    	new Project(name, neighbourhood,unitType1,type1SellingPrice, unitType2,type2SellingPrice,
+    			openingDate, closingDate,manager,availableSlots,true);
+    	System.out.println("Project Created!");
     }
-    // poosible to use this >
-//    String name, String neighbourhood, 
-//    int numberOfType1Units, double type1SellingPrice,
-//    int numberOfType2Units, double type2SellingPrice,
-//    String openingDate, String closingDate,
-//    Manager manager, int officerSlot
 
     public void handleProject(Project project)
     {
@@ -63,6 +57,11 @@ public class Manager extends User {
     	if(type==1)
     	{
     		//TODO Print all project
+    		List<Project>projects=Project.loadAllProjects();
+    		for(Project project:projects)
+    		{
+    			project.displayProjectDetails();
+    		}
     	}
     	else
     	{
