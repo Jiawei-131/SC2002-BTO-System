@@ -5,9 +5,7 @@ import data.UserDatabase;
 import java.util.Scanner;
 import entities.Applicant;
 import entities.User;
-import util.ActionHandler;
-import util.GetInput;
-import util.PasswordReset;
+import util.*;
 import view.View;
 
 public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordReset {

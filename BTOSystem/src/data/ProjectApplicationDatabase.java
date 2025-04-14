@@ -30,11 +30,11 @@ public class ProjectApplicationDatabase implements FilePath,Database {
 //    }
     
     public ProjectApplication getApplicationByApplicantId(String nric) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(projectApplicationDatabaseFilePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("\\|");
-                if (parts.length == 5 && parts[0].equals(nric)) { // Check if applicantNRIC matches
+    	List<String> lines = readFile(projectApplicationDatabaseFilePath);
+            for (String line : lines)
+            {
+            	String[] parts = line.split("\\|");
+            	if (parts.length == 5 && parts[0].equals(nric)) { // Check if applicantNRIC matches
                     String applicationStatus = parts[1];
                     String projectName = parts[2];  
                     String flatType = parts[3];
@@ -42,9 +42,25 @@ public class ProjectApplicationDatabase implements FilePath,Database {
                     return new ProjectApplication(nric, applicationStatus, projectName, flatType, flatBooked);
                 }
             }
-        } catch (IOException e) {
-            throw new RuntimeException("Error reading Applications from file: " + e.getMessage(), e);
-        }
-        return null; // Return null if no matching patient is found
+            return null; // Return null if no matching patient is found
     }
+    
+//    public ProjectApplication getApplicationByApplicantId(String nric) {
+//        try (BufferedReader reader = new BufferedReader(new FileReader(projectApplicationDatabaseFilePath))) {
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                String[] parts = line.split("\\|");
+//                if (parts.length == 5 && parts[0].equals(nric)) { // Check if applicantNRIC matches
+//                    String applicationStatus = parts[1];
+//                    String projectName = parts[2];  
+//                    String flatType = parts[3];
+//                    boolean flatBooked=Boolean.parseBoolean(parts[4]);
+//                    return new ProjectApplication(nric, applicationStatus, projectName, flatType, flatBooked);
+//                }
+//            }
+//        } catch (IOException e) {
+//            throw new RuntimeException("Error reading Applications from file: " + e.getMessage(), e);
+//        }
+//        return null; // Return null if no matching patient is found
+//    }
 }

@@ -5,8 +5,6 @@ import java.io.*;
 import java.util.*;
 import data.PasswordHasher;
 import controllers.*;
-import entities.User;
-import view.View;
 import util.*;
 
 public class BTOSystem implements FilePath {
