@@ -29,6 +29,47 @@ public class ProjectApplicationDatabase implements FilePath,Database {
 //        }
 //    }
     
+    // update
+    public void updateApplication(ProjectApplication application) {
+    	try {
+    		File inputFile = new File(projectApplicationDatabaseFilePath);
+            File tempFile = new File("BTOSystem/src/data/ProjectApplicationDatabaseTemp.txt");
+    		
+    		BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+        	
+            String currentLine;
+            boolean updated = false;
+
+            while ((currentLine = reader.readLine()) != null) {
+                String[] parts = currentLine.split("\\|");
+
+                if (parts.length == 5 && parts[0].equals(application.getApplicantId())) {
+                	String flatBooked = application.getFlatBooked() ? "true" : "false";
+                    writer.write(application.getApplicantId() + "|" + application.getApplicationStatus() + "|" + application.getProjectName() + "|" + application.getFlatType() + "|" + flatBooked); // Write the updated line
+                    updated = true;
+                } else {
+                    writer.write(currentLine); // Write original line
+                }
+                writer.newLine(); // Add newline after each line
+            }
+            
+            reader.close();
+            writer.close();
+
+            // Replace original file with updated file
+            if (updated) {
+                inputFile.delete();
+                tempFile.renameTo(inputFile);
+            } else {
+                tempFile.delete(); // Clean up if no change was made
+            }
+    	} catch (IOException e) {
+            throw new RuntimeException("Error updating Project Application Database: " + e.getMessage(), e);
+    	}
+    	
+    }
+    
     public ProjectApplication getApplicationByApplicantId(String nric) {
     	List<String> lines = readFile(projectApplicationDatabaseFilePath);
             for (String line : lines)
