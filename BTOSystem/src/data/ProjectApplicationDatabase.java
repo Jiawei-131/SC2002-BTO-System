@@ -16,7 +16,7 @@ public class ProjectApplicationDatabase {
 
     // Write a new application to the file
     public void writeApplication(ProjectApplication application) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("BTOSystem/src/ProjectApplicationDatabase.txt", true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("BTOSystem/src/data/ProjectApplicationDatabase.txt", true))) {
         	String flatBooked = application.getFlatBooked() ? "true" : "false";
             writer.write(application.getApplicantId() + "|"+  application.getApplicationStatus() + "|"+  application.getProjectName() + "|"+  application.getFlatType() + "|"+ flatBooked);
             writer.newLine();
@@ -26,7 +26,7 @@ public class ProjectApplicationDatabase {
     }
     
     public void writeApplication(String applicantId, String applicationStatus, String projectName, String flatType, boolean flatBooked) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("BTOSystem/src/ProjectApplicationDatabase.txt", true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("BTOSystem/src/data/ProjectApplicationDatabase.txt", true))) {
             writer.write(applicantId + "|"+  applicationStatus + "|"+  projectName + "|"+  flatType + "|"+ Boolean.toString(flatBooked));
             writer.newLine();
         } catch (IOException e) {
