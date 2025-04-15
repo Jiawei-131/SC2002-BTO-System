@@ -50,6 +50,7 @@ public class Project {
                   Manager manager, int officerSlot,boolean save) {
         this();
         this.name = name;
+        this.manager = manager;
         this.neighbourhood = neighbourhood;
         this.numberOfType1Units = numberOfType1Units;
         this.type1SellingPrice = type1SellingPrice;
@@ -57,7 +58,8 @@ public class Project {
         this.type2SellingPrice = type2SellingPrice;
         this.openingDate = openingDate;
         this.closingDate = closingDate;
-        this.manager = manager;
+        System.out.println(manager);
+        System.out.printf("%s",manager.toString());
         this.officerSlot = Math.min(officerSlot, MAX_OFFICERS);
         this.visibleToApplicant = true;
         
@@ -71,7 +73,7 @@ public class Project {
     private void saveToDatabase() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(PROJECT_DB_FILE, true))) {
             // Serialize manager
-            String managerData = (manager != null) ? manager.toString() : "null";
+            String managerData = (manager != null) ? manager.getNric() : "null";
             
             // Serialize officers
             StringBuilder officersData = new StringBuilder();

@@ -23,10 +23,10 @@ public class Manager extends User {
     }
 
     public void createProject(String name, String neighbourhood, int unitType1, int unitType2, String openingDate, String closingDate
-    		, Manager manager,int availableSlots,boolean isVisible,double type1SellingPrice,double type2SellingPrice) 
+    		,int availableSlots,boolean isVisible,double type1SellingPrice,double type2SellingPrice) 
     {
     	new Project(name, neighbourhood,unitType1,type1SellingPrice, unitType2,type2SellingPrice,
-    			openingDate, closingDate,manager,availableSlots,true);
+    			openingDate, closingDate,this,availableSlots,true);
     	System.out.println("Project Created!");
     }
 

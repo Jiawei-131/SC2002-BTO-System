@@ -1,6 +1,7 @@
 package data;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import entities.*;
@@ -20,6 +21,24 @@ public class OfficerApplicationDatabase implements FilePath,Database {
 //            throw new RuntimeException("Error writing to file: " + e.getMessage(), e);
 //        }
 //	}
+	
+    public void updateApplication(OfficerApplication application) {
+        List<String> lines = readFile(officerApplicationDatabaseFilePath);
+        List<String> newLines = new ArrayList<>();
+        
+        for (String line : lines) {
+        	 String[] parts = line.split("\\|");
+        	 if (parts.length == 3 && parts[0].equals(application.getApplicantId())) {
+        		 //TODO Change to required field?
+             	newLines.add(application.getApplicantId() + "|" + application.getApplicationStatus() + "|" +
+             	application.getProjectName());
+             }
+        	 else {
+        		 newLines.add(line);
+        	 }
+        }
+        updateFile(officerApplicationDatabaseFilePath,newLines);
+    }
 	
 	public void writeApplication(OfficerApplication application) {
             writeFile(officerApplicationDatabaseFilePath,application.getApplicantId(),application.getApplicationStatus(),application.getProjectName());
