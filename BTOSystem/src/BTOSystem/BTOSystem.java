@@ -6,7 +6,7 @@ import java.util.*;
 import data.PasswordHasher;
 import controllers.*;
 import util.*;
-
+//Flow of program MainMenuController-> AccountController->User specific menu in handler->user action
 public class BTOSystem implements FilePath {
     public static void main(String[] args)
     {

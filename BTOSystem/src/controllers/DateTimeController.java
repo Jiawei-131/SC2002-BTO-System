@@ -2,7 +2,7 @@ package controllers;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
+//Handles validation of data in datatime format
 public class DateTimeController {
 	static LocalDate currentDate = LocalDate.now();
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");

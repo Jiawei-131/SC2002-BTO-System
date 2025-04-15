@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
 public class AuthenticationController {
+	
+//In charge of validating user inputs when logging in
 //    private User currentUser;
     private Map<String,User>users;
     private static final String defaultPassword="password";

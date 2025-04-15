@@ -10,7 +10,7 @@ import java.util.Scanner;
 import data.UserDatabase;
 
 public class AccountController implements GetInput,PasswordReset,FilePath{
-
+	//Handles login process
 	public static User loginProcess(int choice,Scanner sc,Map<String,String>users,PasswordHasher passwordHasher,UserDatabase db,AuthenticationController ac)
 	{
 		User currentUser = null;

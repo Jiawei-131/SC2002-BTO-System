@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import entities.*;
+import handlers.ManagerProjectService;
 import util.GetInput;
 import controllers.AuthenticationController;
 import controllers.DateTimeController;
@@ -23,11 +24,10 @@ public class Manager extends User {
         View.menu(this,options);
     }
 
-    public void createProject(String name, String neighbourhood, int unitType1, int unitType2, String openingDate, String closingDate
-    		,int availableSlots,double type1SellingPrice,double type2SellingPrice) 
+    public void createProject(Scanner sc) 
     {
-    	new Project(name, neighbourhood,unitType1,type1SellingPrice, unitType2,type2SellingPrice,
-    			openingDate, closingDate,this.getNric(),availableSlots,true);
+    	ManagerProjectService.createProject(this, sc);
+
     	System.out.println("Project Created!");
     }
 
@@ -39,45 +39,12 @@ public class Manager extends User {
     
     public void editProject(Scanner sc) {
         // TODO: edit project
- 		String btoName=GetInput.getLineInput(sc, "the BTO Name");
- 		if(Project.findByName(btoName).equals(null)||!this.getNric().equals(Project.findByName(btoName).getManager()))
-		{
- 			System.out.println("BTO Project does not exist or you do not have access.");
-		}
- 		else {
- 			int choice;
- 			Project project=Project.findByName(btoName);
- 			do {
- 				this.displayMenu(this.getBtoOptions());
- 				choice=GetInput.getIntInput(sc,"the field to update");
- 				switch(choice)
- 				{
- 				case 1 -> project.setNeighbourhood(GetInput.getLineInput(sc, "the new neighbourhood"));
- 	            case 2 -> project.setNumberOfType1Units(GetInput.inputLoop("the new Number of 2 Room Units", sc, Integer::parseInt, i -> i > 0));
- 	            case 3 -> project.setType1SellingPrice(GetInput.inputLoop("the new Price of 2 Room Units", sc, Double::parseDouble, i -> i > 0));
- 	            case 4 -> project.setNumberOfType2Units(GetInput.inputLoop("the new Number of 3 Room Units", sc, Integer::parseInt, i -> i > 0));
- 	            case 5 -> project.setType2SellingPrice(GetInput.inputLoop("the new Price of 3 Room Units", sc, Double::parseDouble, i -> i > 0));
- 	            case 6 -> project.setOpeningDate(GetInput.inputLoop("the new Opening Date in DD-MM-YYYY format", sc, s -> s, s -> DateTimeController.isValidFormat(s) && DateTimeController.isAfter(s)));
- 	            case 7 -> project.setClosingDate(GetInput.inputLoop("the new Closing Date in DD-MM-YYYY format", sc, s -> s, s -> DateTimeController.isValidFormat(s) && DateTimeController.isAfter(s, project.getOpeningDate())));
- 	            case 8 -> project.setOfficerSlot(GetInput.inputLoop("the new Number of HDB Officer slots", sc, Integer::parseInt, i -> i <= 10 && i > 0));
- 	            case 9 -> {
- 	                int isVisibleChoice = GetInput.inputLoop("""
- 	                        the visibility to applicants
- 	                        1. Yes
- 	                        2. No
- 	                        """, sc, Integer::parseInt, i -> i == 1 || i == 2);
- 	                project.setVisibleToApplicant(isVisibleChoice == 1);
- 	            }
- 				default->{}
- 				}
- 			}while (choice != 9);
- 
- 		}
+    	ManagerProjectService.editProject(this, sc);
     }
 
-    public void deleteProject(String BTOname,Project project) {
+    public void deleteProject(Scanner sc) {
         // TODO: delete project and unassign project remove from db straight?
-    	project.deleteFromDatabase(BTOname);
+    	ManagerProjectService.deleteProject(this, sc);
 //    	assignedProject.Delete?
     	hasProject=false;
     }

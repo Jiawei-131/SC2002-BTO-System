@@ -19,7 +19,7 @@ import handlers.ApplicantActionHandler;
 import handlers.ManagerActionHandler;
 import handlers.OfficerActionHandler;
 import util.*;
-
+//Handles flow from main menu to user specific menus
 public class MainMenuController implements GetInput,FilePath {
 	
 public static void mainMenu(Scanner sc,Map<String,String>users,PasswordHasher passwordHasher,UserDatabase db,AuthenticationController ac)

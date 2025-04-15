@@ -93,43 +93,18 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
 			switch(choice)
 			{
 			case 1,2->manager.viewProjects(choice);
-	        case 3-> createProject(manager,sc);
+	        case 4-> manager.createProject(sc);
 	        //Edit BTO Projects, check if exists
-	        case 4 ->deleteProject(manager,sc);
-	        case 5 ->manager.editProject(sc);
-	        case 6 ->generateReport(manager,sc);
-	        case 7 -> {}
+	        case 5 ->manager.deleteProject(sc);
+	        case 6 ->manager.editProject(sc);
+	        case 7 ->generateReport(manager,sc);
+	        case 8 -> {}
 	        default-> View.invalidChoice();
 			}}
 	    	while(choice!=8);
 	    }
 	
-   private static void deleteProject(Manager manager,Scanner sc)
-   {
-   	String btoName=GetInput.getLineInput(sc, "the BTO Name");
-		if(Project.findByName(btoName).equals(null)||!manager.getNric().equals(Project.findByName(btoName).getManager()))
-		{
-			System.out.println("BTO Project does not exist or you do not have access.");
-		}
-		else {
-			manager.deleteProject(btoName,Project.findByName(btoName));
-		}
-   }
-   
-   private static void createProject(Manager manager,Scanner sc) {
-		String btoName=GetInput.getLineInput(sc, "the BTO Name");
-		String neighbourhood=GetInput.getLineInput(sc, "the neighbourhood");
-		int unitType1=GetInput.inputLoop("the Number of 2 Room Units", sc, Integer::parseInt, i->i>0);
-		int unitType1Price=GetInput.inputLoop("the Price of 2 Room Units", sc, Integer::parseInt, i->i>0);
-		int unitType2=GetInput.inputLoop("the Number of 3 Room Units", sc, Integer::parseInt, i->i>0);
-		int unitType2Price=GetInput.inputLoop("the Price of 3 Room Units", sc, Integer::parseInt, i->i>0);
-		String openDate=GetInput.inputLoop("the Opening Date in DD-MM-YYYY format", sc, s->s, s-> DateTimeController.isValidFormat(s)&&DateTimeController.isAfter(s));
-		String closeDate=GetInput.inputLoop("the Closing Date in DD-MM-YYYY format", sc, s->s,
-				s->DateTimeController.isValidFormat(s) &&DateTimeController.isAfter(s, openDate)&&DateTimeController.isAfter(s));
-		int availableSlots = GetInput.inputLoop("the Number of HDB Officer slots", sc, Integer::parseInt, i->i<=10 && i>0);
-		manager.createProject(btoName, neighbourhood, unitType1,unitType2, openDate, closeDate,
-				 availableSlots,unitType1Price,unitType2Price);
-   }
+
 
     private void approveReject(Scanner sc,Manager manager)
     {
