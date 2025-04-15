@@ -13,7 +13,7 @@ public abstract class User {
 private String name;
 protected String nric;
 private int age;
-private String maritalStatus;
+protected String maritalStatus;
 private String password;
 private boolean isLogin=false;
 private AuthenticationController ac;

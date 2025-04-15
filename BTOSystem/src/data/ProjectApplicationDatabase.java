@@ -17,7 +17,7 @@ public class ProjectApplicationDatabase implements FilePath,Database {
     // Write a new application to the file
     public static void writeApplication(ProjectApplication application) {
         	String flatBooked = application.getFlatBooked() ? "true" : "false";
-            Database.writeFile(projectApplicationDatabaseFilePath,application.getApplicantId(),application.getApplicationStatus(),application.getProjectName(),application.getFlatType(), flatBooked);
+            Database.writeFile(projectApplicationDatabaseFilePath,application.getApplicantId(),application.getMaritalStatus(), application.getApplicationStatus(),application.getProjectName(),application.getFlatType(), flatBooked);
     }
     
     public List<ProjectApplication> readApplication()
@@ -28,11 +28,12 @@ public class ProjectApplicationDatabase implements FilePath,Database {
     	{
             String[] parts = application.split("\\|");
             String applicantId = parts[0];
-            String status = parts[1];
-            String projectName = parts[2];
-            String flatType = parts[3];
-            String flatBooked =parts[4];
-            ProjectApplication pa = new ProjectApplication(applicantId, status, projectName, flatType,Boolean.parseBoolean(flatBooked));
+            String maritalStatus = parts[1];
+            String status = parts[2];
+            String projectName = parts[3];
+            String flatType = parts[4];
+            String flatBooked =parts[5];
+            ProjectApplication pa = new ProjectApplication(applicantId, maritalStatus, status, projectName, flatType,Boolean.parseBoolean(flatBooked));
             projectApplications.add(pa);
     	}
     	return projectApplications;
@@ -108,12 +109,13 @@ public class ProjectApplicationDatabase implements FilePath,Database {
             for (String line : lines)
             {
             	String[] parts = line.split("\\|");
-            	if (parts.length == 5 && parts[0].equals(nric)) { // Check if applicantNRIC matches
-                    String applicationStatus = parts[1];
-                    String projectName = parts[2];  
-                    String flatType = parts[3];
-                    boolean flatBooked=Boolean.parseBoolean(parts[4]);
-                    return new ProjectApplication(nric, applicationStatus, projectName, flatType, flatBooked);
+            	if (parts.length == 6 && parts[0].equals(nric)) { // Check if applicantNRIC matches
+                    String maritalStatus = parts[1];
+            		String applicationStatus = parts[2];
+                    String projectName = parts[3];  
+                    String flatType = parts[4];
+                    boolean flatBooked=Boolean.parseBoolean(parts[5]);
+                    return new ProjectApplication(nric, maritalStatus, applicationStatus, projectName, flatType, flatBooked);
                 }
             }
             return null; // Return null if no matching patient is found

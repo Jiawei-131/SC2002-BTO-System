@@ -5,12 +5,14 @@ public class ProjectApplication {
     private String applicationStatus;
     private String projectName;
     private String flatType;
+    private String maritalStatus;
     private boolean flatBooked;
     
 
     // new applications
-    public ProjectApplication(String nric, String projectName, String flatType) {
+    public ProjectApplication(String nric, String maritalStatus, String projectName, String flatType) {
         this.applicantNRIC = nric;
+        this.maritalStatus = maritalStatus;
         this.projectName = projectName;
         this.flatType = flatType;
         this.applicationStatus = "Pending";
@@ -18,8 +20,9 @@ public class ProjectApplication {
     }
     
     // existing applications
-    public ProjectApplication(String nric, String applicationStatus, String projectName, String flatType, boolean flatBooked) {
+    public ProjectApplication(String nric, String maritalStatus, String applicationStatus, String projectName, String flatType, boolean flatBooked) {
         this.applicantNRIC = nric;
+        this.maritalStatus = maritalStatus;
         this.projectName = projectName;
         this.flatType = flatType;
         this.applicationStatus = applicationStatus;
@@ -28,6 +31,14 @@ public class ProjectApplication {
     
     public String getApplicantId() {
     		return this.applicantNRIC;
+    }
+    
+    public String getMaritalStatus() {
+    	return this.maritalStatus;
+    }
+    
+    public void setMaritalStatus(String maritalStatus) {
+    	this.maritalStatus = maritalStatus;
     }
     
     public String getProjectName() {

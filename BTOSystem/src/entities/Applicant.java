@@ -37,7 +37,7 @@ public class Applicant extends User {
 
     public void applyForProject(String projectName, String flatType) {
         // TODO: create new Application instance with project
-    	ProjectApplication application = new ProjectApplication(this.nric, projectName, flatType);
+    	ProjectApplication application = new ProjectApplication(this.nric, this.maritalStatus, projectName, flatType);
     	
     	ProjectApplicationDatabase.writeApplication(application);
     	appliedProject=projectName;
