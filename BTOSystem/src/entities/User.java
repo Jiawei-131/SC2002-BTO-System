@@ -3,6 +3,7 @@ package entities;
 import controllers.AuthenticationController;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import data.UserDatabase;
@@ -35,6 +36,21 @@ public User(String name, String nric,int age, String maritalStatus,String passwo
     this.ac=ac;
     this.role=role;
     }
+
+public static List<Project> findByNameContainsSorted(String keyword) {
+    return Project.loadAllProjects().stream()
+        .filter(p -> p.getName().toLowerCase().contains(keyword.toLowerCase()))
+        .sorted(Comparator.comparing(Project::getName))
+        .toList();
+}
+
+public static List<Project> getAllProjectsSortedByName() {
+    return Project.loadAllProjects().stream()
+        .sorted(Comparator.comparing(Project::getName))
+        .toList();
+}
+
+
 
 public Role getRole() {
 	return this.role;

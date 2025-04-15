@@ -27,7 +27,6 @@ public class Manager extends User {
     public void createProject(Scanner sc) 
     {
     	ManagerProjectService.createProject(this, sc);
-
     	System.out.println("Project Created!");
     }
 
@@ -57,21 +56,7 @@ public class Manager extends User {
         // TODO
         /* Able to view all created projects, including projects created by other 
     	HDB Manager, regardless of visibility setting. */
-    		
-	List<Project>projects=Project.loadAllProjects();
-	for(Project project:projects)
-	{
-		if(type==1)//Print all project
-		{
-			project.displayProjectDetails();
-		}
-		else {//Print only projects that the manager created
-			if(this.getNric().equals(project.getManager()))
-			{
-				project.displayProjectDetails();
-			}
-		}
-	}
+    	ManagerProjectService.showProject(this, type);
 }
 
     public void approveOfficerRegistration(Officer officer) {

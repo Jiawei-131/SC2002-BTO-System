@@ -1,5 +1,6 @@
 package handlers;
 
+import java.util.List;
 import java.util.Scanner;
 
 import controllers.DateTimeController;
@@ -28,8 +29,10 @@ public class ManagerProjectService {
 		            case 3 -> project.setType1SellingPrice(GetInput.inputLoop("the new Price of 2 Room Units", sc, Double::parseDouble, i -> i > 0));
 		            case 4 -> project.setNumberOfType2Units(GetInput.inputLoop("the new Number of 3 Room Units", sc, Integer::parseInt, i -> i > 0));
 		            case 5 -> project.setType2SellingPrice(GetInput.inputLoop("the new Price of 3 Room Units", sc, Double::parseDouble, i -> i > 0));
-		            case 6 -> project.setOpeningDate(GetInput.inputLoop("the new Opening Date in DD-MM-YYYY format", sc, s -> s, s -> DateTimeController.isValidFormat(s) && DateTimeController.isAfter(s)));
-		            case 7 -> project.setClosingDate(GetInput.inputLoop("the new Closing Date in DD-MM-YYYY format", sc, s -> s, s -> DateTimeController.isValidFormat(s) && DateTimeController.isAfter(s, project.getOpeningDate())));
+		            case 6 -> project.setOpeningDate(GetInput.inputLoop("the new Opening Date in DD-MM-YYYY format", sc, s -> s,
+		            		s -> DateTimeController.isValidFormat(s) && DateTimeController.isAfter(s)));
+		            case 7 -> project.setClosingDate(GetInput.inputLoop("the new Closing Date in DD-MM-YYYY format", sc, s -> s,
+		            		s -> DateTimeController.isValidFormat(s) && DateTimeController.isAfter(s, project.getOpeningDate())));
 		            case 8 -> project.setOfficerSlot(GetInput.inputLoop("the new Number of HDB Officer slots", sc, Integer::parseInt, i -> i <= 10 && i > 0));
 		            case 9 -> {
 		                int isVisibleChoice = GetInput.inputLoop("""
@@ -46,6 +49,23 @@ public class ManagerProjectService {
 			}
 	   }
 	   
+	   public static void showProject(Manager manager,int type)
+	   {
+			List<Project>projects=Project.loadAllProjects();
+			for(Project project:projects)
+			{
+				if(type==1)//Print all project
+				{
+					project.displayProjectDetails();
+				}
+				else {//Print only projects that the manager created
+					if(manager.getNric().equals(project.getManager()))
+					{
+						project.displayProjectDetails();
+					}
+				}
+			}
+	   }
 	   
 	   public static void deleteProject(Manager manager,Scanner sc)
 	   {
