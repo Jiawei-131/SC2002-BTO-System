@@ -17,6 +17,7 @@ protected String maritalStatus;
 private String password;
 private boolean isLogin=false;
 private AuthenticationController ac;
+static Comparator<Project> comparator=Comparator.comparing(Project::getName);
 private Role role;
 
 public User() {
@@ -36,21 +37,19 @@ public User(String name, String nric,int age, String maritalStatus,String passwo
     this.ac=ac;
     this.role=role;
     }
+//Get all projects with names containing a substring, sorted alphabetically
+//public static List<Project> sort(String keyword) {
+//    return Project.loadAllProjects().stream()
+//        .filter(p -> p.getName().toLowerCase().contains(keyword.toLowerCase()))
+//        .sorted(comparator)
+//        .toList();
+//}
 
-public static List<Project> findByNameContainsSorted(String keyword) {
+public static List<Project> sort() {
     return Project.loadAllProjects().stream()
-        .filter(p -> p.getName().toLowerCase().contains(keyword.toLowerCase()))
-        .sorted(Comparator.comparing(Project::getName))
+        .sorted(comparator)
         .toList();
 }
-
-public static List<Project> getAllProjectsSortedByName() {
-    return Project.loadAllProjects().stream()
-        .sorted(Comparator.comparing(Project::getName))
-        .toList();
-}
-
-
 
 public Role getRole() {
 	return this.role;
@@ -114,12 +113,40 @@ public String getMaritalStatus(){
 public void setMaritalStatus(String maritalStatus){
     this.maritalStatus=maritalStatus;
 }
+
+//public Comparator<Project>  getFilter()
+//{
+//	return comparator;
+//}
+
+public void setFilter(int choice)
+{
+	switch(choice)
+	{
+		case 1->comparator=Comparator.comparing(Project::getNeighbourhood);
+		case 2->comparator=Comparator.comparingInt(Project::getNumberOfType1Units);
+		case 3->comparator=Comparator.comparingInt(Project::getNumberOfType2Units);
+		case 4->comparator=Comparator.comparing(Project::getOpeningDate);
+		case 5->comparator=Comparator.comparing(Project::getClosingDate);
+	}
+}
+
 public List<String> getMenuOptions() {
     return Arrays.asList(
         "1. Projects",
         "2. Enquiries",
         "3. Change Password",
-        "4. Logout"
+        "4. Filter Settings",
+        "5. Logout"
+    );
+}
+public List<String> getSortOptions() {
+    return Arrays.asList(
+			"1. Neighbourhood",
+			"2. 2-Room Types",
+			"3. 3-Room Types",
+			"4. Opening Date",
+			"5. Closing Date"
     );
 }
 public abstract List<String> getProjectOptions();

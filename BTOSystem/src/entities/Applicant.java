@@ -49,7 +49,7 @@ public class Applicant extends User {
     	Singles, 35 years old and above, can ONLY apply for 2-Room 
     	o Married, 21 years old and above, can apply for any flat types (2
     			Room or 3-Room) */
-    	List<Project> projects = Project.loadAllProjects();
+    	List<Project> projects = this.sort();
     	System.out.println(projects.size());
     	for (Project project : projects) {
     		if (project.isVisibleToApplicant()) {

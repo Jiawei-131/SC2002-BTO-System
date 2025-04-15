@@ -25,7 +25,10 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
         case 4->{
         	return(PasswordReset.resetPassword(sc, currentUser, db));
         }
-        case 5->{
+      	case 5->{
+    		handleFilterAction(currentUser,sc);
+    	}
+        case 6->{
     		return currentUser.logout();
     	}
     	default->View.invalidChoice();
@@ -34,6 +37,10 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
 
 	}
 	
+	public void handleFilterAction(User currentUser,Scanner sc)
+	{
+		
+	}
 	
 	/*	1. Approve or reject HDB Officer’s registration as the HDB 
 			Manager in-charge of the project – update project’s remaining HDB 

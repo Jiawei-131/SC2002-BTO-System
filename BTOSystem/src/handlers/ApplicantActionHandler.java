@@ -18,13 +18,15 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
     	case 3 ->{
     		return(PasswordReset.resetPassword(sc, currentUser, db));
     	}
-    	case 4 ->{
+    	case 4->{
+    		handleFilterAction(currentUser,sc);
+    	}
+    	case 5 ->{
         	return currentUser.logout();
     	}
     	default->View.invalidChoice();
         }
 		return currentUser;
-
 	}
 	
 	public void handleEnquiryAction(int choice,User currentUser, Scanner sc) {
@@ -55,6 +57,12 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
         default -> View.invalidChoice();
 		}}
     	while(choice!=5);
+	}
+	
+	public void handleFilterAction(User currentUser,Scanner sc)
+	{
+		currentUser.displayMenu(currentUser.getSortOptions());
+		currentUser.setFilter(GetInput.inputLoop("your choice", sc, Integer::parseInt, i->i>0&&i<6));
 	}
 	
     public void handleProjectAction(int choice,User currentUser, Scanner sc) {
