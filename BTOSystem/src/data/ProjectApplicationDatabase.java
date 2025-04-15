@@ -19,6 +19,24 @@ public class ProjectApplicationDatabase implements FilePath,Database {
         	String flatBooked = application.getFlatBooked() ? "true" : "false";
             writeFile(projectApplicationDatabaseFilePath,application.getApplicantId(),application.getApplicationStatus(),application.getProjectName(),application.getFlatType(), flatBooked);
     }
+    
+    public List<ProjectApplication> readApplication()
+    {
+    	List<String> applications=readFile(projectApplicationDatabaseFilePath);
+    	List<ProjectApplication> projectApplications = null;
+    	for(String application: applications)
+    	{
+            String[] parts = application.split("\\|");
+            String applicantId = parts[0];
+            String status = parts[1];
+            String projectName = parts[2];
+            String flatType = parts[3];
+            String flatBooked =parts[4];
+            ProjectApplication pa = new ProjectApplication(applicantId, status, projectName, flatType,Boolean.parseBoolean(flatBooked));
+            projectApplications.add(pa);
+    	}
+    	return projectApplications;
+    }
 //    
 //    public void writeApplication(String applicantId, String applicationStatus, String projectName, String flatType, boolean flatBooked) {
 //        try (BufferedWriter writer = new BufferedWriter(new FileWriter("BTOSystem/src/data/ProjectApplicationDatabase.txt", true))) {

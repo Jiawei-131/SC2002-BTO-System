@@ -2,19 +2,17 @@ package handlers;
 
 import java.time.LocalDate;
 import java.util.InputMismatchException;
-
+import java.util.List;
 import java.util.Scanner;
 
 import controllers.DateTimeController;
-import data.UserDatabase;
+import data.*;
 import entities.Applicant;
 import entities.Manager;
 import entities.Officer;
 import entities.Project;
 import entities.User;
-import util.ActionHandler;
-import util.GetInput;
-import util.PasswordReset;
+import util.*;
 import view.View;
 
 public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInput {
@@ -99,7 +97,7 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
 	        //Edit BTO Projects, check if exists
 	        case 5 ->ManagerProjectService.deleteProject(manager,sc);
 	        case 6 ->ManagerProjectService.updateProject(manager,sc);
-	        case 7 ->System.out.println("Not Done"); //TODO Generate Report
+	        case 7 ->generateReport(manager,sc);
 	        case 8 -> {}
 	        default-> View.invalidChoice();
 			}}
@@ -119,6 +117,11 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
  		} else {
  		    manager.rejectApplication(null);
  		}
+    }
+    
+    private void generateReport(Manager manager,Scanner sc)
+    {
+
     }
 
 }
