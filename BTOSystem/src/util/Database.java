@@ -12,7 +12,7 @@ import entities.OfficerApplication;
 
 public interface Database {
 	
-    default public void writeFile(String filePath,String... fields) {
+    public static void writeFile(String filePath,String... fields) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
         	String line = String.join("|", fields);
             writer.write(line);
@@ -23,7 +23,7 @@ public interface Database {
         }
     }
     
-    default public void writeFile(String filePath,List<String> lines) {
+    public static void writeFile(String filePath,List<String> lines) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
             for (String line : lines) {
                 writer.write(line);
@@ -35,7 +35,7 @@ public interface Database {
         }
     }
     
-    default public List<String> readFile(String filePath) {
+    public static List<String> readFile(String filePath) {
     	List<String> lines = new ArrayList<>();
 		try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
 			
@@ -49,7 +49,7 @@ public interface Database {
         return lines; // Return null
 	}
     
-    default public void updateFile(String filePath,String... fields) {
+    public static void updateFile(String filePath,String... fields) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
         	String line = String.join("|", fields);
             writer.write(line);

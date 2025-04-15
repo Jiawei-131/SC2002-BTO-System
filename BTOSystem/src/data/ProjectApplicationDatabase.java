@@ -15,14 +15,14 @@ public class ProjectApplicationDatabase implements FilePath,Database {
     }
 
     // Write a new application to the file
-    public void writeApplication(ProjectApplication application) {
+    public static void writeApplication(ProjectApplication application) {
         	String flatBooked = application.getFlatBooked() ? "true" : "false";
-            writeFile(projectApplicationDatabaseFilePath,application.getApplicantId(),application.getApplicationStatus(),application.getProjectName(),application.getFlatType(), flatBooked);
+            Database.writeFile(projectApplicationDatabaseFilePath,application.getApplicantId(),application.getApplicationStatus(),application.getProjectName(),application.getFlatType(), flatBooked);
     }
     
     public List<ProjectApplication> readApplication()
     {
-    	List<String> applications=readFile(projectApplicationDatabaseFilePath);
+    	List<String> applications=Database.readFile(projectApplicationDatabaseFilePath);
     	List<ProjectApplication> projectApplications = null;
     	for(String application: applications)
     	{
@@ -49,7 +49,7 @@ public class ProjectApplicationDatabase implements FilePath,Database {
     
     // update
     public void updateApplication(ProjectApplication application) {
-        List<String> lines = readFile(projectApplicationDatabaseFilePath);
+        List<String> lines = Database.readFile(projectApplicationDatabaseFilePath);
         List<String> newLines = new ArrayList<>();
         
         for (String line : lines) {
@@ -104,7 +104,7 @@ public class ProjectApplicationDatabase implements FilePath,Database {
 //    }
     
     public ProjectApplication getApplicationByApplicantId(String nric) {
-    	List<String> lines = readFile(projectApplicationDatabaseFilePath);
+    	List<String> lines = Database.readFile(projectApplicationDatabaseFilePath);
             for (String line : lines)
             {
             	String[] parts = line.split("\\|");

@@ -23,7 +23,7 @@ public class OfficerApplicationDatabase implements FilePath,Database {
 //	}
 	
     public void updateApplication(OfficerApplication application) {
-        List<String> lines = readFile(officerApplicationDatabaseFilePath);
+        List<String> lines = Database.readFile(officerApplicationDatabaseFilePath);
         List<String> newLines = new ArrayList<>();
         
         for (String line : lines) {
@@ -41,11 +41,11 @@ public class OfficerApplicationDatabase implements FilePath,Database {
     }
 	
 	public void writeApplication(OfficerApplication application) {
-            writeFile(officerApplicationDatabaseFilePath,application.getApplicantId(),application.getApplicationStatus(),application.getProjectName());
+            Database.writeFile(officerApplicationDatabaseFilePath,application.getApplicantId(),application.getApplicationStatus(),application.getProjectName());
 	}
 	
     public OfficerApplication getApplicationByApplicantId(String applicantId) {
-    	List<String> lines = readFile(officerApplicationDatabaseFilePath);
+    	List<String> lines = Database.readFile(officerApplicationDatabaseFilePath);
             for (String line : lines)
             {
             	String[] parts = line.split("\\|");
@@ -58,7 +58,7 @@ public class OfficerApplicationDatabase implements FilePath,Database {
             return null; // Return null if no matching patient is found
     }
     public OfficerApplication getApplicationByProjectName(String projectName) {
-    	List<String> lines = readFile(officerApplicationDatabaseFilePath);
+    	List<String> lines = Database.readFile(officerApplicationDatabaseFilePath);
             for (String line : lines)
             {
             	String[] parts = line.split("\\|");

@@ -41,7 +41,7 @@ public class UserDatabase implements Database,FilePath{
     public void updateUserPassword(String userID, String newPassword) {
     	List<String> lines = new ArrayList<>();
     	List<String> newLines = new ArrayList<>();
-    	lines = readFile(loginFilePath);
+    	lines = Database.readFile(loginFilePath);
         for (String line : lines) {
             String[] parts = line.split("\\|", 2);
             if (parts[0].equals(userID)) {
@@ -55,8 +55,8 @@ public class UserDatabase implements Database,FilePath{
     }
     
     public User getUserById(String nric,AuthenticationController ac) {
-    	List<String> lines = readFile(userDatabaseFilePath);
-    	List<String> linesLogin = readFile(loginFilePath);
+    	List<String> lines = Database.readFile(userDatabaseFilePath);
+    	List<String> linesLogin = Database.readFile(loginFilePath);
     	 String password=null;
     	for (String line : lines) {
             String[] parts = line.split("\\|");
