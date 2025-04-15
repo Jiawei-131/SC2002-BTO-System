@@ -81,8 +81,8 @@ public class AccountController implements GetInput,PasswordReset,FilePath{
 	    
 	    String password = GetInput.inputLoop("your Password", sc, s -> s, AuthenticationController::isValidPassword);
 
-	    db.writeFile(loginFilePath,nric, password);
-	    db.writeFile(userDatabaseFilePath,name, nric, String.valueOf(age), maritalStatus, "A","true");
+	    Database.writeFile(loginFilePath,nric, password);
+	    Database.writeFile(userDatabaseFilePath,name, nric, String.valueOf(age), maritalStatus, "A","true");
 
 	    System.out.println("Registration Successful");
 	}
