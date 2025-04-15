@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+
+import data.ProjectDatabase;
 import data.UserDatabase;
 
 
@@ -45,9 +47,9 @@ public User(String name, String nric,int age, String maritalStatus,String passwo
 //        .toList();
 //}
 
-public static List<Project> sort() {
-    return Project.loadAllProjects().stream()
-        .sorted(comparator)
+public List<Project> sort() {
+    return ProjectDatabase.loadAllProjects().stream()
+        .sorted(Comparator.comparing(Project::getName))
         .toList();
 }
 

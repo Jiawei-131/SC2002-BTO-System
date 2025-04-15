@@ -4,7 +4,7 @@ import java.util.InputMismatchException;
 import data.UserDatabase;
 import java.util.Scanner;
 import entities.Applicant;
-import entities.Project;
+import data.ProjectDatabase;
 import entities.User;
 import util.*;
 import view.View;
@@ -73,9 +73,9 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
 		switch(choice)
 		{
 		//Print all projects
-		case 1->applicant.viewProjects();
+		case 1->applicant.viewProjects(applicant);
         case 2->{
-        	String projectName=GetInput.inputLoop(" the Project Name",sc,s->s,s->Project.findByName(s)!=null);
+        	String projectName=GetInput.inputLoop(" the Project Name",sc,s->s,s->ProjectDatabase.findByName(s)!=null);
         	int flatTypeChoice=GetInput.inputLoop("""
                     the flat type
                     1. 2-Room

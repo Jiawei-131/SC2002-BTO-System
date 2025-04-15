@@ -4,21 +4,23 @@ import java.util.List;
 import java.util.Scanner;
 
 import controllers.DateTimeController;
+import data.ProjectDatabase;
 import entities.Manager;
 import entities.Project;
 import util.GetInput;
+import view.ProjectView;
 
 public class ManagerProjectService {
 	   public static void editProject(Manager manager,Scanner sc)
 	   {
 			String btoName=GetInput.getLineInput(sc, "the BTO Name");
-			if(Project.findByName(btoName).equals(null)||!manager.getNric().equals(Project.findByName(btoName).getManager()))
-			{
+	        Project project = ProjectDatabase.findByName(btoName);
+	        
+	        if (project == null || !manager.getNric().equals(project.getManager())) {
 				System.out.println("BTO Project does not exist or you do not have access.");
 			}
 			else {
 				int choice;
-				Project project=Project.findByName(btoName);
 				do {
 					manager.displayMenu(manager.getBtoOptions());
 					choice=GetInput.getIntInput(sc,"the field to update");
@@ -51,17 +53,17 @@ public class ManagerProjectService {
 	   
 	   public static void showProject(Manager manager,int type)
 	   {
-			List<Project>projects=Project.loadAllProjects();
+		   List<Project> projects = ProjectDatabase.loadAllProjects();
 			for(Project project:projects)
 			{
 				if(type==1)//Print all project
 				{
-					project.displayProjectDetails();
+					ProjectView.displayProjectDetails(project);
 				}
 				else {//Print only projects that the manager created
 					if(manager.getNric().equals(project.getManager()))
 					{
-						project.displayProjectDetails();
+						ProjectView.displayProjectDetails(project);
 					}
 				}
 			}
@@ -70,12 +72,13 @@ public class ManagerProjectService {
 	   public static void deleteProject(Manager manager,Scanner sc)
 	   {
 	   	String btoName=GetInput.getLineInput(sc, "the BTO Name");
-			if(Project.findByName(btoName).equals(null)||!manager.getNric().equals(Project.findByName(btoName).getManager()))
+	   	Project project = ProjectDatabase.findByName(btoName);
+			if(project == null || !manager.getNric().equals(project.getManager()))
 			{
 				System.out.println("BTO Project does not exist or you do not have access.");
 			}
 			else {
-				Project.findByName(btoName).deleteFromDatabase(btoName);
+				ProjectDatabase.delete(btoName);
 			}
 	   }
 	   
@@ -90,7 +93,9 @@ public class ManagerProjectService {
 			String closeDate=GetInput.inputLoop("the Closing Date in DD-MM-YYYY format", sc, s->s,
 					s->DateTimeController.isValidFormat(s) &&DateTimeController.isAfter(s, openDate)&&DateTimeController.isAfter(s));
 			int availableSlots = GetInput.inputLoop("the Number of HDB Officer slots", sc, Integer::parseInt, i->i<=10 && i>0);
-	    	new Project(btoName, neighbourhood,unitType1,unitType1Price, unitType2,unitType2Price,
-	    			openDate, closeDate,manager.getNric(),availableSlots,true);
+			Project project = new Project(btoName, neighbourhood,unitType1,unitType1Price, unitType2,unitType2Price,
+	    			openDate, closeDate,manager.getNric(),availableSlots);
+			ProjectDatabase.save(project);
+	    	
 	   }
 }

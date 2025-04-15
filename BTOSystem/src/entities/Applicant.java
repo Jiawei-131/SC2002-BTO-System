@@ -6,6 +6,7 @@ import java.util.List;
 import data.*;
 
 import controllers.AuthenticationController;
+import view.ProjectView;
 import view.View;
 
 
@@ -44,18 +45,19 @@ public class Applicant extends User {
     }
 
     
-    public void viewProjects() {
+    public void viewProjects(Applicant applicant) {
         /* TODO: Show based on applicant details
     	Singles, 35 years old and above, can ONLY apply for 2-Room 
     	o Married, 21 years old and above, can apply for any flat types (2
     			Room or 3-Room) */
     	List<Project> projects = this.sort();
-    	System.out.println(projects.size());
-    	for (Project project : projects) {
-    		if (project.isVisibleToApplicant()) {
-        		project.displayProjectDetails();
-    		}
-    	}
+    	ProjectView projectView = new ProjectView();
+    	System.out.println("Available projects: " + projects.size());
+        for (Project project : projects) {
+            if (Project.isVisibleToApplicant()) {
+                projectView.displayProjectDetails(project);
+            }
+        }
     }
 
 
