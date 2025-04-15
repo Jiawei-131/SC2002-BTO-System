@@ -15,14 +15,13 @@ public class BTOSystem implements FilePath {
     	UserDatabase db= new UserDatabase();
     	AuthenticationController ac = new AuthenticationController();
     	PermissionController pc= new PermissionController();
-    	ChoiceController cc=new ChoiceController();
     	Scanner sc = new Scanner(System.in);
 
     	 Map<String,String>users;
     	//TODO Implement password hashing when done?
         while(true) {
         	users=db.readUsers();
-        	MainMenuController.mainMenu(sc,users,passwordHasher,db,ac,cc);
+        	MainMenuController.mainMenu(sc,users,passwordHasher,db,ac);
         }
     }
         

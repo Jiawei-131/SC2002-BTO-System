@@ -10,13 +10,19 @@ import java.util.function.Predicate;
 import view.View;
 import data.PasswordHasher;
 import data.UserDatabase;
+import entities.Applicant;
+import entities.Manager;
+import entities.Officer;
 import entities.Role;
 import entities.User;
+import handlers.ApplicantActionHandler;
+import handlers.ManagerActionHandler;
+import handlers.OfficerActionHandler;
 import util.*;
 
 public class MainMenuController implements GetInput,FilePath {
 	
-public static void mainMenu(Scanner sc,Map<String,String>users,PasswordHasher passwordHasher,UserDatabase db,AuthenticationController ac,ChoiceController cc)
+public static void mainMenu(Scanner sc,Map<String,String>users,PasswordHasher passwordHasher,UserDatabase db,AuthenticationController ac)
 {
 	
 	User currentUser = null;
@@ -41,7 +47,19 @@ public static void mainMenu(Scanner sc,Map<String,String>users,PasswordHasher pa
     } while (choice != 3 || currentUser == null);
 	
     do {
-    currentUser=cc.choice(choice, currentUser, sc,db);
+	    currentUser.displayMenu(currentUser.getMenuOptions());
+	    choice=GetInput.getIntInput(sc,"your Choice");
+		ActionHandler handler = null;
+		if (currentUser instanceof Officer) {
+			handler=new OfficerActionHandler();
+        } 
+		else if (currentUser instanceof Applicant) {
+			handler=new ApplicantActionHandler();
+        } 
+		else if (currentUser instanceof Manager) {
+			handler = new ManagerActionHandler();
+        }
+		currentUser=handler.handleAction(choice, currentUser, sc,db);
     }
     while(currentUser != null);
     }
