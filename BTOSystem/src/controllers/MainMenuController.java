@@ -27,10 +27,10 @@ public static void mainMenu(Scanner sc,Map<String,String>users,PasswordHasher pa
         choice = GetInput.getIntInput(sc,"your Choice");
         switch(choice) {
         case 1->{
-        	currentUser=LoginController.loginProcess(choice, sc, users, passwordHasher, db, ac);
+        	currentUser=AccountController.loginProcess(choice, sc, users, passwordHasher, db, ac);
             choice=3;
         }
-        case 2->register(db,sc,users);
+        case 2->AccountController.register(db,sc,users);
         case 3->{
         	View.exit();
         	System.exit(0);
@@ -48,27 +48,6 @@ public static void mainMenu(Scanner sc,Map<String,String>users,PasswordHasher pa
 	
 
 
-private static void register(UserDatabase db, Scanner sc, Map<String, String> users) {
-    String name = GetInput.inputLoop("your Name", sc, s -> s, AuthenticationController::validName);
-    String nric = GetInput.inputLoop("your NRIC", sc, s -> s, s ->
-        AuthenticationController.checkNRIC(s) && AuthenticationController.nricExists(s, users)
-    );
-    int age = GetInput.inputLoop("your Age", sc, Integer::parseInt, AuthenticationController::ageCheck);
-    
-    int maritalStatusChoice = GetInput.inputLoop("""
-            Marital Status:
-            1. Single
-            2. Married
-            """, sc, Integer::parseInt, i -> i == 1 || i == 2);
-    String maritalStatus = (maritalStatusChoice == 1) ? "Single" : "Married";
-    
-    String password = GetInput.inputLoop("your Password", sc, s -> s, AuthenticationController::isValidPassword);
-
-    db.writeFile(loginFilePath,nric, password);
-    db.writeFile(userDatabaseFilePath,name, nric, String.valueOf(age), maritalStatus, "A","true");
-
-    System.out.println("Registration Successful");
-}
 
 
 

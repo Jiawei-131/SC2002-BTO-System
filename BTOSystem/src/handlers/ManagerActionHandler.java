@@ -1,14 +1,16 @@
-package controllers;
+package handlers;
 
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 
 import java.util.Scanner;
 
+import controllers.DateTimeController;
 import data.UserDatabase;
 import entities.Applicant;
 import entities.Manager;
 import entities.Officer;
+import entities.Project;
 import entities.User;
 import util.ActionHandler;
 import util.GetInput;
@@ -21,7 +23,7 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
       //Manager Officer menu
         case 1 -> handleProjectAction(choice,currentUser,sc);
     	case 2 -> handleApprovalAction(choice,currentUser,sc);
-    	case 3-> handleEnquiryAction(choice,currentUser,sc);
+    	case 3->  handleEnquiryAction(choice,currentUser,sc);
         case 4->{
         	return(PasswordReset.resetPassword(sc, currentUser, db));
         }
@@ -72,65 +74,39 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
 			case 1,2 ->System.out.println("Not Done");
 			case 3 ->System.out.println("Not Done");
 			case 4 ->System.out.println("Not Done");
+			case 5-> {}
 			default-> View.invalidChoice();
 			}
 		}while(choice!=5);
-		
-		
 	}
 	
+/*	"1. View All Project listings",
+	"2. View My Project listings",
+	"3. Create BTO Project listing",
+	"4. Delete BTO Project listing",
+	"5. Edit BTO Project listing ",
+	"6. Generate report",
+	"7. Back to Main Menu"*/
+   public void handleProjectAction(int choice,User currentUser, Scanner sc) {
+	    	Manager manager	=(Manager)currentUser;
+	    	do {
+			manager.displayMenu(manager.getProjectOptions());
+			choice=GetInput.getIntInput(sc, "your choice");
+			switch(choice)
+			{
+			case 1,2->ManagerProjectService.viewProject(manager, choice);
+	        case 4-> ManagerProjectService.createProject(manager,sc);
+	        //Edit BTO Projects, check if exists
+	        case 5 ->ManagerProjectService.deleteProject(manager,sc);
+	        case 6 ->ManagerProjectService.updateProject(manager,sc);
+	        case 7 ->System.out.println("Not Done"); //TODO Generate Report
+	        case 8 -> {}
+	        default-> View.invalidChoice();
+			}}
+	    	while(choice!=8);
+	    }
 	
-	/*	"1. View All Project listings",
-	  	"2. View My Project listings",
-		"3. Toggle Visibility of Project",
-		"4. Create BTO Project listings",
-		"5. Delete BTO Project listings",
-		"6. Edit BTO Project listings ",
-		"7. Generate report",
-		"8. Back to Main Menu", */
-    public void handleProjectAction(int choice,User currentUser, Scanner sc) {
-    	Manager manager	=(Manager)currentUser;
-    	do {
-		manager.displayMenu(manager.getProjectOptions());
-		choice=GetInput.getIntInput(sc, "your choice");
-		switch(choice)
-		{
-		//Print all projects
-		case 1,2-> manager.viewProjects(choice);
-        //Add projects, check if project already existed?
-        case 3-> manager.toggleVisibility();
-        //Delete BTO Projects , check if exists
-        case 4->createProject(currentUser,sc);
-        //Edit BTO Projects, check if exists
-        case 5 ->manager.deleteProject();
-        case 6 ->System.out.println("Not Done");
-        case 7 ->System.out.println("Not Done");
-        case 8 ->System.out.println("Not Done");
-        default-> View.invalidChoice();
-		}}
-    	while(choice!=8);
-    }
-    
-    private void createProject(User currentUser,Scanner sc) {
- 		String btoName=GetInput.getLineInput(sc, "the BTO Name");
- 		String neighbourhood=GetInput.getLineInput(sc, "the neighbourhood");
- 		int unitType1=GetInput.getIntInput(sc, "the Number of 2 Room Units");
- 		int unitType1Price=GetInput.getIntInput(sc, "the Price of 2 Room Units");
- 		int unitType2=GetInput.getIntInput(sc, "the Number of 3 Room Units");
- 		int unitType2Price=GetInput.getIntInput(sc, "the Price of 3 Room Units");
- 		String openDate=GetInput.inputLoop("the Opening Date in DD-MM-YYYY format", sc, s->s, s-> DateTimeController.isValidFormat(s));
- 		String closeDate=GetInput.inputLoop("the Closing Date in DD-MM-YYYY format", sc, s->s,s->DateTimeController.isValidFormat(s) &&DateTimeController.isAfter(s, openDate));
- 		int availableSlots = GetInput.inputLoop("the Number of HDB Officer slots", sc, Integer::parseInt, i->i<=10 && i>0);
- 	    int isVisibleChoice = GetInput.inputLoop("""
- 	            the visibility to applicants
- 	            1. Yes
- 	            2. No
- 	            """, sc, Integer::parseInt, i -> i == 1 || i == 2);
- 	   boolean isVisible = (isVisibleChoice == 1) ? true : false;
- 		((Manager)currentUser).createProject(btoName, neighbourhood, unitType1,unitType2, openDate, closeDate,
- 				 availableSlots,isVisible,unitType1Price,unitType2Price);
-    }
-    
+
     private void approveReject(Scanner sc,Manager manager)
     {
  	    int choice = GetInput.inputLoop("""

@@ -1,4 +1,4 @@
-package controllers;
+package handlers;
 
 import java.util.InputMismatchException;
 import data.UserDatabase;

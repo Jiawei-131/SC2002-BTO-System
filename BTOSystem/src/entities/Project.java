@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.io.*;
 
 public class Project {
+	private UserDatabase db=new UserDatabase();
+	
     // Project details
     private String name;
     private String neighbourhood;
@@ -24,6 +26,7 @@ public class Project {
     
     // Staff assignments
     private Manager manager;
+    private String managerData;
     private List<Officer> officersInCharge;
     private int officerSlot;
     
@@ -47,10 +50,10 @@ public class Project {
                   int numberOfType1Units, double type1SellingPrice,
                   int numberOfType2Units, double type2SellingPrice,
                   String openingDate, String closingDate,
-                  Manager manager, int officerSlot,boolean save) {
+                  String managerNRIC, int officerSlot,boolean save) {
         this();
         this.name = name;
-        this.manager = manager;
+        this.managerData = managerNRIC;
         this.neighbourhood = neighbourhood;
         this.numberOfType1Units = numberOfType1Units;
         this.type1SellingPrice = type1SellingPrice;
@@ -58,8 +61,6 @@ public class Project {
         this.type2SellingPrice = type2SellingPrice;
         this.openingDate = openingDate;
         this.closingDate = closingDate;
-        System.out.println(manager);
-        System.out.printf("%s",manager.toString());
         this.officerSlot = Math.min(officerSlot, MAX_OFFICERS);
         this.visibleToApplicant = true;
         
@@ -73,7 +74,7 @@ public class Project {
     private void saveToDatabase() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(PROJECT_DB_FILE, true))) {
             // Serialize manager
-            String managerData = (manager != null) ? manager.getNric() : "null";
+//            String managerData = (manager != null) ? manager.getNric() : "null";
             
             // Serialize officers
             StringBuilder officersData = new StringBuilder();
@@ -103,7 +104,7 @@ public class Project {
                 String[] parts = line.split("\\|");
                 if (parts.length >= 1 && parts[0].equals(name)) {
                     // Update with current data
-                    String managerData = (manager != null) ? manager.toString() : "null";
+//                    String managerData = (manager != null) ? manager.toString() : "null";
                     
                     StringBuilder officersData = new StringBuilder();
                     if (!officersInCharge.isEmpty()) {
@@ -171,7 +172,7 @@ public class Project {
             boolean isVisible = Boolean.parseBoolean(parts[11]);
             
             // Deserialize manager
-            Manager manager = null;
+//            Manager manager = null;
 //            if (!managerData.equals("null")) {
 //                manager = Manager.fromString(managerData);
 //            }
@@ -180,7 +181,7 @@ public class Project {
             Project project = new Project(
                 name, neighbourhood, type1Units, type1Price,
                 type2Units, type2Price, openingDate, closingDate,
-                manager, officerSlot,false
+                managerData, officerSlot,false
             );
             
             // Deserialize officers
@@ -208,7 +209,7 @@ public class Project {
             .orElse(null);
     }
     
-    public void deleteFromDatabase() {
+    public void deleteFromDatabase(String name) {
         List<String> projects = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(PROJECT_DB_FILE))) {
             String line;
@@ -274,7 +275,7 @@ public class Project {
         System.out.println("Type 1 Units: " + numberOfType1Units + " (Price: $" + String.format("%.2f", type1SellingPrice) + ")");
         System.out.println("Type 2 Units: " + numberOfType2Units + " (Price: $" + String.format("%.2f", type2SellingPrice) + ")");
         System.out.println("Application Period: " + openingDate + " to " + closingDate);
-        System.out.println("Manager: " + (manager != null ? manager.getUsername() : "Not assigned"));
+        System.out.println("Manager: " + (managerData != null ? db.getUserById(managerData, null).getUsername() : "Not assigned"));
         System.out.println("Officers: " + officersInCharge.size() + "/" + officerSlot);
         for (Officer officer : officersInCharge) {
             System.out.println("  - " + officer.getUsername());
@@ -331,7 +332,15 @@ public class Project {
         updateInDatabase();
     }
 
-    public Manager getManager() { return manager; }
+    public String getManager()
+    {
+    	return this.managerData;
+    }
+    
+//    public Manager getManager() 
+//    { 
+//    	return manager;
+//	}
     public void setManager(Manager manager) { 
         this.manager = manager; 
         updateInDatabase();

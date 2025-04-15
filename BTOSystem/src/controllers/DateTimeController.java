@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class DateTimeController {
+	static LocalDate currentDate = LocalDate.now();
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     public static boolean isAfter(String date1, String date2) {
         try {
@@ -17,5 +18,12 @@ public class DateTimeController {
 
     public static boolean isValidFormat(String dateStr) {
         return dateStr.matches("^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-(\\d{4})$");
+    }
+    
+    public static boolean isAfter(String date)
+    {
+    	LocalDate inputDate = LocalDate.parse(date, FORMATTER);
+    	 return inputDate.isAfter(currentDate);
+
     }
 }

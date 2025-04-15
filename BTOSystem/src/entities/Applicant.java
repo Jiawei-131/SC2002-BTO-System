@@ -46,14 +46,17 @@ public class Applicant extends User {
 
     
     public void viewProjects() {
-        // TODO: currently project implementation will cause infinite loop of reading and writing. do not run this code until that is fixed.
-//    	List<Project> projects = Project.loadAllProjects();
-//    	System.out.println(projects.size());
-//    	for (Project project : projects) {
-//    		if (project.isVisibleToApplicant()) {
-//        		project.displayProjectDetails();
-//    		}
-//    	}
+        /* TODO: Show based on applicant details
+    	Singles, 35 years old and above, can ONLY apply for 2-Room 
+    	o Married, 21 years old and above, can apply for any flat types (2
+    			Room or 3-Room) */
+    	List<Project> projects = Project.loadAllProjects();
+    	System.out.println(projects.size());
+    	for (Project project : projects) {
+    		if (project.isVisibleToApplicant()) {
+        		project.displayProjectDetails();
+    		}
+    	}
     }
 
 

@@ -23,10 +23,10 @@ public class Manager extends User {
     }
 
     public void createProject(String name, String neighbourhood, int unitType1, int unitType2, String openingDate, String closingDate
-    		,int availableSlots,boolean isVisible,double type1SellingPrice,double type2SellingPrice) 
+    		,int availableSlots,double type1SellingPrice,double type2SellingPrice) 
     {
     	new Project(name, neighbourhood,unitType1,type1SellingPrice, unitType2,type2SellingPrice,
-    			openingDate, closingDate,this,availableSlots,true);
+    			openingDate, closingDate,this.getNric(),availableSlots,true);
     	System.out.println("Project Created!");
     }
 
@@ -40,8 +40,9 @@ public class Manager extends User {
         // TODO: edit project
     }
 
-    public void deleteProject() {
+    public void deleteProject(String BTOname,Project project) {
         // TODO: delete project and unassign project remove from db straight?
+    	project.deleteFromDatabase(BTOname);
 //    	assignedProject.Delete?
     	hasProject=false;
     }
@@ -54,21 +55,22 @@ public class Manager extends User {
         // TODO
         /* Able to view all created projects, including projects created by other 
     	HDB Manager, regardless of visibility setting. */
-    	if(type==1)
-    	{
-    		//TODO Print all project
-    		List<Project>projects=Project.loadAllProjects();
-    		for(Project project:projects)
-    		{
-    			project.displayProjectDetails();
-    		}
-    	}
-    	else
-    	{
-    		//TODO Print only projects that the manager created
-    	}
     		
-    }
+	List<Project>projects=Project.loadAllProjects();
+	for(Project project:projects)
+	{
+		if(type==1)//Print all project
+		{
+			project.displayProjectDetails();
+		}
+		else {//Print only projects that the manager created
+			if(this.getNric().equals(project.getManager()))
+			{
+				project.displayProjectDetails();
+			}
+		}
+	}
+}
 
     public void approveOfficerRegistration(Officer officer) {
         // TODO implement
@@ -116,12 +118,11 @@ public class Manager extends User {
         return Arrays.asList(
 				"1. View All Project listings",
 				"2. View My Project listings",
-				"3. Toggle Visibility of Project",
-				"4. Create BTO Project listings",
-				"5. Delete BTO Project listings",
-				"6. Edit BTO Project listings ",
-				"7. Generate report",
-				"8. Back to Main Menu"
+				"3. Create BTO Project listing",
+				"4. Delete BTO Project listing",
+				"5. Edit BTO Project listing ",
+				"6. Generate report",
+				"7. Back to Main Menu"
         );
     }
     public List<String> getEnquiryOptions() {
@@ -131,6 +132,22 @@ public class Manager extends User {
 				"3. Reply to enquiry",
 				"4. Delete enquiry",
 				"5. Back to Main Menu"
+        );
+    }
+    
+    public List<String> getBtoOptions() {
+        return Arrays.asList(
+        		"1. the neighbourhood",
+        		"2. the Number of 2 Room Units",
+        		"3. the Price of 2 Room Units",
+        		"4. the Number of 3 Room Units",
+        		"5. the Price of 3 Room Units",
+        		"6. the Opening Date in DD-MM-YYYY format",
+        		"7. the Closing Date in DD-MM-YYYY format",
+        		"8. the Number of HDB Officer slots",
+        		"9. the Visibility",
+        		"10.finish Editing"
+
         );
     }
 //    public String viewEnquiry(Enquiry[] enquiryList ) {

@@ -8,6 +8,7 @@ import entities.Applicant;
 import entities.Manager;
 import entities.Officer;
 import entities.User;
+import handlers.*;
 import util.ActionHandler;
 import util.GetInput;
 import view.View;
@@ -20,9 +21,6 @@ public class ChoiceController {
 	    choice=GetInput.getIntInput(sc,"your Choice");
 		ActionHandler handler = null;
 		if (currentUser instanceof Officer) {
-//			((Officer)currentUser).displayChoice();
-//			choice=GetInput.getIntInput(sc,"Enter your choice");
-//			handler=(choice==1)?new OfficerActionHandler():new ApplicantActionHandler();
 			handler=new OfficerActionHandler();
         } 
       //Manager Applicant menu
