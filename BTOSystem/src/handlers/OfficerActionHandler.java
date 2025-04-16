@@ -2,6 +2,8 @@ package handlers;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import controllers.EnquiryController;
 import data.UserDatabase;
 import entities.Officer;
 import entities.User;
@@ -36,9 +38,26 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
 			"3. Edit Enquiry",
 			"4. Delete Enquiry",
 			"5. Back to Main Menu"*/
-	public void handleEnquiryAction(int choice,User currentUser, Scanner sc) {
-		View.menu(currentUser,((Officer)currentUser).getEnquiryOptions());
+
+	public void handleEnquiryAction(int choice, User currentUser, Scanner sc) {
+//		View.menu(currentUser,((Officer)currentUser).getEnquiryOptions());
+	    Officer officer = (Officer) currentUser;
+	    EnquiryController controller = new EnquiryController();
+
+	    int selection;
+	    do {
+	        View.menu(officer, officer.getEnquiryOptions());
+	        selection = GetInput.getIntInput(sc, "your choice");
+
+	        switch (selection) {
+	            case 1 -> officer.viewEnquiries(controller);
+	            case 2 -> officer.replyToEnquiry(sc, controller);
+	            case 3 -> System.out.println("Returning to main menu...");
+	            default -> View.invalidChoice();
+	        }
+	    } while (selection != 3);
 	}
+
 	
 	
 	/*    		"1. View list of projects",

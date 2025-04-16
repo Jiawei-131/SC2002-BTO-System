@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import controllers.AuthenticationController;
+import controllers.EnquiryController;
+import data.EnquiryDatabase;
 import view.View;
 public class Officer extends Applicant {
 private boolean isVisible;
@@ -49,9 +51,43 @@ public boolean viewRegistrationStatus()
 //{
 //
 //}
-public void replyEnquiry(){
 
+public void viewEnquiries(EnquiryController controller) {
+    String myNRIC = this.getNric();
+    List<Enquiry> enquiries = controller.getAllEnquiries();
+
+    boolean found = false;
+    System.out.println("\n--- Enquiries for Your Project ---");
+    for (Enquiry e : enquiries) {
+        if (e.getOfficerNRIC().equals(myNRIC)) {
+            System.out.println(e);
+            System.out.println("------------------");
+            found = true;
+        }
+    }
+
+    if (!found) {
+        System.out.println("No enquiries found for your project.");
+    }
 }
+
+public void replyToEnquiry(Scanner sc, EnquiryController controller) {
+    System.out.print("Enter Enquiry ID to reply: ");
+    int id = Integer.parseInt(sc.nextLine());
+    Enquiry e = controller.findEnquiryById(String.valueOf(id));
+
+    if (e == null || !e.getOfficerNRIC().equals(this.getNric())) {
+        System.out.println("You do not have access to this enquiry or it does not exist.");
+        return;
+    }
+
+    System.out.print("Enter your reply: ");
+    String reply = sc.nextLine();
+    e.replyEnquiry(id, reply);
+    boolean updated = EnquiryDatabase.update(e);
+    System.out.println(updated ? "Reply sent." : "Failed to send reply.");
+}
+
 public void updateApplicantProfile(Applicant applicant)
 {
 
@@ -93,13 +129,24 @@ public List<String> getProjectOptions() {
 			"7. Back to Main Menu"
     );
 }
+//public List<String> getEnquiryOptions() {
+//    return Arrays.asList(
+//			"1. Submit Enquiry",
+//			"2. View Enquiry",
+//			"3. Edit Enquiry",
+//			"4. Delete Enquiry",
+//			"5. Back to Main Menu"
+//    );
+//}
+
+// Able to view and reply to enquiries regarding the project he/she is handling
+@Override
 public List<String> getEnquiryOptions() {
     return Arrays.asList(
-			"1. Submit Enquiry",
-			"2. View Enquiry",
-			"3. Edit Enquiry",
-			"4. Delete Enquiry",
-			"5. Back to Main Menu"
+        "1. View enquiries for my project",
+        "2. Reply to an enquiry",
+        "3. Back to Main Menu"
     );
 }
+
 }
