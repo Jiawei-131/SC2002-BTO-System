@@ -37,6 +37,7 @@ public class View {
         System.out.println("===================================");
         System.out.println(" Welcome, " + user.getUsername());
         System.out.printf(" Role: %s \n", user.getRole());
+        System.out.printf(" Filter Setting: %s \n", user.getFilter());
         System.out.println("===================================");
 	}
 	

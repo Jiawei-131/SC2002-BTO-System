@@ -20,6 +20,7 @@ private String password;
 private boolean isLogin=false;
 private AuthenticationController ac;
 static Comparator<Project> comparator=Comparator.comparing(Project::getName);
+private String filterDescription="Alphabetical";
 private Role role;
 
 public User() {
@@ -105,24 +106,40 @@ public String getMaritalStatus(){
     return maritalStatus;
 }
 
+
 public void setMaritalStatus(String maritalStatus){
     this.maritalStatus=maritalStatus;
 }
 
-public Comparator<Project>  getFilter()
+public String getFilter()
 {
-	return comparator;
+	return filterDescription;
 }
 
 public void setFilter(int choice)
 {
 	switch(choice)
 	{
-		case 1->comparator=Comparator.comparing(Project::getNeighbourhood);
-		case 2->comparator=Comparator.comparingInt(Project::getNumberOfType1Units);
-		case 3->comparator=Comparator.comparingInt(Project::getNumberOfType2Units);
-		case 4->comparator=Comparator.comparing(Project::getOpeningDate);
-		case 5->comparator=Comparator.comparing(Project::getClosingDate);
+		case 1->{
+			comparator=Comparator.comparing(Project::getNeighbourhood);
+			filterDescription = "Neighbourhood";
+		}
+		case 2->{
+			comparator=Comparator.comparingInt(Project::getNumberOfType1Units);
+			filterDescription = "Number of 2-Room Units";
+		}
+		case 3->{
+			comparator=Comparator.comparingInt(Project::getNumberOfType2Units);
+			filterDescription = "Number of 3-Room Units";
+		}
+		case 4->{
+			comparator=Comparator.comparing(Project::getOpeningDate);
+			filterDescription = "Opening Date";
+		}
+		case 5->{
+			comparator=Comparator.comparing(Project::getClosingDate);
+			filterDescription = "Closing Date";
+		}
 	}
 }
 
