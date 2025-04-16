@@ -87,6 +87,8 @@ public class Applicant extends User {
     public void requestWithdrawal() {
         ProjectApplication application = this.retrieveApplication();
         application.setApplicationStatus("Withdraw Requested");
+        
+        ProjectApplicationDatabase.updateApplication(application);
     }
 
     public void createEnquiry(String text) {
