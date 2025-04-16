@@ -70,13 +70,19 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
 		//Print all projects
 		case 1->applicant.viewProjects(applicant);
         case 2->{
+        	String flatType;
         	String projectName=GetInput.inputLoop(" the Project Name",sc,s->s,s->ProjectDatabase.findByName(s)!=null);
-        	int flatTypeChoice=GetInput.inputLoop("""
-                    the flat type
-                    1. 2-Room
-                    2. 3-Room
-                    """, sc, Integer::parseInt, i -> i == 1 || i == 2);
-        	String flatType=flatTypeChoice==1?"2-Room":"3-Room";
+        	if (applicant.getMaritalStatus().equals("Single")) {
+        		flatType = "2-Room";
+        	} else {
+        		int flatTypeChoice=GetInput.inputLoop("""
+                        the flat type
+                        1. 2-Room
+                        2. 3-Room
+                        """, sc, Integer::parseInt, i -> i == 1 || i == 2);
+            	flatType=flatTypeChoice==1?"2-Room":"3-Room";
+        	}
+        	
         	applicant.applyForProject(projectName, flatType);
         }
 
