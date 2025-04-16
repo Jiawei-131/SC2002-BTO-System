@@ -164,7 +164,7 @@ public class Manager extends User {
 		        System.out.println("------------------");
 	    	}
 	    	else {
-	    		if(e.getVisibleToManager()) //TODO Change to manager NRIC is found
+//	    		if(e.getVisibleToManager()) //TODO Change to manager NRIC is found
 	    		{
 	    	        System.out.println(e);
 			        System.out.println("------------------");

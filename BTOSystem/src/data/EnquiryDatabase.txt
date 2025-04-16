@@ -1,5 +1,1 @@
-1|Hi test|Pending|null|true|true|T1234569J
-17|asd|Pending|null|true|true|T1234569J
-18|asdasd|Pending|null|true|true|T1234569J
-19|asdasdasd|Pending|null|true|true|T1234569J
-20|asdasd|Pending|null|true|true|T1234569J
+1|YCK Huts|got slot liao mah?|Pending|null|None|T1234568J|T1234569J|true

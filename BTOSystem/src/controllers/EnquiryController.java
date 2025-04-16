@@ -1,20 +1,45 @@
 package controllers;
 
-import entities.Enquiry;
 import data.EnquiryDatabase;
+import data.ProjectDatabase;
+import entities.Enquiry;
+import entities.Project;
+import entities.Officer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EnquiryController {
 
-    // All methods now interact directly with the database
+	public void addEnquiry(String projectName, String userNRIC, String content) {
+	    Project project = ProjectDatabase.findByName(projectName);
 
-    public void addEnquiry(String projectId, String userNRIC, String content) {
-        Enquiry enquiry = new Enquiry(content, "Pending", userNRIC);
-        EnquiryDatabase.save(enquiry);
-        System.out.println("Enquiry added! ID: " + enquiry.getEnquiryID());
-    }
+	    if (project == null) {
+	        System.out.println("Project not found: " + projectName);
+	        return;
+	    }
+
+	    String managerNRIC = project.getManager();
+	    String officerNRIC = "None";
+
+	    if (!project.getOfficersInCharge().isEmpty()) {
+	        Officer officer = project.getOfficersInCharge().get(0);
+	        officerNRIC = officer.getNric();
+	    }
+
+	    Enquiry enquiry = new Enquiry(
+	        projectName,
+	        content,
+	        "Pending",
+	        userNRIC,
+	        managerNRIC,
+	        officerNRIC
+	    );
+
+	    EnquiryDatabase.save(enquiry);
+	    System.out.println("Enquiry added! ID: " + enquiry.getEnquiryID());
+	}
+
 
     public List<Enquiry> getAllEnquiries() {
         return EnquiryDatabase.loadAll();
@@ -23,7 +48,7 @@ public class EnquiryController {
     public List<Enquiry> getUserEnquiries(String userNRIC) {
         List<Enquiry> userEnquiries = new ArrayList<>();
         for (Enquiry e : EnquiryDatabase.loadAll()) {
-        	if (userNRIC.trim().equalsIgnoreCase(e.getUserNRIC().trim())) {
+            if (userNRIC.trim().equalsIgnoreCase(e.getUserNRIC().trim())) {
                 userEnquiries.add(e);
             }
         }

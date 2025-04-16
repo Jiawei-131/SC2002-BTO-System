@@ -64,6 +64,11 @@ public boolean getCanRegister()
 {
     return true;
 }
+
+public String getNric() {
+    return this.nric;
+}
+
 public void setCanRegister(boolean canRegister)
 {
     this.canRegister=canRegister;

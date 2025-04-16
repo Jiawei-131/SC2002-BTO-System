@@ -74,7 +74,7 @@ public class EnquiryDatabase implements Database, FilePath {
 
         for (String line : lines) {
             String[] parts = line.split("\\|");
-            if (parts.length >= 7) {
+            if (parts.length == 9) {
                 Enquiry enquiry = parseEnquiry(parts);
                 if (enquiry != null) {
                     enquiries.add(enquiry);
@@ -95,25 +95,29 @@ public class EnquiryDatabase implements Database, FilePath {
         return enquiries;
     }
 
-
     private static Enquiry parseEnquiry(String[] parts) {
         try {
             int enquiryID = Integer.parseInt(parts[0]);
-            String text = parts[1];
-            String status = parts[2];
-            String reply = parts[3];
-            boolean visibleToApplicant = Boolean.parseBoolean(parts[4]);
-            boolean visibleToManager = Boolean.parseBoolean(parts[5]);
-            String userNRIC = parts[6];
+            String projectName = parts[1];
+            String text = parts[2];
+            String status = parts[3];
+            String reply = parts[4];
+            String officerNRIC = parts[5];
+            String managerNRIC = parts[6];
+            String userNRIC = parts[7];
+            boolean visibleToApplicant = Boolean.parseBoolean(parts[8]);
 
-            Enquiry e = new Enquiry(text, status, userNRIC);
-            // Set ID manually
+            Enquiry e = new Enquiry(projectName, text, status, userNRIC, managerNRIC, officerNRIC);
+
+            // Manually set enquiryID
             java.lang.reflect.Field idField = Enquiry.class.getDeclaredField("enquiryID");
             idField.setAccessible(true);
             idField.setInt(e, enquiryID);
 
             e.setVisibleToApplicant(visibleToApplicant);
-            e.setVisibleToManager(visibleToManager);
+            if (reply != null && !reply.equals("null")) {
+                e.replyEnquiry(enquiryID, reply);
+            }
 
             return e;
         } catch (Exception ex) {
@@ -122,17 +126,17 @@ public class EnquiryDatabase implements Database, FilePath {
         }
     }
 
-
     private static String formatEnquiry(Enquiry e) {
-        return String.format("%d|%s|%s|%s|%b|%b|%s",
+        return String.format("%d|%s|%s|%s|%s|%s|%s|%s|%b",
             e.getEnquiryID(),
+            e.getProjectName(),
             e.getText(),
             e.getStatus(),
             e.getReply(),
-            e.getVisibleToApplicant(),
-            e.getVisibleToManager(),
-            e.getUserNRIC());
+            e.getOfficerNRIC(),
+            e.getManagerNRIC(),
+            e.getUserNRIC(),
+            e.getVisibleToApplicant()
+        );
     }
-
-
 }

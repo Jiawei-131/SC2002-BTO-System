@@ -2,23 +2,28 @@ package entities;
 
 public class Enquiry {
 	private int enquiryID;
+	private String projectName;
 	private String text;
 	private String status;
 	private String reply;
 	private boolean visibleToApplicant;
-	private boolean visibleToManager;
 	private String userNRIC; // Track who submitted the enquiry
+	private String officerNRIC;
+	private String managerNRIC;
 
 	private static int nextID = 1;
 
-	public Enquiry(String text, String status, String userNRIC) {
+	public Enquiry(String projectName, String text, String status, String userNRIC, String managerNRIC,
+			String officerNRIC) {
 		this.enquiryID = nextID++;
+		this.projectName = projectName;
 		this.text = text;
 		this.status = status;
 		this.reply = null;
 		this.userNRIC = userNRIC;
+		this.managerNRIC = managerNRIC;
+		this.officerNRIC = officerNRIC;
 		this.visibleToApplicant = true;
-		this.visibleToManager = true;
 	}
 
 	public void setText(String newText) {
@@ -31,7 +36,6 @@ public class Enquiry {
 			this.status = "Deleted";
 			this.reply = null;
 			this.visibleToApplicant = false;
-			this.visibleToManager = false;
 		}
 	}
 
@@ -48,18 +52,14 @@ public class Enquiry {
 
 	public void setVisibleToApplicant(boolean visibleToApplicant) {
 		this.visibleToApplicant = visibleToApplicant;
-	}
-
-	public boolean getVisibleToManager() {
-		return visibleToManager;
-	}
-
-	public void setVisibleToManager(boolean visibleToManager) {
-		this.visibleToManager = visibleToManager;
-	}
+	}	
 
 	public int getEnquiryID() {
 		return enquiryID;
+	}
+
+	public String getProjectName() {
+		return projectName;
 	}
 
 	public String getText() {
@@ -79,10 +79,18 @@ public class Enquiry {
 		return userNRIC;
 	}
 
+	public String getOfficerNRIC() {
+		return officerNRIC;
+	}
+
+	public String getManagerNRIC() {
+		return managerNRIC;
+	}
+
 	@Override
 	public String toString() {
-		return "Enquiry ID: " + enquiryID + "\nSubmitted By: " + userNRIC + "\nText: " + text + "\nStatus: " + status
-				+ "\nReply: " + reply + "\nVisible to Applicant: " + visibleToApplicant + "\nVisible to Manager: "
-				+ visibleToManager;
+		return "Enquiry ID: " + enquiryID + "\nProject: " + projectName + "\nSubmitted By: " + userNRIC + "\nText: "
+				+ text + "\nStatus: " + status + "\nReply: " + reply + "\nManager NRIC: " + managerNRIC
+				+ "\nOfficer NRIC: " + officerNRIC + "\nVisible to Applicant: " + visibleToApplicant;
 	}
 }
