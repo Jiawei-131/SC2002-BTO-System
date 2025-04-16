@@ -58,12 +58,12 @@ public class ManagerProjectService {
 			{
 				if(type==1)//Print all project
 				{
-					View.displayProjectDetails(project);
+					View.displayProjectDetails(manager, project);
 				}
 				else {//Print only projects that the manager created
 					if(manager.getNric().equals(project.getManager()))
 					{
-						View.displayProjectDetails(project);
+						View.displayProjectDetails(manager, project);
 					}
 				}
 			}

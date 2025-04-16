@@ -71,7 +71,11 @@ public class View {
 		System.out.println("Please enter a valid choice");
 	}
 	
-    public static void displayProjectDetails(Project project) {
+    public static void displayProjectDetails(User user, Project project) {
+        if (user instanceof Applicant && !Project.isVisibleToApplicant()) {
+            System.out.println("You do not have access to view this project.");
+            return;
+        }
         System.out.println("\n=== Project Details ===");
         System.out.println("Name: " + project.getName());
         System.out.println("Neighborhood: " + project.getNeighbourhood());
@@ -88,14 +92,14 @@ public class View {
             System.out.println("  - " + officer.getUsername());
         }
         System.out.println("Visibility: " + 
-            (project.isVisibleToApplicant() ? "Visible to applicants" : "Hidden from applicants"));
+            (Project.isVisibleToApplicant() ? "Visible to applicants" : "Hidden from applicants"));
     }
 
     public static void displayAllProjects(List<Project> projects) {
         System.out.println("\n=== All Projects ===");
         for (Project project : projects) {
             System.out.println(project.getName() + " - " + project.getNeighbourhood() + 
-                " (" + (project.isVisibleToApplicant() ? "Visible" : "Hidden") + ")");
+                " (" + (Project.isVisibleToApplicant() ? "Visible" : "Hidden") + ")");
         }
     }
 
