@@ -104,7 +104,7 @@ public class ProjectApplicationDatabase implements FilePath,Database {
 //    	
 //    }
     
-    public ProjectApplication getApplicationByApplicantId(String nric) {
+    public static ProjectApplication getApplicationByApplicantId(String nric) {
     	List<String> lines = Database.readFile(projectApplicationDatabaseFilePath);
             for (String line : lines)
             {

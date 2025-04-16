@@ -4,7 +4,7 @@ import java.util.InputMismatchException;
 import data.UserDatabase;
 import java.util.Scanner;
 import entities.Applicant;
-import data.ProjectDatabase;
+import data.*;
 import entities.User;
 import util.*;
 import view.View;
@@ -70,20 +70,24 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
 		//Print all projects
 		case 1->applicant.viewProjects(applicant);
         case 2->{
-        	String flatType;
-        	String projectName=GetInput.inputLoop(" the Project Name",sc,s->s,s->ProjectDatabase.findByName(s)!=null);
-        	if (applicant.getMaritalStatus().equals("Single")) {
-        		flatType = "2-Room";
+        	if (ProjectApplicationDatabase.getApplicationByApplicantId(applicant.getNric()) != null) {
+        		System.out.println("You have an existing application!");
         	} else {
-        		int flatTypeChoice=GetInput.inputLoop("""
-                        the flat type
-                        1. 2-Room
-                        2. 3-Room
-                        """, sc, Integer::parseInt, i -> i == 1 || i == 2);
-            	flatType=flatTypeChoice==1?"2-Room":"3-Room";
+        		String flatType;
+            	String projectName=GetInput.inputLoop(" the Project Name",sc,s->s,s->ProjectDatabase.findByName(s)!=null);
+            	if (applicant.getMaritalStatus().equals("Single")) {
+            		flatType = "2-Room";
+            	} else {
+            		int flatTypeChoice=GetInput.inputLoop("""
+                            the flat type
+                            1. 2-Room
+                            2. 3-Room
+                            """, sc, Integer::parseInt, i -> i == 1 || i == 2);
+                	flatType=flatTypeChoice==1?"2-Room":"3-Room";
+            	}
+            	
+            	applicant.applyForProject(projectName, flatType);
         	}
-        	
-        	applicant.applyForProject(projectName, flatType);
         }
 
       //TODO Implement view applications
