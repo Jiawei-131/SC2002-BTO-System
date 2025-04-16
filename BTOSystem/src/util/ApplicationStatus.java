@@ -6,7 +6,7 @@ public enum ApplicationStatus {
 	SUCCESSFUL("Successful"),
 	BOOKED("Booked"),
 	BOOKREQ("Booking requested"),
-	BOOKREJ("Booking rejected"),
+	BOOKREJ("Booking rejected"), // should not be used
 	WITHDRAWN("Withdrawn"),
 	WITHDRAWREQ("Withdrawal Requested"),
 	WITHDRAWREJ("Withdrawal Rejected");
