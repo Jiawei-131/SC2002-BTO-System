@@ -18,15 +18,15 @@ public class ProjectController {
 
     // CRUD Operations
     public boolean createProject(Project project) {
-        return projectDB.save(project);
+        return ProjectDatabase.save(project);
     }
 
     public Project getProject(String name) {
-        return projectDB.findByName(name);
+        return ProjectDatabase.findByName(name);
     }
 
     public List<Project> getAllProjects() {
-        return projectDB.loadAllProjects();
+        return ProjectDatabase.loadAllProjects();
     }
 
     public boolean updateProject(Project project) {
@@ -34,12 +34,12 @@ public class ProjectController {
     }
 
     public boolean deleteProject(String name) {
-        return projectDB.delete(name);
+        return ProjectDatabase.delete(name);
     }
 
     // Staff Management
     public boolean assignOfficer(String projectName, Officer officer) {
-        Project project = projectDB.findByName(projectName);
+        Project project = ProjectDatabase.findByName(projectName);
         if (project != null && project.addOfficer(officer)) {
             return projectDB.update(project);
         }
@@ -47,7 +47,7 @@ public class ProjectController {
     }
 
     public boolean removeOfficer(String projectName, Officer officer) {
-        Project project = projectDB.findByName(projectName);
+        Project project = ProjectDatabase.findByName(projectName);
         if (project != null && project.removeOfficer(officer)) {
             return projectDB.update(project);
         }
@@ -55,7 +55,7 @@ public class ProjectController {
     }
 
     public boolean setOfficerSlot(String projectName, int slot) {
-        Project project = projectDB.findByName(projectName);
+        Project project = ProjectDatabase.findByName(projectName);
         if (project != null) {
             project.setOfficerSlot(slot);
             return projectDB.update(project);
@@ -65,9 +65,9 @@ public class ProjectController {
 
     // Visibility Management
     public boolean toggleVisibility(String projectName) {
-        Project project = projectDB.findByName(projectName);
+        Project project = ProjectDatabase.findByName(projectName);
         if (project != null) {
-            project.setVisibleToApplicant(!project.isVisibleToApplicant());
+            project.setVisibleToApplicant(!Project.isVisibleToApplicant());
             return projectDB.update(project);
         }
         return false;
@@ -75,7 +75,7 @@ public class ProjectController {
 
     // Eligibility Check
     public boolean checkEligibility(String projectName, Applicant applicant) {
-        Project project = projectDB.findByName(projectName);
+        Project project = ProjectDatabase.findByName(projectName);
         return project != null && project.isEligible(applicant);
     }
 }
