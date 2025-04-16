@@ -104,7 +104,7 @@ public class EnquiryDatabase implements Database, FilePath {
             String reply = parts[3];
             boolean visibleToApplicant = Boolean.parseBoolean(parts[4]);
             boolean visibleToManager = Boolean.parseBoolean(parts[5]);
-            String userNRIC = parts[6];  // NEW
+            String userNRIC = parts[6];
 
             Enquiry e = new Enquiry(text, status, userNRIC);
             // Set ID manually
