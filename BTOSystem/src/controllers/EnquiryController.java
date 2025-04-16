@@ -23,7 +23,8 @@ public class EnquiryController {
     public List<Enquiry> getUserEnquiries(String userNRIC) {
         List<Enquiry> userEnquiries = new ArrayList<>();
         for (Enquiry e : EnquiryDatabase.loadAll()) {
-            if (userNRIC.equals(e.getUserNRIC())) {
+        	System.out.println("Checking: " + e.getUserNRIC() + " vs " + userNRIC);
+        	if (userNRIC.trim().equalsIgnoreCase(e.getUserNRIC().trim())) {
                 userEnquiries.add(e);
             }
         }
