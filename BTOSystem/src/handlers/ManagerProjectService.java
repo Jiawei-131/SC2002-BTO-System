@@ -110,12 +110,12 @@ public class ManagerProjectService {
 	    	ProjectApplicationDatabase db=new ProjectApplicationDatabase();
 	    	projectApplications=db.readApplication();
 	    	manager.displayMenu(manager.getReportFilterOptions());
-	    	int choice = GetInput.inputLoop("your Choice", sc, Integer::parseInt, i-> i<4&&i>0);
+	    	int choice = GetInput.inputLoop("your Choice", sc, Integer::parseInt, i-> i<=4&&i>0);
 	    	switch(choice)
 	    	{
 	    		case 1->comparator=Comparator.comparing(ProjectApplication::getProjectName);
 	    		case 2->comparator=Comparator.comparing(ProjectApplication::getFlatType);
-	    		//case 3->comparator=Comparator.comparingInt(ProjectApplication::getAge);
+	    		case 3->comparator=Comparator.comparingInt(ProjectApplication::getAge);
 	    		case 4->comparator=Comparator.comparing(ProjectApplication::getMaritalStatus);
 	    	}
 	    	
@@ -127,10 +127,13 @@ public class ManagerProjectService {
 	        	System.out.printf("""
 	        			Application Details
 	        			Project Name: %s
+	        			Applicant NRIC: %s
+	        			Applicant Age: %s
+	        			Applicant MaritalStatus
 	        			Flat Type: %s
 	        			Status: %s
 	        			
-	        			""", projectApplication.getProjectName(), projectApplication.getFlatType(), projectApplication.getApplicationStatus());
+	        			""", projectApplication.getProjectName(),projectApplication.getApplicantId(),projectApplication.getAge(),projectApplication.getMaritalStatus(), projectApplication.getFlatType(), projectApplication.getApplicationStatus());
 	    	}
 	    	
 	   }
