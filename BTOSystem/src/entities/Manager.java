@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -79,10 +80,9 @@ public class Manager extends User {
         // TODO implement
     }
 
-    public void generateReport(int filter) {
-        // TODO implement
-    	ProjectApplicationDatabase db=new ProjectApplicationDatabase();
-    	db.readApplication();
+    public void generateReport(Scanner sc) {
+    	ManagerProjectService.generateReport(this,sc);
+
     }
     public List<String> getMenuOptions() {
         return Arrays.asList(
@@ -122,6 +122,19 @@ public class Manager extends User {
 				"3. Reply to enquiry",
 				"4. Delete enquiry",
 				"5. Back to Main Menu"
+        );
+    }
+    
+    /*		"1. Project Name",
+			"2. Flat Type",
+			"3. Age",
+			"4. Marital Status"*/
+    public List<String> getReportFilterOptions() {
+        return Arrays.asList(
+        		"1. Project Name",
+    			"2. Flat Type",
+    			"3. Age",
+    			"4. Marital Status"
         );
     }
     

@@ -101,7 +101,7 @@ public class View {
             System.out.println(project.getName() + " - " + project.getNeighbourhood() + 
                 " (" + (Project.isVisibleToApplicant() ? "Visible" : "Hidden") + ")");
         }
-    }
+    }	
 
 
 }

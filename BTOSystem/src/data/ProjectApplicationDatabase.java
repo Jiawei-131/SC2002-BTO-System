@@ -23,7 +23,7 @@ public class ProjectApplicationDatabase implements FilePath,Database {
     public List<ProjectApplication> readApplication()
     {
     	List<String> applications=Database.readFile(projectApplicationDatabaseFilePath);
-    	List<ProjectApplication> projectApplications = null;
+    	List<ProjectApplication> projectApplications =new ArrayList<>();
     	for(String application: applications)
     	{
             String[] parts = application.split("\\|");
@@ -49,21 +49,21 @@ public class ProjectApplicationDatabase implements FilePath,Database {
 //    }
     
     // update
-    public void updateApplication(ProjectApplication application) {
+    public static void updateApplication(ProjectApplication application) {
         List<String> lines = Database.readFile(projectApplicationDatabaseFilePath);
         List<String> newLines = new ArrayList<>();
         
         for (String line : lines) {
         	 String[] parts = line.split("\\|");
-        	 if (parts.length == 5 && parts[0].equals(application.getApplicantId())) {
-             	newLines.add(application.getApplicantId() + "|" + application.getApplicationStatus() + "|" +
+        	 if (parts.length == 6 && parts[0].equals(application.getApplicantId())) {
+             	newLines.add(application.getApplicantId() + "|" + application.getMaritalStatus() + "|" + application.getApplicationStatus() + "|" +
              	application.getProjectName() + "|" + application.getFlatType() + "|" + String.valueOf(application.getFlatBooked()));
              }
         	 else {
         		 newLines.add(line);
         	 }
         }
-        updateFile(projectApplicationDatabaseFilePath,newLines);
+        Database.updateFile(projectApplicationDatabaseFilePath,newLines);
     }
 //    	try {
 //    		File inputFile = new File(projectApplicationDatabaseFilePath);
@@ -104,7 +104,7 @@ public class ProjectApplicationDatabase implements FilePath,Database {
 //    	
 //    }
     
-    public ProjectApplication getApplicationByApplicantId(String nric) {
+    public static ProjectApplication getApplicationByApplicantId(String nric) {
     	List<String> lines = Database.readFile(projectApplicationDatabaseFilePath);
             for (String line : lines)
             {

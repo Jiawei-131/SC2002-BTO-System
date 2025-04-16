@@ -37,7 +37,7 @@ public class OfficerApplicationDatabase implements FilePath,Database {
         		 newLines.add(line);
         	 }
         }
-        updateFile(officerApplicationDatabaseFilePath,newLines);
+        Database.updateFile(officerApplicationDatabaseFilePath,newLines);
     }
 	
 	public void writeApplication(OfficerApplication application) {

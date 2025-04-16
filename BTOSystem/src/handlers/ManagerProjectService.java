@@ -1,12 +1,16 @@
 package handlers;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
+import controllers.AuthenticationController;
 import controllers.DateTimeController;
+import data.ProjectApplicationDatabase;
 import data.ProjectDatabase;
 import entities.Manager;
 import entities.Project;
+import entities.ProjectApplication;
 import util.GetInput;
 import view.View;
 
@@ -96,6 +100,38 @@ public class ManagerProjectService {
 			Project project = new Project(btoName, neighbourhood,unitType1,unitType1Price, unitType2,unitType2Price,
 	    			openDate, closeDate,manager.getNric(),availableSlots);
 			ProjectDatabase.save(project);
+	    	
+	   }
+	   
+	   public static void generateReport(Manager manager,Scanner sc)
+	   {
+		   List<ProjectApplication> projectApplications;
+		   Comparator<ProjectApplication> comparator=Comparator.comparing(ProjectApplication::getProjectName);
+	    	ProjectApplicationDatabase db=new ProjectApplicationDatabase();
+	    	projectApplications=db.readApplication();
+	    	manager.displayMenu(manager.getReportFilterOptions());
+	    	int choice = GetInput.inputLoop("your Choice", sc, Integer::parseInt, i-> i<4&&i>0);
+	    	switch(choice)
+	    	{
+	    		case 1->comparator=Comparator.comparing(ProjectApplication::getProjectName);
+	    		case 2->comparator=Comparator.comparing(ProjectApplication::getFlatType);
+	    		//case 3->comparator=Comparator.comparingInt(ProjectApplication::getAge);
+	    		case 4->comparator=Comparator.comparing(ProjectApplication::getMaritalStatus);
+	    	}
+	    	
+	    	projectApplications=projectApplications.stream()
+			            .sorted(comparator)
+			            .toList();
+	    	for(ProjectApplication projectApplication:projectApplications)
+	    	{ 
+	        	System.out.printf("""
+	        			Application Details
+	        			Project Name: %s
+	        			Flat Type: %s
+	        			Status: %s
+	        			
+	        			""", projectApplication.getProjectName(), projectApplication.getFlatType(), projectApplication.getApplicationStatus());
+	    	}
 	    	
 	   }
 }

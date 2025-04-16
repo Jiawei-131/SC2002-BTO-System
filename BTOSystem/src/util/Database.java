@@ -59,7 +59,7 @@ public interface Database {
             throw new RuntimeException("Error writing to file: " + e.getMessage(), e);
         }
     }
-    default public void updateFile(String filePath,List<String> lines) {
+    public static void updateFile(String filePath,List<String> lines) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             for (String line : lines) {
                 writer.write(line);
