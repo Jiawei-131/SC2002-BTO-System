@@ -107,7 +107,9 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
         case 2->{
         	if (ProjectApplicationDatabase.getApplicationByApplicantId(applicant.getNric()) != null) {
         		System.out.println("You have an existing application!");
-        	} else {
+        	} if (applicant.getMaritalStatus().equals("Single") && applicant.getAge() < 35) {
+    			System.out.println("Ineligible applicant. No projects available.");
+    		} else {
         		String flatType;
             	String projectName=GetInput.inputLoop("the Project Name",sc,s->s,s->ProjectDatabase.findByName(s)!=null);
             	
