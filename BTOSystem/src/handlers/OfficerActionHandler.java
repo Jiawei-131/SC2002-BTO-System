@@ -31,10 +31,6 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
 
 	}
 	
-	public void handleFilterAction(User currentUser,Scanner sc)
-	{
-		
-	}
 	
 	public void handleEnquiryAction(int choice,User currentUser, Scanner sc) {
 		View.menu(currentUser,((Officer)currentUser).getEnquiryOptions());

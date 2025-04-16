@@ -39,13 +39,6 @@ public User(String name, String nric,int age, String maritalStatus,String passwo
     this.ac=ac;
     this.role=role;
     }
-//Get all projects with names containing a substring, sorted alphabetically
-//public static List<Project> sort(String keyword) {
-//    return Project.loadAllProjects().stream()
-//        .filter(p -> p.getName().toLowerCase().contains(keyword.toLowerCase()))
-//        .sorted(comparator)
-//        .toList();
-//}
 
 public List<Project> sort() {
     return ProjectDatabase.loadAllProjects().stream()
@@ -116,10 +109,10 @@ public void setMaritalStatus(String maritalStatus){
     this.maritalStatus=maritalStatus;
 }
 
-//public Comparator<Project>  getFilter()
-//{
-//	return comparator;
-//}
+public Comparator<Project>  getFilter()
+{
+	return comparator;
+}
 
 public void setFilter(int choice)
 {

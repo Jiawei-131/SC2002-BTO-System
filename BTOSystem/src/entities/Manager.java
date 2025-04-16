@@ -90,7 +90,8 @@ public class Manager extends User {
             "2. Approvals",
             "3. Enquiries",
             "4. Change Password",
-            "5. Logout"
+            "5. Filter Settings",
+            "6. Logout"
         );
     }
     

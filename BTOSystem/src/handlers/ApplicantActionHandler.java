@@ -59,11 +59,6 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
     	while(choice!=5);
 	}
 	
-	public void handleFilterAction(User currentUser,Scanner sc)
-	{
-		currentUser.displayMenu(currentUser.getSortOptions());
-		currentUser.setFilter(GetInput.inputLoop("your choice", sc, Integer::parseInt, i->i>0&&i<6));
-	}
 	
     public void handleProjectAction(int choice,User currentUser, Scanner sc) {
     	do {

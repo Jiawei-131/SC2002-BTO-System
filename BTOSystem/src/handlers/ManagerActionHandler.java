@@ -37,10 +37,6 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
 
 	}
 	
-	public void handleFilterAction(User currentUser,Scanner sc)
-	{
-		
-	}
 	
 	/*	1. Approve or reject HDB Officer’s registration as the HDB 
 			Manager in-charge of the project – update project’s remaining HDB 
@@ -100,12 +96,12 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
 			switch(choice)
 			{
 			case 1,2->manager.viewProjects(choice);
-	        case 4-> manager.createProject(sc);
+	        case 3-> manager.createProject(sc);
 	        //Edit BTO Projects, check if exists
-	        case 5 ->manager.deleteProject(sc);
-	        case 6 ->manager.editProject(sc);
-	        case 7 ->generateReport(manager,sc);
-	        case 8 -> {}
+	        case 4 ->manager.deleteProject(sc);
+	        case 5 ->manager.editProject(sc);
+	        case 6 ->generateReport(manager,sc);
+	        case 7 -> {}
 	        default-> View.invalidChoice();
 			}}
 	    	while(choice!=8);
