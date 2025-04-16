@@ -7,7 +7,7 @@ import util.FilePath;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnquiryDababase implements Database, FilePath {
+public class EnquiryDatabase implements Database, FilePath {
 
     public static boolean save(Enquiry enquiry) {
         try {
@@ -73,7 +73,7 @@ public class EnquiryDababase implements Database, FilePath {
 
         for (String line : lines) {
             String[] parts = line.split("\\|");
-            if (parts.length == 6) {
+            if (parts.length >= 6) {
                 Enquiry enquiry = parseEnquiry(parts);
                 if (enquiry != null) enquiries.add(enquiry);
             }
@@ -90,9 +90,10 @@ public class EnquiryDababase implements Database, FilePath {
             String reply = parts[3];
             boolean visibleToApplicant = Boolean.parseBoolean(parts[4]);
             boolean visibleToManager = Boolean.parseBoolean(parts[5]);
+            String userNRIC = parts[6];  // NEW
 
-            Enquiry e = new Enquiry(text, status, reply);
-            // simulate setting ID (if needed for persistence logic)
+            Enquiry e = new Enquiry(text, status, userNRIC);
+            // Set ID manually
             java.lang.reflect.Field idField = Enquiry.class.getDeclaredField("enquiryID");
             idField.setAccessible(true);
             idField.setInt(e, enquiryID);
@@ -107,13 +108,17 @@ public class EnquiryDababase implements Database, FilePath {
         }
     }
 
+
     private static String formatEnquiry(Enquiry e) {
-        return String.format("%d|%s|%s|%s|%b|%b",
+        return String.format("%d|%s|%s|%s|%b|%b|%s",
             e.getEnquiryID(),
             e.getText(),
             e.getStatus(),
             e.getReply(),
             e.getVisibleToApplicant(),
-            e.getVisibleToManager());
+            e.getVisibleToManager(),
+            e.getUserNRIC());
     }
+
+
 }
