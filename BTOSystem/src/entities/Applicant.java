@@ -3,6 +3,7 @@ package entities;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.List;
+import util.ApplicationStatus;
 import data.*;
 
 import controllers.AuthenticationController;
@@ -113,7 +114,7 @@ public class Applicant extends User {
 
     public void requestWithdrawal() {
         ProjectApplication application = this.retrieveApplication();
-        application.setApplicationStatus("Withdraw Requested");
+        application.setApplicationStatus(ApplicationStatus.WITHDRAWREQ.getStatus());
         
         ProjectApplicationDatabase.updateApplication(application);
     }
