@@ -119,14 +119,17 @@ public class Applicant extends User {
         ProjectApplicationDatabase.updateApplication(application);
     }
 
-	public void createEnquiry(String text, EnquiryController enquiryController) {
-		// TODO: waiting on Enquiry class
-		if (this.appliedProject == null) {
-			System.out.println("You must apply for a project before submitting an enquiry.");
-			return;
-		}
-		enquiryController.addEnquiry(appliedProject, this.nric, text);
-	}
+    public void createEnquiry(String projectName, String text, EnquiryController enquiryController) {
+        Project project = ProjectDatabase.findByName(projectName);
+
+        if (project == null || !Project.isVisibleToApplicant()) {
+            System.out.println("You can only enquire about visible projects.");
+            return;
+        }
+
+        enquiryController.addEnquiry(projectName, this.nric, text);
+    }
+
 
 	public void viewEnquiries(EnquiryController enquiryController) {
 	    List<Enquiry> userEnquiries = enquiryController.getUserEnquiries(this.nric);

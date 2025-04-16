@@ -73,8 +73,11 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
             
 			switch (choice) {
                 case 1 -> {
-                    enquiry = GetInput.getLineInput(sc, "Your Enquiry");
-                    applicant.createEnquiry(enquiry, enquiryController);
+                	String projectName = GetInput.getLineInput(sc, "the project name you want to enquire about");
+                	String enquiryText = GetInput.getLineInput(sc, "your enquiry");
+
+                	applicant.createEnquiry(projectName, enquiryText, enquiryController);
+
                 }
                 case 2 -> applicant.viewEnquiries(enquiryController);
                 case 3 -> {
