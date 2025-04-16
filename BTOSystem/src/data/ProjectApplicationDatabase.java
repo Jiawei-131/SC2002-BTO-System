@@ -55,8 +55,8 @@ public class ProjectApplicationDatabase implements FilePath,Database {
         
         for (String line : lines) {
         	 String[] parts = line.split("\\|");
-        	 if (parts.length == 5 && parts[0].equals(application.getApplicantId())) {
-             	newLines.add(application.getApplicantId() + "|" + application.getApplicationStatus() + "|" +
+        	 if (parts.length == 6 && parts[0].equals(application.getApplicantId())) {
+             	newLines.add(application.getApplicantId() + "|" + application.getMaritalStatus() + "|" + application.getApplicationStatus() + "|" +
              	application.getProjectName() + "|" + application.getFlatType() + "|" + String.valueOf(application.getFlatBooked()));
              }
         	 else {
