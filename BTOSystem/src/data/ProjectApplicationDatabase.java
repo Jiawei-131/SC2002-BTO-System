@@ -17,7 +17,7 @@ public class ProjectApplicationDatabase implements FilePath,Database {
     // Write a new application to the file
     public static void writeApplication(ProjectApplication application) {
         	String flatBooked = application.getFlatBooked() ? "true" : "false";
-            Database.writeFile(projectApplicationDatabaseFilePath,application.getApplicantId(),application.getMaritalStatus(), application.getApplicationStatus(),application.getProjectName(),application.getFlatType(), flatBooked);
+            Database.writeFile(projectApplicationDatabaseFilePath,application.getApplicantId(),application.getMaritalStatus(), Integer.toString(application.getAge()), application.getApplicationStatus(),application.getProjectName(),application.getFlatType(), flatBooked);
     }
     
     public List<ProjectApplication> readApplication()
@@ -29,11 +29,12 @@ public class ProjectApplicationDatabase implements FilePath,Database {
             String[] parts = application.split("\\|");
             String applicantId = parts[0];
             String maritalStatus = parts[1];
-            String status = parts[2];
-            String projectName = parts[3];
-            String flatType = parts[4];
-            String flatBooked =parts[5];
-            ProjectApplication pa = new ProjectApplication(applicantId, maritalStatus, status, projectName, flatType,Boolean.parseBoolean(flatBooked));
+            String age = parts[2];
+            String status = parts[3];
+            String projectName = parts[4];
+            String flatType = parts[5];
+            String flatBooked =parts[6];
+            ProjectApplication pa = new ProjectApplication(applicantId, maritalStatus, Integer.parseInt(age), status, projectName, flatType,Boolean.parseBoolean(flatBooked));
             projectApplications.add(pa);
     	}
     	return projectApplications;
@@ -55,8 +56,8 @@ public class ProjectApplicationDatabase implements FilePath,Database {
         
         for (String line : lines) {
         	 String[] parts = line.split("\\|");
-        	 if (parts.length == 6 && parts[0].equals(application.getApplicantId())) {
-             	newLines.add(application.getApplicantId() + "|" + application.getMaritalStatus() + "|" + application.getApplicationStatus() + "|" +
+        	 if (parts.length == 7 && parts[0].equals(application.getApplicantId())) {
+             	newLines.add(application.getApplicantId() + "|" + application.getMaritalStatus() + "|" + application.getAge() + "|" + application.getApplicationStatus() + "|" +
              	application.getProjectName() + "|" + application.getFlatType() + "|" + String.valueOf(application.getFlatBooked()));
              }
         	 else {
@@ -109,16 +110,17 @@ public class ProjectApplicationDatabase implements FilePath,Database {
             for (String line : lines)
             {
             	String[] parts = line.split("\\|");
-            	if (parts.length == 6 && parts[0].equals(nric)) { // Check if applicantNRIC matches
+            	if (parts.length == 7 && parts[0].equals(nric)) { // Check if applicantNRIC matches
                     String maritalStatus = parts[1];
-            		String applicationStatus = parts[2];
-                    String projectName = parts[3];  
-                    String flatType = parts[4];
-                    boolean flatBooked=Boolean.parseBoolean(parts[5]);
-                    return new ProjectApplication(nric, maritalStatus, applicationStatus, projectName, flatType, flatBooked);
+                    String age = parts[2];
+            		String applicationStatus = parts[3];
+                    String projectName = parts[4];  
+                    String flatType = parts[5];
+                    boolean flatBooked=Boolean.parseBoolean(parts[6]);
+                    return new ProjectApplication(nric, maritalStatus, Integer.parseInt(age), applicationStatus, projectName, flatType, flatBooked);
                 }
             }
-            return null; // Return null if no matching patient is found
+            return null; // Return null if no matching application is found
     }
     
 //    public ProjectApplication getApplicationByApplicantId(String nric) {
