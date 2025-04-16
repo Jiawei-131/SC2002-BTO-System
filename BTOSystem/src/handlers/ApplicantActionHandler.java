@@ -3,6 +3,8 @@ package handlers;
 import java.util.InputMismatchException;
 import data.UserDatabase;
 import java.util.Scanner;
+
+import controllers.EnquiryController;
 import entities.Applicant;
 import entities.Project;
 import data.*;
@@ -11,6 +13,7 @@ import util.*;
 import view.View;
 
 public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordReset {
+    private final EnquiryController enquiryController = new EnquiryController();
 	public User handleAction(int choice,User currentUser, Scanner sc,UserDatabase db){
         switch(choice) {
       //Manager Officer menu
@@ -30,35 +33,66 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
 		return currentUser;
 	}
 	
-	public void handleEnquiryAction(int choice,User currentUser, Scanner sc) {
-		String enquiry;
-		int enquiryID;
-		Applicant applicant	=(Applicant)currentUser;
-    	do {
-    	applicant.displayMenu(applicant.getEnquiryOptions());
-    	choice = GetInput.getIntInput(sc, "your choice");
-		switch(choice)
-		{
-		case 1->{
-				enquiry=GetInput.getLineInput(sc,"Your Enquiry");
-				applicant.createEnquiry(enquiry);
-		}
-        case 2 ->	applicant.viewEnquiry();
-        //TODO Implement Edit Enquiry
-        case 3 ->{
-        	 enquiryID =GetInput.getIntInput(sc,"your EnquiryID");
-        	 enquiry= GetInput.getLineInput(sc,"your new enquiry");
-        	 applicant.editEnquiry(enquiryID, enquiry);
-        }
-        //TODO Implement Delete Enquiry
-        case 4->{
-				enquiryID=GetInput.getIntInput(sc,"your Enquiry ID");
-				applicant.deleteEnquiry(enquiryID);
-        }
-        default -> View.invalidChoice();
-		}}
-    	while(choice!=5);
-	}
+//	public void handleEnquiryAction(int choice,User currentUser, Scanner sc) {
+//		String enquiry;
+//		int enquiryID;
+//		Applicant applicant	=(Applicant)currentUser;
+//    	do {
+//    	applicant.displayMenu(applicant.getEnquiryOptions());
+//    	choice = GetInput.getIntInput(sc, "your choice");
+//		switch(choice)
+//		{
+//		case 1->{
+//				enquiry=GetInput.getLineInput(sc,"Your Enquiry");
+//				applicant.createEnquiry(enquiry);
+//		}
+//        case 2 ->	applicant.viewEnquiry();
+//        //TODO Implement Edit Enquiry
+//        case 3 ->{
+//        	 enquiryID =GetInput.getIntInput(sc,"your EnquiryID");
+//        	 enquiry= GetInput.getLineInput(sc,"your new enquiry");
+//        	 applicant.editEnquiry(enquiryID, enquiry);
+//        }
+//        //TODO Implement Delete Enquiry
+//        case 4->{
+//				enquiryID=GetInput.getIntInput(sc,"your Enquiry ID");
+//				applicant.deleteEnquiry(enquiryID);
+//        }
+//        default -> View.invalidChoice();
+//		}}
+//    	while(choice!=5);
+//	}
+    public void handleEnquiryAction(int choice, User currentUser, Scanner sc) {
+        String enquiry;
+        String enquiryID;
+        Applicant applicant = (Applicant) currentUser;
+
+        do {
+            applicant.displayMenu(applicant.getEnquiryOptions());
+            choice = GetInput.getIntInput(sc, "your choice");
+            
+			switch (choice) {
+                case 1 -> {
+                    enquiry = GetInput.getLineInput(sc, "Your Enquiry");
+                    applicant.createEnquiry(enquiry, enquiryController);
+                }
+                case 2 -> applicant.viewEnquiries(enquiryController);
+                case 3 -> {
+                    enquiryID = GetInput.getLineInput(sc, "your Enquiry ID");
+                    enquiry = GetInput.getLineInput(sc, "your new enquiry");
+                    applicant.editEnquiry(enquiryID, enquiry, enquiryController);
+                }
+                case 4 -> {
+                    enquiryID = GetInput.getLineInput(sc, "your Enquiry ID");
+                    applicant.deleteEnquiry(enquiryID, enquiryController);
+                }
+                case 5 -> {
+                    System.out.println("Returning to main menu...");
+                }
+                default -> View.invalidChoice();
+            }
+        } while (choice != 5);
+    }
 	
 	
     public void handleProjectAction(int choice,User currentUser, Scanner sc) {

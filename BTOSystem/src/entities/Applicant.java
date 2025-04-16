@@ -6,6 +6,7 @@ import java.util.List;
 import data.*;
 
 import controllers.AuthenticationController;
+import controllers.EnquiryController;
 import view.View;
 
 
@@ -106,25 +107,41 @@ public class Applicant extends User {
         ProjectApplicationDatabase.updateApplication(application);
     }
 
-    public void createEnquiry(String text) {
-        // TODO: waiting on Enquiry class
-//    	enquiry=new Enquiry(text,this.nric,this.appliedProject);
-    }
+	public void createEnquiry(String text, EnquiryController enquiryController) {
+		// TODO: waiting on Enquiry class
+		if (this.appliedProject == null) {
+			System.out.println("You must apply for a project before submitting an enquiry.");
+			return;
+		}
+		enquiryController.addEnquiry(appliedProject, this.nric, text);
+	}
 
-    public void viewEnquiry() {
-        // TODO: idk what this is
-//    	enquiry.displayDetails(this);
-    }
+	public void viewEnquiries(EnquiryController enquiryController) {
+	    List<Enquiry> userEnquiries = enquiryController.getUserEnquiries(this.nric);
+	    if (userEnquiries.isEmpty()) {
+	        System.out.println("No enquiries found.");
+	        return;
+	    }
 
-    public void editEnquiry(int enquiryID, String newText) {
-        // TODO: waiting on Enquiry
-//    	enquiry.editEnquiry(newText);
-    }
+	    System.out.println("\nYour Enquiries:");
+	    for (Enquiry e : userEnquiries) {
+	        System.out.println(e);
+	        System.out.println("------------------");
+	    }
+	}
 
-    public void deleteEnquiry(int enquiryID) {
-        // TODO: waiting on Enquiry
-//    	enquiry.deleteEnquiry();
-    }
+	public void editEnquiry(String enquiryID, String newText, EnquiryController enquiryController) {
+		// TODO: waiting on Enquiry
+		boolean updated = enquiryController.editEnquiry(enquiryID, this.nric, newText);
+		System.out.println(
+				updated ? "Enquiry updated." : "Failed to update enquiry (ID not found or permission denied).");
+	}
+
+	public void deleteEnquiry(String enquiryID, EnquiryController enquiryController) {
+		boolean deleted = enquiryController.deleteEnquiry(enquiryID, this.nric);
+		System.out.println(
+				deleted ? "Enquiry deleted." : "Failed to delete enquiry (ID not found or permission denied).");
+	}
     
     public List<String> getProjectOptions() {
         return Arrays.asList(
