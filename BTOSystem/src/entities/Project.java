@@ -55,7 +55,7 @@ public class Project {
 		this.openingDate = openingDate;
 		this.closingDate = closingDate;
 		this.officerSlot = Math.min(officerSlot, MAX_OFFICERS);
-		this.visibleToApplicant = true;
+		Project.visibleToApplicant = true;
 	}
 
 	// Staff Management
@@ -196,7 +196,7 @@ public class Project {
 	}
 
 	public void setVisibleToApplicant(boolean visible) {
-		this.visibleToApplicant = visible;
+		Project.visibleToApplicant = visible;
 	}
 
 	public List<Enquiry> getEnquiryList() {
@@ -216,6 +216,6 @@ public class Project {
 	}
 
 	public void setIsVisible(boolean b) {
-		this.visibleToApplicant = b;
+		Project.visibleToApplicant = b;
 	}
 }

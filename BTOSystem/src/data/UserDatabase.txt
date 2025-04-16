@@ -6,3 +6,4 @@ iamnotgroot|T1234569J|25|Single|A|true
 aasdkjhk|T1234569D|40|Married|A|true
 weihao|T1234562J|25|Single|A|true
 notweihao|T2233445J|20|Single|A|true
+Applicant|T1231233J|35|Single|A|true
