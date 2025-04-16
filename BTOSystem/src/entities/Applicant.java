@@ -37,10 +37,21 @@ public class Applicant extends User {
 
     public void applyForProject(String projectName, String flatType) {
         // TODO: create new Application instance with project
+    	
     	ProjectApplication application = new ProjectApplication(this.nric, this.maritalStatus, projectName, flatType);
     	
     	ProjectApplicationDatabase.writeApplication(application);
     	appliedProject=projectName;
+    	
+
+    	Project project = ProjectDatabase.findByName(projectName);
+    	
+    	if (flatType == "2-Room") {
+    		project.setNumberOfType1Units(project.getNumberOfType1Units()-1);
+    	} else {
+    		project.setNumberOfType2Units(project.getNumberOfType2Units()-1);
+    	}
+    	ProjectDatabase.update(project);
     }
 
     
