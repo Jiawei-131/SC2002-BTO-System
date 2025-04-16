@@ -10,6 +10,7 @@ import util.GetInput;
 import controllers.AuthenticationController;
 import controllers.DateTimeController;
 import controllers.EnquiryController;
+import data.EnquiryDatabase;
 import data.ProjectApplicationDatabase;
 import view.View;
 public class Manager extends User {
@@ -21,6 +22,8 @@ public class Manager extends User {
         super(name, nric, age, maritalStatus, password,ac,role);
         this.isVisible=isVisible;
     }
+    
+
  
     public void displayMenu(List<String> options) {
         View.menu(this,options);
@@ -153,27 +156,54 @@ public class Manager extends User {
 
         );
     }
-    public void viewAllEnquiries(EnquiryController enquiryController,int choice) {
-        // TODO implement
-    	List<Enquiry> userEnquiries=enquiryController.getAllEnquiries();
-	    System.out.println("\nYour Enquiries:");
-	    for (Enquiry e : userEnquiries) { //Print 
-	    	if(choice==1) //Print all enquires
-	    	{
-		        System.out.println(e);
-		        System.out.println("------------------");
-	    	}
-	    	else {
-//	    		if(e.getVisibleToManager()) //TODO Change to manager NRIC is found
-	    		{
-	    	        System.out.println(e);
-			        System.out.println("------------------");
-	    		}
-	    	}
+    public void viewAllEnquiries(EnquiryController enquiryController, int choice) {
+        List<Enquiry> allEnquiries = enquiryController.getAllEnquiries();
+        boolean found = false;
 
-	    }
+        System.out.println("\n--- Enquiries ---");
+
+        for (Enquiry e : allEnquiries) {
+            if (choice == 1) {
+                // Show all project enquiries
+                System.out.println(e);
+                System.out.println("------------------");
+                found = true;
+            } else if (e.getManagerNRIC().equals(this.getNric())) {
+                // Show only enquiries for manager's project
+                System.out.println(e);
+                System.out.println("------------------");
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("No enquiries found.");
+        }
     }
-    public void replyEnquiry(Project assignedProject) {
-        // TODO implement
+
+    public void replyToEnquiry(Scanner sc, EnquiryController enquiryController) {
+        System.out.print("Enter Enquiry ID to reply: ");
+        int id = sc.nextInt();
+        sc.nextLine(); // consume newline
+
+        Enquiry enquiry = enquiryController.findEnquiryById(String.valueOf(id));
+
+        if (enquiry == null) {
+            System.out.println("Enquiry not found.");
+            return;
+        }
+
+        if (!enquiry.getManagerNRIC().equals(this.getNric())) {
+            System.out.println("You are not authorized to reply to this enquiry.");
+            return;
+        }
+
+        System.out.print("Enter your reply: ");
+        String reply = sc.nextLine();
+
+        enquiry.replyEnquiry(id, reply);
+        boolean success = EnquiryDatabase.update(enquiry);
+        System.out.println(success ? "Reply submitted successfully." : "Failed to update enquiry.");
     }
+
 }

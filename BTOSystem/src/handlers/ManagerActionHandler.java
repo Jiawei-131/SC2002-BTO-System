@@ -75,7 +75,7 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
 			choice=GetInput.getIntInput(sc, "your choice");
 			switch(choice) {
 			case 1,2 ->manager.viewAllEnquiries(enquiryController,choice);
-			case 3 ->System.out.println("Not Done");
+			case 3 -> manager.replyToEnquiry(sc, enquiryController);
 			case 4-> {}
 			default-> View.invalidChoice();
 			}
