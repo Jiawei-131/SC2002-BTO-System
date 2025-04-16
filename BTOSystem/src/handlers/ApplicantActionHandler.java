@@ -74,7 +74,7 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
         		System.out.println("You have an existing application!");
         	} else {
         		String flatType;
-            	String projectName=GetInput.inputLoop(" the Project Name",sc,s->s,s->ProjectDatabase.findByName(s)!=null);
+            	String projectName=GetInput.inputLoop("the Project Name",sc,s->s,s->ProjectDatabase.findByName(s)!=null);
             	if (applicant.getMaritalStatus().equals("Single")) {
             		flatType = "2-Room";
             	} else {
