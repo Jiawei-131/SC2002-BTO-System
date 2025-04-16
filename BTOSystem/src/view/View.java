@@ -1,13 +1,20 @@
 package view;
 
 import entities.Applicant;
+import entities.Enquiry;
 import entities.Manager;
 import entities.Officer;
 import entities.Project;
 import entities.User;
 import java.util.List;
+import java.util.Scanner;
+
+import controllers.EnquiryController;
 
 public class View {
+	
+	private EnquiryController controller;
+    private Scanner scanner;
 	
 	public View() {
 	}
@@ -101,7 +108,7 @@ public class View {
             System.out.println(project.getName() + " - " + project.getNeighbourhood() + 
                 " (" + (Project.isVisibleToApplicant() ? "Visible" : "Hidden") + ")");
         }
-    }	
+    }
 
 
 }
