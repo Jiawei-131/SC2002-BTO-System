@@ -118,6 +118,13 @@ public class Applicant extends User {
         
         ProjectApplicationDatabase.updateApplication(application);
     }
+    
+    public void requestFlatBooking() {
+        ProjectApplication application = this.retrieveApplication();
+        application.setApplicationStatus(ApplicationStatus.BOOKREQ.getStatus());
+        
+        ProjectApplicationDatabase.updateApplication(application);
+    }
 
     public void createEnquiry(String projectName, String text, EnquiryController enquiryController) {
         Project project = ProjectDatabase.findByName(projectName);
@@ -163,8 +170,9 @@ public class Applicant extends User {
         		"1. View list of projects",
     		 	"2. Apply for project",
         		"3. View applied project",
-        		"4. Withdraw from BTO Application",
-				"5. Back to Main Menu"
+        		"4. Request Flat Booking",
+        		"5. Withdraw from BTO Application",
+				"6. Back to Main Menu"
         );
     }
     public List<String> getEnquiryOptions() {

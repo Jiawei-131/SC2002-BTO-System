@@ -1,12 +1,12 @@
 package handlers;
 
 import java.util.InputMismatchException;
-import data.UserDatabase;
 import java.util.Scanner;
 
 import controllers.EnquiryController;
 import entities.Applicant;
 import entities.Project;
+import entities.ProjectApplication;
 import data.*;
 import entities.User;
 import util.*;
@@ -110,7 +110,9 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
         case 2->{
         	if (ProjectApplicationDatabase.getApplicationByApplicantId(applicant.getNric()) != null) {
         		System.out.println("You have an existing application!");
-        	} else {
+        	} if (applicant.getMaritalStatus().equals("Single") && applicant.getAge() < 35) {
+    			System.out.println("Ineligible applicant. No projects available.");
+    		} else {
         		String flatType;
             	String projectName=GetInput.inputLoop("the Project Name",sc,s->s,s->ProjectDatabase.findByName(s)!=null);
             	
@@ -142,20 +144,60 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
 
       //TODO Implement view applications
         case 3-> {
-        	if (ProjectApplicationDatabase.getApplicationByApplicantId(applicant.getNric()) == null) {
+        	ProjectApplication application = ProjectApplicationDatabase.getApplicationByApplicantId(applicant.getNric());
+        	if (application == null) {
         		System.out.println("You do not have an existing application!");
-        	} else {
-        		applicant.viewApplication();
+        		break;
+        	} else if (application.getApplicationStatus().equals(ApplicationStatus.WITHDRAWREJ.getStatus())) {
+        		System.out.println("Your withdrawal request has been rejected.");
+        		
+        		// resets status
+        		application.setApplicationStatus(ApplicationStatus.SUCCESSFUL.getStatus());
+                ProjectApplicationDatabase.updateApplication(application);
+        	}
+        	applicant.viewApplication();
+        }
+        
+        case 4 -> {
+        	ProjectApplication application = ProjectApplicationDatabase.getApplicationByApplicantId(applicant.getNric());
+        	if (application == null) {
+        		System.out.println("You do not have an existing application!");
+        	} else if (application.getApplicationStatus().equals(ApplicationStatus.PENDING.getStatus())) {
+        		System.out.println("Your application is still pending!");
+        	} else if (application.getApplicationStatus().equals(ApplicationStatus.UNSUCCESSFUL.getStatus())) {
+        		System.out.println("Your application was unsuccessful!");
+        	} else if (application.getApplicationStatus().equals(ApplicationStatus.BOOKREQ.getStatus())) {
+        		System.out.println("There is an on-going booking request. Please wait for an officer to assist.");
+        	} else if (application.getApplicationStatus().equals(ApplicationStatus.BOOKED.getStatus())) {
+        		System.out.println("You have already successfully booked a flat.");
+        	} else if (application.getApplicationStatus().equals(ApplicationStatus.WITHDRAWREQ.getStatus())) {
+        		System.out.println("There is an on-going withdrawal request. Please wait for an officer to assist.");
+        	} else if (application.getApplicationStatus().equals(ApplicationStatus.WITHDRAWN.getStatus())) {
+        		System.out.println("This application has been withdrawn.");
+        	} else { // status is {successful, withdrawal rejected}
+        		applicant.requestWithdrawal();
+        		System.out.println("Successfully requested booking.");
         	}
         }
       //TODO Implement requestWithdrawal
-        case 4 -> {
-        	applicant.requestWithdrawal();
-        	System.out.println("Successfully requested withdrawal of application.");
+        case 5 -> {
+        	ProjectApplication application = ProjectApplicationDatabase.getApplicationByApplicantId(applicant.getNric());
+        	
+        	if (application.getApplicationStatus().equals(ApplicationStatus.BOOKREQ.getStatus())) {
+            	System.out.println("Withdrawal requests are not allowed while there is an on-going booking request.");
+            } else if (application.getApplicationStatus().equals(ApplicationStatus.WITHDRAWREQ.getStatus())) {
+            	System.out.println("There is already an on-going withdrawal request.");
+            } else if (application.getApplicationStatus().equals(ApplicationStatus.WITHDRAWN.getStatus()) ||
+            		application.getApplicationStatus().equals(ApplicationStatus.UNSUCCESSFUL.getStatus())) {
+            	System.out.println("Application already withdrawn.");
+            } else {
+            	applicant.requestWithdrawal();
+            	System.out.println("Successfully requested withdrawal of application.");
+            }
         }
         default -> View.invalidChoice();
 		}}
-    	while(choice!=5);
+    	while(choice!=6);
     }
 
     
