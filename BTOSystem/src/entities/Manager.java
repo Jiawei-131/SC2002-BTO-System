@@ -9,6 +9,7 @@ import handlers.ManagerProjectService;
 import util.GetInput;
 import controllers.AuthenticationController;
 import controllers.DateTimeController;
+import controllers.EnquiryController;
 import data.ProjectApplicationDatabase;
 import view.View;
 public class Manager extends User {
@@ -120,8 +121,7 @@ public class Manager extends User {
 				"1. View enquiry of all projects",
 				"2. View enquiries of my project",
 				"3. Reply to enquiry",
-				"4. Delete enquiry",
-				"5. Back to Main Menu"
+				"4. Back to Main Menu"
         );
     }
     
@@ -153,11 +153,27 @@ public class Manager extends User {
 
         );
     }
-//    public String viewEnquiry(Enquiry[] enquiryList ) {
-//        // TODO implement
-//    }
-//
-//    public void replyEnquiry(Project assignedProject) {
-//        // TODO implement
-//    }
+    public void viewAllEnquiries(EnquiryController enquiryController,int choice) {
+        // TODO implement
+    	List<Enquiry> userEnquiries=enquiryController.getAllEnquiries();
+	    System.out.println("\nYour Enquiries:");
+	    for (Enquiry e : userEnquiries) { //Print 
+	    	if(choice==1) //Print all enquires
+	    	{
+		        System.out.println(e);
+		        System.out.println("------------------");
+	    	}
+	    	else {
+	    		if(e.getVisibleToManager()) //TODO Change to manager NRIC is found
+	    		{
+	    	        System.out.println(e);
+			        System.out.println("------------------");
+	    		}
+	    	}
+
+	    }
+    }
+    public void replyEnquiry(Project assignedProject) {
+        // TODO implement
+    }
 }

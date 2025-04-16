@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import controllers.DateTimeController;
+import controllers.EnquiryController;
 import data.*;
 import entities.Applicant;
 import entities.Manager;
@@ -68,17 +69,17 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
 		"5. Back to Main Menu" */
 	public void handleEnquiryAction(int choice,User currentUser, Scanner sc) {
 		Manager manager	=(Manager)currentUser;
+		final EnquiryController enquiryController = new EnquiryController();
 		do {
 			manager.displayMenu(manager.getEnquiryOptions());
 			choice=GetInput.getIntInput(sc, "your choice");
 			switch(choice) {
-			case 1,2 ->System.out.println("Not Done");
+			case 1,2 ->manager.viewAllEnquiries(enquiryController,choice);
 			case 3 ->System.out.println("Not Done");
-			case 4 ->System.out.println("Not Done");
-			case 5-> {}
+			case 4-> {}
 			default-> View.invalidChoice();
 			}
-		}while(choice!=5);
+		}while(choice!=4);
 	}
 	
 /*	"1. View All Project listings",
