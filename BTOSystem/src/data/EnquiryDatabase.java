@@ -7,7 +7,7 @@ import util.FilePath;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnquiryDababase implements Database, FilePath {
+public class EnquiryDatabase implements Database, FilePath {
 
     public static boolean save(Enquiry enquiry) {
         try {
