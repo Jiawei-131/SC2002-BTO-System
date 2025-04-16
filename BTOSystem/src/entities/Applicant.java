@@ -60,12 +60,7 @@ public class Applicant extends User {
 
 
     private ProjectApplication retrieveApplication() {
-
-    	// bad code but..
-    	// TODO if able, refine code?
-    	ProjectApplicationDatabase db = new ProjectApplicationDatabase();
-
-    	ProjectApplication application = db.getApplicationByApplicantId(this.nric);
+    	ProjectApplication application = ProjectApplicationDatabase.getApplicationByApplicantId(this.nric);
     	
     	return application;
     }
