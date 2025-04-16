@@ -73,7 +73,7 @@ public class ProjectDatabase implements Database,FilePath  {
 
 	    if (!found) return false;
 
-	    updateFile(projectDatabaseFilePath, updatedLines);
+	    Database.updateFile(projectDatabaseFilePath, updatedLines);
 	    return true;
 	}
 
@@ -147,9 +147,12 @@ public class ProjectDatabase implements Database,FilePath  {
         }
 
         if (!found) return false;
+        
+        Database.updateFile(projectDatabaseFilePath, updatedLines);
 
-        new ProjectDatabase().updateFile(projectDatabaseFilePath, updatedLines);
         return true;
     }
+
+
 
 }
