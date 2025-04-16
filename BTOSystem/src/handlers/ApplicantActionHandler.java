@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import data.UserDatabase;
 import java.util.Scanner;
 import entities.Applicant;
+import entities.Project;
 import data.*;
 import entities.User;
 import util.*;
@@ -75,6 +76,11 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
         	} else {
         		String flatType;
             	String projectName=GetInput.inputLoop("the Project Name",sc,s->s,s->ProjectDatabase.findByName(s)!=null);
+            	
+            	Project project = ProjectDatabase.findByName(projectName);
+            	int twoRoomQuantity = project.getNumberOfType1Units();
+            	int threeRoomQuantity = project.getNumberOfType2Units();
+            	
             	if (applicant.getMaritalStatus().equals("Single")) {
             		flatType = "2-Room";
             	} else {
@@ -86,7 +92,14 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
                 	flatType=flatTypeChoice==1?"2-Room":"3-Room";
             	}
             	
+            	if (flatType.equals("2-Room") && twoRoomQuantity < 1 ||
+            			flatType.equals("3-Room") && threeRoomQuantity < 1) {
+            		System.out.println("No units available!");
+            		break;
+            	}
+            		
             	applicant.applyForProject(projectName, flatType);
+            	System.out.println("Successfully applied for " + projectName + ".");
         	}
         }
 
@@ -99,7 +112,10 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
         	}
         }
       //TODO Implement requestWithdrawal
-        case 4 -> applicant.requestWithdrawal();
+        case 4 -> {
+        	applicant.requestWithdrawal();
+        	System.out.println("Successfully requested withdrawal of application.")
+        }
         default -> View.invalidChoice();
 		}}
     	while(choice!=5);
