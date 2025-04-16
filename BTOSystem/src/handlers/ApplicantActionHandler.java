@@ -114,7 +114,7 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
       //TODO Implement requestWithdrawal
         case 4 -> {
         	applicant.requestWithdrawal();
-        	System.out.println("Successfully requested withdrawal of application.")
+        	System.out.println("Successfully requested withdrawal of application.");
         }
         default -> View.invalidChoice();
 		}}
