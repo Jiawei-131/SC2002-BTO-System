@@ -100,14 +100,13 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
 	        //Edit BTO Projects, check if exists
 	        case 4 ->manager.deleteProject(sc);
 	        case 5 ->manager.editProject(sc);
-	        case 6 ->generateReport(manager,sc);
+	        case 6 ->manager.generateReport(sc);
 	        case 7 -> {}
 	        default-> View.invalidChoice();
 			}}
-	    	while(choice!=8);
+	    	while(choice!=7);
 	    }
 	
-
 
     private void approveReject(Scanner sc,Manager manager)
     {
@@ -123,9 +122,4 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
  		}
     }
     
-    private void generateReport(Manager manager,Scanner sc)
-    {
-
-    }
-
 }
