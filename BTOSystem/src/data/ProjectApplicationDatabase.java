@@ -49,7 +49,7 @@ public class ProjectApplicationDatabase implements FilePath,Database {
 //    }
     
     // update
-    public void updateApplication(ProjectApplication application) {
+    public static void updateApplication(ProjectApplication application) {
         List<String> lines = Database.readFile(projectApplicationDatabaseFilePath);
         List<String> newLines = new ArrayList<>();
         
@@ -63,7 +63,7 @@ public class ProjectApplicationDatabase implements FilePath,Database {
         		 newLines.add(line);
         	 }
         }
-        updateFile(projectApplicationDatabaseFilePath,newLines);
+        Database.updateFile(projectApplicationDatabaseFilePath,newLines);
     }
 //    	try {
 //    		File inputFile = new File(projectApplicationDatabaseFilePath);

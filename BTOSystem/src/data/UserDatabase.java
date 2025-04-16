@@ -51,7 +51,7 @@ public class UserDatabase implements Database,FilePath{
             }
         }
 
-        updateFile(loginFilePath,newLines);
+        Database.updateFile(loginFilePath,newLines);
     }
     
     public User getUserById(String nric,AuthenticationController ac) {
