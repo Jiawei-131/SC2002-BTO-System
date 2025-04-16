@@ -6,13 +6,15 @@ public class ProjectApplication {
     private String projectName;
     private String flatType;
     private String maritalStatus;
+    private int age; // applicants age for filtering
     private boolean flatBooked;
     
 
     // new applications
-    public ProjectApplication(String nric, String maritalStatus, String projectName, String flatType) {
+    public ProjectApplication(String nric, String maritalStatus, int age, String projectName, String flatType) {
         this.applicantNRIC = nric;
         this.maritalStatus = maritalStatus;
+        this.age = age;
         this.projectName = projectName;
         this.flatType = flatType;
         this.applicationStatus = "Pending";
@@ -20,9 +22,10 @@ public class ProjectApplication {
     }
     
     // existing applications
-    public ProjectApplication(String nric, String maritalStatus, String applicationStatus, String projectName, String flatType, boolean flatBooked) {
+    public ProjectApplication(String nric, String maritalStatus, int age, String applicationStatus, String projectName, String flatType, boolean flatBooked) {
         this.applicantNRIC = nric;
         this.maritalStatus = maritalStatus;
+        this.age = age;
         this.projectName = projectName;
         this.flatType = flatType;
         this.applicationStatus = applicationStatus;
@@ -39,6 +42,14 @@ public class ProjectApplication {
     
     public void setMaritalStatus(String maritalStatus) {
     	this.maritalStatus = maritalStatus;
+    }
+    
+    public int getAge() {
+    	return this.age;
+    }
+    
+    public void setAge(int age) {
+    	this.age = age;
     }
     
     public String getProjectName() {

@@ -14,7 +14,7 @@ import data.UserDatabase;
 public abstract class User {
 private String name;
 protected String nric;
-private int age;
+protected int age;
 protected String maritalStatus;
 private String password;
 private boolean isLogin=false;

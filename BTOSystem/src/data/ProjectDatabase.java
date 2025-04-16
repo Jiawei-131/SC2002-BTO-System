@@ -40,7 +40,7 @@ public class ProjectDatabase implements Database,FilePath  {
 	    }
 	}
 
-	public boolean update(Project project) {
+	public static boolean update(Project project) {
 	    List<String> lines = Database.readFile(projectDatabaseFilePath);
 	    List<String> updatedLines = new ArrayList<>();
 	    boolean found = false;
