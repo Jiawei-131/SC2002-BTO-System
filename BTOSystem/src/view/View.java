@@ -109,60 +109,6 @@ public class View {
                 " (" + (Project.isVisibleToApplicant() ? "Visible" : "Hidden") + ")");
         }
     }
-    
-    public void showEnquiryMenu(String nric) {
-        while (true) {
-            System.out.println("\n--- Enquiry Menu ---");
-            System.out.println("1. Submit enquiry");
-            System.out.println("2. View my enquiries");
-            System.out.println("3. Edit an enquiry");
-            System.out.println("4. Delete an enquiry");
-            System.out.println("5. Exit");
-            System.out.print("Choose option: ");
-
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
-
-            switch (choice) {
-                case 1 -> {
-                    System.out.print("Enter project ID: ");
-                    String projectId = scanner.nextLine();
-                    System.out.print("Enter your enquiry: ");
-                    String content = scanner.nextLine();
-                    controller.addEnquiry(projectId, nric, content);
-                }
-                case 2 -> {
-                    List<Enquiry> enquiries = controller.getUserEnquiries(nric);
-                    if (enquiries.isEmpty()) {
-                        System.out.println("No enquiries found.");
-                    } else {
-                        for (Enquiry e : enquiries) {
-                            System.out.println(e);
-                        }
-                    }
-                }
-                case 3 -> {
-                    System.out.print("Enter Enquiry ID to edit: ");
-                    String eid = scanner.nextLine();
-                    System.out.print("Enter new content: ");
-                    String content = scanner.nextLine();
-                    boolean success = controller.editEnquiry(eid, nric, content);
-                    System.out.println(success ? "Updated!" : "Enquiry not found or permission denied.");
-                }
-                case 4 -> {
-                    System.out.print("Enter Enquiry ID to delete: ");
-                    String eid = scanner.nextLine();
-                    boolean success = controller.deleteEnquiry(eid, nric);
-                    System.out.println(success ? "Deleted!" : "Enquiry not found or permission denied.");
-                }
-                case 5 -> {
-                    System.out.println("Exiting Enquiry Menu...");
-                    return;
-                }
-                default -> System.out.println("Invalid choice.");
-            }
-        }
-    }
 
 
 }
