@@ -91,7 +91,13 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
         }
 
       //TODO Implement view applications
-        case 3-> applicant.viewApplication();
+        case 3-> {
+        	if (ProjectApplicationDatabase.getApplicationByApplicantId(applicant.getNric()) == null) {
+        		System.out.println("You do not have an existing application!");
+        	} else {
+        		applicant.viewApplication();
+        	}
+        }
       //TODO Implement requestWithdrawal
         case 4 -> applicant.requestWithdrawal();
         default -> View.invalidChoice();
