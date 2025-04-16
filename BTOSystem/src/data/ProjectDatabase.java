@@ -2,18 +2,18 @@ package data;
 
 import entities.Officer;
 import entities.Project;
+import util.Database;
+import util.FilePath;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.io.*;
 
-public class ProjectDatabase {
-    private static final String PROJECT_DB_FILE = "BTOSystem/src/data/ProjectDatabase.txt";
-    private UserDatabase userDB = new UserDatabase();
-
-    
+public class ProjectDatabase implements Database,FilePath  {
+//    private UserDatabase userDB = new UserDatabase();
 
     public static boolean save(Project project) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(PROJECT_DB_FILE, true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(projectDatabaseFilePath, true))) {
             StringBuilder officersData = new StringBuilder();
             if (!project.getOfficersInCharge().isEmpty()) {
                 for (Officer officer : project.getOfficersInCharge()) {
@@ -30,7 +30,7 @@ public class ProjectDatabase {
                 project.getNumberOfType2Units(), project.getType2SellingPrice(), 
                 project.getOpeningDate(), project.getClosingDate(),
                 project.getManager(), project.getOfficerSlot(), 
-                officersData.toString(), project.isVisibleToApplicant()));
+                officersData.toString(), Project.isVisibleToApplicant()));
             return true;
         } catch (IOException e) {
             System.err.println("Error saving project to database: " + e.getMessage());
@@ -42,7 +42,7 @@ public class ProjectDatabase {
         List<String> projects = new ArrayList<>();
         boolean found = false;
         
-        try (BufferedReader reader = new BufferedReader(new FileReader(PROJECT_DB_FILE))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(projectDatabaseFilePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
@@ -65,7 +65,7 @@ public class ProjectDatabase {
                         project.getNumberOfType2Units(), project.getType2SellingPrice(), 
                         project.getOpeningDate(), project.getClosingDate(),
                         project.getManager(), project.getOfficerSlot(), 
-                        officersData.toString(), project.isVisibleToApplicant());
+                        officersData.toString(), Project.isVisibleToApplicant());
                 }
                 projects.add(line);
             }
@@ -76,7 +76,7 @@ public class ProjectDatabase {
 
         if (!found) return false;
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(PROJECT_DB_FILE))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(projectDatabaseFilePath))) {
             for (String projectLine : projects) {
                 writer.write(projectLine + "\n");
             }
@@ -89,7 +89,7 @@ public class ProjectDatabase {
 
     public static List<Project> loadAllProjects() {
         List<Project> projects = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(PROJECT_DB_FILE))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(projectDatabaseFilePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
@@ -146,7 +146,7 @@ public class ProjectDatabase {
         List<String> projects = new ArrayList<>();
         boolean found = false;
         
-        try (BufferedReader reader = new BufferedReader(new FileReader(PROJECT_DB_FILE))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(projectDatabaseFilePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
@@ -163,7 +163,7 @@ public class ProjectDatabase {
 
         if (!found) return false;
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(PROJECT_DB_FILE))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(projectDatabaseFilePath))) {
             for (String project : projects) {
                 writer.write(project + "\n");
             }
