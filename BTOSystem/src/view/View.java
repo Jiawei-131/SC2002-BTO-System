@@ -3,6 +3,7 @@ package view;
 import entities.Applicant;
 import entities.Manager;
 import entities.Officer;
+import entities.Project;
 import entities.User;
 import java.util.List;
 
@@ -69,5 +70,34 @@ public class View {
 	{
 		System.out.println("Please enter a valid choice");
 	}
+	
+    public static void displayProjectDetails(Project project) {
+        System.out.println("\n=== Project Details ===");
+        System.out.println("Name: " + project.getName());
+        System.out.println("Neighborhood: " + project.getNeighbourhood());
+        System.out.println("Type 1 Units: " + project.getNumberOfType1Units() + 
+            " (Price: $" + String.format("%.2f", project.getType1SellingPrice()) + ")");
+        System.out.println("Type 2 Units: " + project.getNumberOfType2Units() + 
+            " (Price: $" + String.format("%.2f", project.getType2SellingPrice()) + ")");
+        System.out.println("Application Period: " + project.getOpeningDate() + 
+            " to " + project.getClosingDate());
+        System.out.println("Manager: " + project.getManager());
+        System.out.println("Officers: " + project.getOfficersInCharge().size() + 
+            "/" + project.getOfficerSlot());
+        for (Officer officer : project.getOfficersInCharge()) {
+            System.out.println("  - " + officer.getUsername());
+        }
+        System.out.println("Visibility: " + 
+            (project.isVisibleToApplicant() ? "Visible to applicants" : "Hidden from applicants"));
+    }
+
+    public static void displayAllProjects(List<Project> projects) {
+        System.out.println("\n=== All Projects ===");
+        for (Project project : projects) {
+            System.out.println(project.getName() + " - " + project.getNeighbourhood() + 
+                " (" + (project.isVisibleToApplicant() ? "Visible" : "Hidden") + ")");
+        }
+    }
+
 
 }

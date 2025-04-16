@@ -55,7 +55,7 @@ public class Applicant extends User {
     	System.out.println("Available projects: " + projects.size());
         for (Project project : projects) {
             if (Project.isVisibleToApplicant()) {
-                projectView.displayProjectDetails(project);
+                View.displayProjectDetails(project);
             }
         }
     }

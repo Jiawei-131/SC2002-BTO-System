@@ -9,6 +9,7 @@ import entities.Manager;
 import entities.Project;
 import util.GetInput;
 import view.ProjectView;
+import view.View;
 
 public class ManagerProjectService {
 	   public static void editProject(Manager manager,Scanner sc)
@@ -58,12 +59,12 @@ public class ManagerProjectService {
 			{
 				if(type==1)//Print all project
 				{
-					ProjectView.displayProjectDetails(project);
+					View.displayProjectDetails(project);
 				}
 				else {//Print only projects that the manager created
 					if(manager.getNric().equals(project.getManager()))
 					{
-						ProjectView.displayProjectDetails(project);
+						View.displayProjectDetails(project);
 					}
 				}
 			}
