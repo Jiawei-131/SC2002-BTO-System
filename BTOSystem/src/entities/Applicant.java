@@ -49,13 +49,33 @@ public class Applicant extends User {
     	Singles, 35 years old and above, can ONLY apply for 2-Room 
     	o Married, 21 years old and above, can apply for any flat types (2
     			Room or 3-Room) */
-    	List<Project> projects = this.sort();
-    	System.out.println("Available projects: " + projects.size());
-        for (Project project : projects) {
-            if (Project.isVisibleToApplicant()) {
-                View.displayProjectDetails(applicant, project);
-            }
-        }
+
+		List<Project> projects = this.sort();
+    	
+    	if (applicant.getMaritalStatus().equals("Single")) {
+    		if (applicant.getAge() < 35) {
+    			System.out.println("Ineligible applicant. No projects available.");
+    		} else {
+    			for (Project project : projects) {
+                    if (Project.isVisibleToApplicant() && project.getNumberOfType1Units() > 0) {
+                        View.displayProjectDetails(applicant, project);
+                    }
+                }
+    		}
+        	
+//        	System.out.println("Available projects: " + projects.size());
+            
+    	} else {
+    		if (applicant.getAge() < 21) {
+    			System.out.println("Ineligible applicant. No projects available.");
+    		} else {
+    			for (Project project : projects) {
+                    if (Project.isVisibleToApplicant()) {
+                        View.displayProjectDetails(applicant, project);
+                    }
+                }
+    		}
+    	}
     }
 
 
