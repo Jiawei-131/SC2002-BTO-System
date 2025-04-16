@@ -70,17 +70,31 @@ public class EnquiryDatabase implements Database, FilePath {
     public static List<Enquiry> loadAll() {
         List<Enquiry> enquiries = new ArrayList<>();
         List<String> lines = Database.readFile(enquiryDatabaseFilePath);
+        int maxId = 0;
 
         for (String line : lines) {
             String[] parts = line.split("\\|");
-            if (parts.length >= 6) {
+            if (parts.length >= 7) {
                 Enquiry enquiry = parseEnquiry(parts);
-                if (enquiry != null) enquiries.add(enquiry);
+                if (enquiry != null) {
+                    enquiries.add(enquiry);
+                    maxId = Math.max(maxId, enquiry.getEnquiryID());
+                }
             }
+        }
+
+        // Bump nextID so new enquiries get unique IDs
+        try {
+            java.lang.reflect.Field nextIdField = Enquiry.class.getDeclaredField("nextID");
+            nextIdField.setAccessible(true);
+            nextIdField.setInt(null, maxId + 1);
+        } catch (Exception e) {
+            System.err.println("Error updating nextID: " + e.getMessage());
         }
 
         return enquiries;
     }
+
 
     private static Enquiry parseEnquiry(String[] parts) {
         try {
