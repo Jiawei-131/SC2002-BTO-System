@@ -8,7 +8,6 @@ import data.ProjectDatabase;
 import entities.Manager;
 import entities.Project;
 import util.GetInput;
-import view.ProjectView;
 import view.View;
 
 public class ManagerProjectService {

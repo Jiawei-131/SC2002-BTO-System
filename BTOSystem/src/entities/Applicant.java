@@ -6,7 +6,6 @@ import java.util.List;
 import data.*;
 
 import controllers.AuthenticationController;
-import view.ProjectView;
 import view.View;
 
 
@@ -51,7 +50,6 @@ public class Applicant extends User {
     	o Married, 21 years old and above, can apply for any flat types (2
     			Room or 3-Room) */
     	List<Project> projects = this.sort();
-    	ProjectView projectView = new ProjectView();
     	System.out.println("Available projects: " + projects.size());
         for (Project project : projects) {
             if (Project.isVisibleToApplicant()) {
