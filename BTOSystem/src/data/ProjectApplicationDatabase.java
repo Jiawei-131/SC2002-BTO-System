@@ -23,7 +23,7 @@ public class ProjectApplicationDatabase implements FilePath,Database {
     public List<ProjectApplication> readApplication()
     {
     	List<String> applications=Database.readFile(projectApplicationDatabaseFilePath);
-    	List<ProjectApplication> projectApplications = null;
+    	List<ProjectApplication> projectApplications =new ArrayList<>();
     	for(String application: applications)
     	{
             String[] parts = application.split("\\|");

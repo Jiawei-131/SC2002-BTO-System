@@ -12,99 +12,89 @@ import java.io.*;
 public class ProjectDatabase implements Database,FilePath  {
 //    private UserDatabase userDB = new UserDatabase();
 
-    public static boolean save(Project project) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(projectDatabaseFilePath, true))) {
-            StringBuilder officersData = new StringBuilder();
-            if (!project.getOfficersInCharge().isEmpty()) {
-                for (Officer officer : project.getOfficersInCharge()) {
-                    if (officersData.length() > 0) officersData.append(";");
-                    officersData.append(officer.toString());
-                }
-            } else {
-                officersData.append("null");
-            }
-            
-            writer.write(String.format("%s|%s|%d|%.2f|%d|%.2f|%s|%s|%s|%d|%s|%b\n",
-                project.getName(), project.getNeighbourhood(), 
-                project.getNumberOfType1Units(), project.getType1SellingPrice(),
-                project.getNumberOfType2Units(), project.getType2SellingPrice(), 
-                project.getOpeningDate(), project.getClosingDate(),
-                project.getManager(), project.getOfficerSlot(), 
-                officersData.toString(), Project.isVisibleToApplicant()));
-            return true;
-        } catch (IOException e) {
-            System.err.println("Error saving project to database: " + e.getMessage());
-            return false;
-        }
-    }
+	public static boolean save(Project project) {
+	    try {
+	        StringBuilder officersData = new StringBuilder();
+	        if (!project.getOfficersInCharge().isEmpty()) {
+	            for (Officer officer : project.getOfficersInCharge()) {
+	                if (officersData.length() > 0) officersData.append(";");
+	                officersData.append(officer.toString());
+	            }
+	        } else {
+	            officersData.append("null");
+	        }
 
-    public boolean update(Project project) {
-        List<String> projects = new ArrayList<>();
-        boolean found = false;
-        
-        try (BufferedReader reader = new BufferedReader(new FileReader(projectDatabaseFilePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("\\|");
-                if (parts.length >= 1 && parts[0].equals(project.getName())) {
-                    found = true;
-                    
-                    StringBuilder officersData = new StringBuilder();
-                    if (!project.getOfficersInCharge().isEmpty()) {
-                        for (Officer officer : project.getOfficersInCharge()) {
-                            if (officersData.length() > 0) officersData.append(";");
-                            officersData.append(officer.toString());
-                        }
-                    } else {
-                        officersData.append("null");
-                    }
-                    
-                    line = String.format("%s|%s|%d|%.2f|%d|%.2f|%s|%s|%s|%d|%s|%b",
-                        project.getName(), project.getNeighbourhood(), 
-                        project.getNumberOfType1Units(), project.getType1SellingPrice(),
-                        project.getNumberOfType2Units(), project.getType2SellingPrice(), 
-                        project.getOpeningDate(), project.getClosingDate(),
-                        project.getManager(), project.getOfficerSlot(), 
-                        officersData.toString(), Project.isVisibleToApplicant());
-                }
-                projects.add(line);
-            }
-        } catch (IOException e) {
-            System.err.println("Error reading projects from database: " + e.getMessage());
-            return false;
-        }
+	        String line = String.format("%s|%s|%d|%.2f|%d|%.2f|%s|%s|%s|%d|%s|%b",
+	            project.getName(), project.getNeighbourhood(),
+	            project.getNumberOfType1Units(), project.getType1SellingPrice(),
+	            project.getNumberOfType2Units(), project.getType2SellingPrice(),
+	            project.getOpeningDate(), project.getClosingDate(),
+	            project.getManager(), project.getOfficerSlot(),
+	            officersData.toString(), Project.isVisibleToApplicant());
 
-        if (!found) return false;
+	        Database.writeFile(projectDatabaseFilePath, line);
+	        return true;
+	    } catch (Exception e) {
+	        System.err.println("Error saving project: " + e.getMessage());
+	        return false;
+	    }
+	}
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(projectDatabaseFilePath))) {
-            for (String projectLine : projects) {
-                writer.write(projectLine + "\n");
-            }
-            return true;
-        } catch (IOException e) {
-            System.err.println("Error updating projects in database: " + e.getMessage());
-            return false;
-        }
-    }
+	public boolean update(Project project) {
+	    List<String> lines = Database.readFile(projectDatabaseFilePath);
+	    List<String> updatedLines = new ArrayList<>();
+	    boolean found = false;
 
-    public static List<Project> loadAllProjects() {
-        List<Project> projects = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(projectDatabaseFilePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("\\|");
-                if (parts.length == 12) {
-                    Project project = parseProjectFromDatabase(parts);
-                    if (project != null) {
-                        projects.add(project);
-                    }
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("Error loading projects from database: " + e.getMessage());
-        }
-        return projects;
-    }
+	    for (String line : lines) {
+	        String[] parts = line.split("\\|");
+	        if (parts.length >= 1 && parts[0].equals(project.getName())) {
+	            found = true;
+
+	            StringBuilder officersData = new StringBuilder();
+	            if (!project.getOfficersInCharge().isEmpty()) {
+	                for (Officer officer : project.getOfficersInCharge()) {
+	                    if (officersData.length() > 0) officersData.append(";");
+	                    officersData.append(officer.toString());
+	                }
+	            } else {
+	                officersData.append("null");
+	            }
+
+	            line = String.format("%s|%s|%d|%.2f|%d|%.2f|%s|%s|%s|%d|%s|%b",
+	                project.getName(), project.getNeighbourhood(),
+	                project.getNumberOfType1Units(), project.getType1SellingPrice(),
+	                project.getNumberOfType2Units(), project.getType2SellingPrice(),
+	                project.getOpeningDate(), project.getClosingDate(),
+	                project.getManager(), project.getOfficerSlot(),
+	                officersData.toString(), Project.isVisibleToApplicant());
+	        }
+	        updatedLines.add(line);
+	    }
+
+	    if (!found) return false;
+
+	    Database.updateFile(projectDatabaseFilePath, updatedLines);
+	    return true;
+	}
+
+
+	public static List<Project> loadAllProjects() {
+	    List<Project> projects = new ArrayList<>();
+	    List<String> lines = Database.readFile(projectDatabaseFilePath);
+
+	    for (String line : lines) {
+	        String[] parts = line.split("\\|");
+	        if (parts.length == 12) {
+	            Project project = parseProjectFromDatabase(parts);
+	            if (project != null) {
+	                projects.add(project);
+	            }
+	        }
+	    }
+
+	    return projects;
+	}
+
 
     private static Project parseProjectFromDatabase(String[] parts) {
         try {
@@ -143,34 +133,26 @@ public class ProjectDatabase implements Database,FilePath  {
     }
 
     public static boolean delete(String name) {
-        List<String> projects = new ArrayList<>();
+        List<String> lines = Database.readFile(projectDatabaseFilePath);
+        List<String> updatedLines = new ArrayList<>();
         boolean found = false;
-        
-        try (BufferedReader reader = new BufferedReader(new FileReader(projectDatabaseFilePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("\\|");
-                if (parts.length >= 1 && parts[0].equals(name)) {
-                    found = true;
-                    continue;
-                }
-                projects.add(line);
+
+        for (String line : lines) {
+            String[] parts = line.split("\\|");
+            if (parts.length >= 1 && parts[0].equals(name)) {
+                found = true;
+                continue;
             }
-        } catch (IOException e) {
-            System.err.println("Error reading projects from database: " + e.getMessage());
-            return false;
+            updatedLines.add(line);
         }
 
         if (!found) return false;
+        
+        Database.updateFile(projectDatabaseFilePath, updatedLines);
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(projectDatabaseFilePath))) {
-            for (String project : projects) {
-                writer.write(project + "\n");
-            }
-            return true;
-        } catch (IOException e) {
-            System.err.println("Error updating projects in database: " + e.getMessage());
-            return false;
-        }
+        return true;
     }
+
+
+
 }

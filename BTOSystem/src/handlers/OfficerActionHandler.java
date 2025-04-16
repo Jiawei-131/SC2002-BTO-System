@@ -31,11 +31,23 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
 
 	}
 	
-	
+	/*			"1. Submit Enquiry",
+			"2. View Enquiry",
+			"3. Edit Enquiry",
+			"4. Delete Enquiry",
+			"5. Back to Main Menu"*/
 	public void handleEnquiryAction(int choice,User currentUser, Scanner sc) {
 		View.menu(currentUser,((Officer)currentUser).getEnquiryOptions());
 	}
 	
+	
+	/*    		"1. View list of projects",
+		 	"2. Apply for project",
+    		"3. View applied projects",
+    		"4. Withdraw from BTO Application",
+    		"5. Generate Receipt",
+    		"6. Check Status",
+			"7. Back to Main Menu"*/
     public void handleProjectAction(int choice,User currentUser, Scanner sc) {
     	do {
 		currentUser.displayMenu(currentUser.getProjectOptions());
@@ -45,10 +57,8 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
 		//Print all projects
 		case 1: 
         break;
-        //Add projects, check if project already existed?
         case 2:
         break;
-        //Delete BTO Projects , check if exists
         case 3:
         break;
         
