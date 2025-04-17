@@ -87,9 +87,9 @@ public class View {
         System.out.println("\n=== Project Details ===");
         System.out.println("Name: " + project.getName());
         System.out.println("Neighborhood: " + project.getNeighbourhood());
-        System.out.println("Type 1 Units: " + project.getNumberOfType1Units() + 
+        System.out.println("2-room Units: " + project.getNumberOfType1Units() + 
             " (Price: $" + String.format("%.2f", project.getType1SellingPrice()) + ")");
-        System.out.println("Type 2 Units: " + project.getNumberOfType2Units() + 
+        System.out.println("3-room Units: " + project.getNumberOfType2Units() + 
             " (Price: $" + String.format("%.2f", project.getType2SellingPrice()) + ")");
         System.out.println("Application Period: " + project.getOpeningDate() + 
             " to " + project.getClosingDate());
