@@ -84,13 +84,36 @@ public class View {
             System.out.println("You do not have access to view this project.");
             return;
         }
-        System.out.println("\n=== Project Details ===");
-        System.out.println("Name: " + project.getName());
-        System.out.println("Neighborhood: " + project.getNeighbourhood());
-        System.out.println("2-room Units: " + project.getNumberOfType1Units() + 
-            " (Price: $" + String.format("%.2f", project.getType1SellingPrice()) + ")");
-        System.out.println("3-room Units: " + project.getNumberOfType2Units() + 
-            " (Price: $" + String.format("%.2f", project.getType2SellingPrice()) + ")");
+        if (user instanceof Applicant applicant) {
+            if (!project.isEligible(applicant)) {
+                System.out.println("You are not eligible to apply for this project.");
+                return;
+            }
+            System.out.println("\n=== Project Details ===");
+            System.out.println("Name: " + project.getName());
+            System.out.println("Neighborhood: " + project.getNeighbourhood());
+            if (project.isEligibleFor2and3Room(applicant)) {
+                // Print both
+                System.out.println("2-room Units: " + project.getNumberOfType1Units() +
+                        " (Price: $" + String.format("%.2f", project.getType1SellingPrice()) + ")");
+                    System.out.println("3-room Units: " + project.getNumberOfType2Units() +
+                        " (Price: $" + String.format("%.2f", project.getType2SellingPrice()) + ")");
+            } else if (project.isEligibleFor2RoomOnly(applicant)) {
+                // Print 2-room only
+                System.out.println("2-room Units: " + project.getNumberOfType1Units() +
+                        " (Price: $" + String.format("%.2f", project.getType1SellingPrice()) + ")");
+            }
+        } else {
+            System.out.println("\n=== Project Details ===");
+            System.out.println("Name: " + project.getName());
+            System.out.println("Neighborhood: " + project.getNeighbourhood());
+            System.out.println("2-room Units: " + project.getNumberOfType1Units() +
+                    " (Price: $" + String.format("%.2f", project.getType1SellingPrice()) + ")");
+                System.out.println("3-room Units: " + project.getNumberOfType2Units() +
+                    " (Price: $" + String.format("%.2f", project.getType2SellingPrice()) + ")");
+        	
+        }
+
         System.out.println("Application Period: " + project.getOpeningDate() + 
             " to " + project.getClosingDate());
         System.out.println("Manager: " + project.getManager());

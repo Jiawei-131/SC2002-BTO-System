@@ -60,16 +60,17 @@ public class Project {
 
 	// Staff Management
 	public boolean addOfficer(String officerNRIC) {
-	    if (officerNRICs.size() >= officerSlot) return false;
-	    if (officerNRICs.contains(officerNRIC)) return false;
-	    officerNRICs.add(officerNRIC);
-	    return true;
+		if (officerNRICs.size() >= officerSlot)
+			return false;
+		if (officerNRICs.contains(officerNRIC))
+			return false;
+		officerNRICs.add(officerNRIC);
+		return true;
 	}
 
 	public boolean removeOfficer(String officerNRIC) {
-	    return officerNRICs.remove(officerNRIC);
+		return officerNRICs.remove(officerNRIC);
 	}
-
 
 	public void setOfficerSlot(int slot) {
 		this.officerSlot = Math.min(slot, MAX_OFFICERS);
@@ -79,28 +80,25 @@ public class Project {
 	}
 
 	// Eligibility check method
+	public boolean isEligibleFor2RoomOnly(Applicant applicant) {
+		int age = applicant.getAge();
+		String status = applicant.getMaritalStatus();
+		return status.equalsIgnoreCase("Single") && age >= 35;
+	}
+
+	public boolean isEligibleFor2and3Room(Applicant applicant) {
+		int age = applicant.getAge();
+		String status = applicant.getMaritalStatus();
+		return status.equalsIgnoreCase("Married") && age >= 21;
+	}
+
 	public boolean isEligible(Applicant applicant) {
 		ProjectApplicationDatabase appDB = new ProjectApplicationDatabase();
 		if (appDB.getApplicationByApplicantId(applicant.getNric()) != null) {
 			return false;
 		}
 
-		int applicantAge = applicant.getAge();
-		boolean isMarried = applicant.getMaritalStatus().equalsIgnoreCase("married");
-
-		if (isMarried) {
-			if (applicantAge < 21) {
-				return false;
-			}
-		} else {
-			if (applicantAge < 35) {
-				return false;
-			}
-			if (this.numberOfType2Units <= 0) {
-				return false;
-			}
-		}
-		return true;
+		return isEligibleFor2and3Room(applicant) || isEligibleFor2RoomOnly(applicant);
 	}
 
 	// Getters and Setters
@@ -179,13 +177,14 @@ public class Project {
 	public int getOfficerSlot() {
 		return officerSlot;
 	}
+
 	public List<String> getOfficerNRICs() {
-	    return officerNRICs;
-	}
-	public void setOfficerNRICs(List<String> nrics) {
-	    this.officerNRICs = nrics;
+		return officerNRICs;
 	}
 
+	public void setOfficerNRICs(List<String> nrics) {
+		this.officerNRICs = nrics;
+	}
 
 	public static boolean isVisibleToApplicant() {
 		return visibleToApplicant;
@@ -214,11 +213,12 @@ public class Project {
 	public void setIsVisible(boolean b) {
 		Project.visibleToApplicant = b;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Project Name:" + this.name + "\nNeighbourhood: " + this.neighbourhood + "\n2-Room Units Available: " + this.numberOfType1Units
-				 + "\nSelling Price: " + this.type1SellingPrice + "\n3-Room Units Available: " + this.numberOfType2Units + "\nSelling Price: " + this.type2SellingPrice
-				 + "\nOpening Date: " + this.openingDate + "\nClosing Date: " + this.closingDate;
+		return "Project Name:" + this.name + "\nNeighbourhood: " + this.neighbourhood + "\n2-Room Units Available: "
+				+ this.numberOfType1Units + "\nSelling Price: " + this.type1SellingPrice + "\n3-Room Units Available: "
+				+ this.numberOfType2Units + "\nSelling Price: " + this.type2SellingPrice + "\nOpening Date: "
+				+ this.openingDate + "\nClosing Date: " + this.closingDate;
 	}
 }
