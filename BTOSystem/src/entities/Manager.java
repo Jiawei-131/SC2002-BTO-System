@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 import entities.*;
 import handlers.ManagerProjectService;
+import util.ApplicationStatus;
 import util.GetInput;
 import util.Role;
 import controllers.AuthenticationController;
@@ -13,6 +14,7 @@ import controllers.DateTimeController;
 import controllers.EnquiryController;
 import controllers.ProjectController;
 import data.EnquiryDatabase;
+import data.OfficerApplicationDatabase;
 import data.ProjectApplicationDatabase;
 import data.ProjectDatabase;
 import view.View;
@@ -45,14 +47,16 @@ public class Manager extends User {
     }
 
     //Called at login to get active project for manager
-    public void getActiveProject()
+    public Project getActiveProject()
     {
     	if(ProjectController.hasActiveProject(ProjectDatabase.loadAllProjects(), this))
     	{
     		hasProject=true;
     		assignedProject=ManagerProjectService.getActiveProject(this);
     	}
+    	return assignedProject;
     }
+    
     
     //Print active project
     public void viewActiveProject()
@@ -97,24 +101,37 @@ public class Manager extends User {
 
     
     //Approval implementation
-    public void approveOfficerRegistration(Officer officer) {
+    public void approveOfficerRegistration(OfficerApplication application) {
         // TODO implement
+    	application.setApplicationStatus("Approval");
+    	OfficerApplicationDatabase.updateApplication(application);
+    }
+    public void rejectOfficerRegistration(OfficerApplication application) {
+        // TODO implement
+    	application.setApplicationStatus("Rejected");
+    	OfficerApplicationDatabase.updateApplication(application);
     }
 
     public void approveApplication(ProjectApplication application) {
-        // TODO implement
+    	application.setApplicationStatus("Successful");
+    	ProjectApplicationDatabase.updateApplication(application);
     }
 
     public void rejectApplication(ProjectApplication application) {
-        // TODO implement
+    	application.setApplicationStatus("Unsuccessful");
+    	ProjectApplicationDatabase.updateApplication(application);
     }
 
     public void approveApplicantWithdrawal(ProjectApplication application) {
         // TODO implement
+    	application.setApplicationStatus("Withdrawn");
+    	ProjectApplicationDatabase.updateApplication(application);
     }
     
     public void rejectApplicantWithdrawal(ProjectApplication application) {
         // TODO implement
+    	application.setApplicationStatus("Withdrawn Rejected");
+    	ProjectApplicationDatabase.updateApplication(application);
     }
     
 

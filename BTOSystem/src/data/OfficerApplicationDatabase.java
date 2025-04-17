@@ -22,7 +22,23 @@ public class OfficerApplicationDatabase implements FilePath,Database {
 //        }
 //	}
 	
-    public void updateApplication(OfficerApplication application) {
+    public static List<OfficerApplication> readApplication()
+    {
+    	List<String> applications=Database.readFile(officerApplicationDatabaseFilePath);
+    	List<OfficerApplication> projectApplications =new ArrayList<>();
+    	for(String application: applications)
+    	{
+            String[] parts = application.split("\\|");
+            String applicantId = parts[0];
+            String status = parts[1];
+            String projectName = parts[2];
+            OfficerApplication pa = new OfficerApplication(applicantId, status, projectName);
+            projectApplications.add(pa);
+    	}
+    	return projectApplications;
+    }
+	
+    public static void updateApplication(OfficerApplication application) {
         List<String> lines = Database.readFile(officerApplicationDatabaseFilePath);
         List<String> newLines = new ArrayList<>();
         
@@ -40,11 +56,11 @@ public class OfficerApplicationDatabase implements FilePath,Database {
         Database.updateFile(officerApplicationDatabaseFilePath,newLines);
     }
 	
-	public void writeApplication(OfficerApplication application) {
+	public static void writeApplication(OfficerApplication application) {
             Database.writeFile(officerApplicationDatabaseFilePath,application.getApplicantId(),application.getApplicationStatus(),application.getProjectName());
 	}
 	
-    public OfficerApplication getApplicationByApplicantId(String applicantId) {
+    public static OfficerApplication getApplicationByApplicantId(String applicantId) {
     	List<String> lines = Database.readFile(officerApplicationDatabaseFilePath);
             for (String line : lines)
             {

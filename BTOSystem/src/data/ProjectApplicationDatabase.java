@@ -20,7 +20,7 @@ public class ProjectApplicationDatabase implements FilePath,Database {
             Database.writeFile(projectApplicationDatabaseFilePath,application.getApplicantId(),application.getMaritalStatus(), Integer.toString(application.getAge()), application.getApplicationStatus(),application.getProjectName(),application.getFlatType(), flatBooked);
     }
     
-    public List<ProjectApplication> readApplication()
+    public static List<ProjectApplication> readApplication()
     {
     	List<String> applications=Database.readFile(projectApplicationDatabaseFilePath);
     	List<ProjectApplication> projectApplications =new ArrayList<>();

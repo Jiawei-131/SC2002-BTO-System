@@ -4,6 +4,7 @@ import entities.Applicant;
 import entities.Enquiry;
 import entities.Manager;
 import entities.Officer;
+import entities.OfficerApplication;
 import entities.Project;
 import entities.User;
 import java.util.List;
@@ -109,6 +110,11 @@ public class View {
                 " (" + (Project.isVisibleToApplicant() ? "Visible" : "Hidden") + ")");
         }
     }
+    
+//    public static void displayApplications(List<OfficerApplication> officerApplications,Project project) {
+//
+//        }
+//    }
 
 
 }
