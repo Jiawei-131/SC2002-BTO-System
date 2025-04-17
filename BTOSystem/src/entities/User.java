@@ -44,7 +44,7 @@ public User(String name, String nric,int age, String maritalStatus,String passwo
 
 public List<Project> sort() {
     return ProjectDatabase.loadAllProjects().stream()
-        .sorted(Comparator.comparing(Project::getName))
+        .sorted(comparator)
         .toList();
 }
 
