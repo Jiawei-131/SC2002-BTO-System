@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import controllers.AuthenticationController;
 import controllers.DateTimeController;
+import controllers.ProjectController;
 import data.ProjectApplicationDatabase;
 import data.ProjectDatabase;
 import entities.Manager;
@@ -17,6 +18,7 @@ import view.View;
 public class ManagerProjectService {
 	   public static void editProject(Manager manager,Scanner sc)
 	   {
+		   	ProjectController pc= new ProjectController();
 			String btoName=GetInput.getLineInput(sc, "the BTO Name");
 	        Project project = ProjectDatabase.findByName(btoName);
 	        
@@ -30,7 +32,7 @@ public class ManagerProjectService {
 					choice=GetInput.getIntInput(sc,"the field to update");
 					switch(choice)
 					{
-					case 1 -> project.setNeighbourhood(GetInput.getLineInput(sc, "the new neighbourhood"));
+					case 1 -> project.setNeighbourhood(GetInput.inputLoop("the new neighbourhood", sc, s->s, s->pc.getProject(s)==null));
 		            case 2 -> project.setNumberOfType1Units(GetInput.inputLoop("the new Number of 2 Room Units", sc, Integer::parseInt, i -> i > 0));
 		            case 3 -> project.setType1SellingPrice(GetInput.inputLoop("the new Price of 2 Room Units", sc, Double::parseDouble, i -> i > 0));
 		            case 4 -> project.setNumberOfType2Units(GetInput.inputLoop("the new Number of 3 Room Units", sc, Integer::parseInt, i -> i > 0));
@@ -103,7 +105,8 @@ public class ManagerProjectService {
 	   }
 	   
 	   public static void createProject(Manager manager,Scanner sc) {
-			String btoName=GetInput.getLineInput(sc, "the BTO Name");
+		   ProjectController pc= new ProjectController();
+			String btoName=GetInput.inputLoop("the BTO Name", sc, s->s, s->pc.getProject(s)==null);
 			String neighbourhood=GetInput.getLineInput(sc, "the neighbourhood");
 			int unitType1=GetInput.inputLoop("the Number of 2 Room Units", sc, Integer::parseInt, i->i>0);
 			int unitType1Price=GetInput.inputLoop("the Price of 2 Room Units", sc, Integer::parseInt, i->i>0);

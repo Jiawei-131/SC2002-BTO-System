@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 import data.ProjectDatabase;
 import data.UserDatabase;
+import util.Role;
 
 
 public abstract class User {
