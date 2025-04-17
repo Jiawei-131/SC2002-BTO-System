@@ -255,8 +255,7 @@ public class Manager extends User {
 
     public void replyToEnquiry(Scanner sc, EnquiryController enquiryController) {
         System.out.print("Enter Enquiry ID to reply: ");
-        int id = sc.nextInt();
-        sc.nextLine(); // consume newline
+        int id = GetInput.getIntInput(sc,"the EnquiryID");
 
         Enquiry enquiry = enquiryController.findEnquiryById(String.valueOf(id));
 

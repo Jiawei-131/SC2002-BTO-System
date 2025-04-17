@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import controllers.EnquiryController;
 import data.UserDatabase;
+import entities.Manager;
 import entities.Officer;
 import entities.User;
 import util.ActionHandler;
@@ -67,7 +68,8 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
 			"7. Back to Main Menu"*/
     public void handleProjectAction(int choice,User currentUser, Scanner sc) {
     	do {
-		currentUser.displayMenu(currentUser.getProjectOptions());
+    		Officer officer	=(Officer)currentUser;
+    		officer.displayMenu(officer.getProjectOptions());
 		choice=GetInput.getIntInput(sc, "your choice");
 		switch(choice)
 		{
@@ -83,6 +85,10 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
         break;
         case 5://TODO Generate Receipt
         break;
+        case 6: officer.viewRegistrationStatus();
+        break;
+        case 7:
+        	break;
         default: View.invalidChoice();
 		}}
     	while(choice!=7);

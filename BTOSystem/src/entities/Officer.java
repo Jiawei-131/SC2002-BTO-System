@@ -59,9 +59,18 @@ public void displayChoice()
 //// inclusive, to application closing date, inclusive) 
 // //   assignedProject=project;
 //}
-public boolean viewRegistrationStatus()
+public void viewRegistrationStatus()
 {
-    return registrationStatus;
+	ProjectController pc=new ProjectController();
+	   List<OfficerApplication> projects = OfficerApplicationDatabase.readApplication();
+	   for(OfficerApplication project:projects)
+	   {
+			if(this.getNric().equals(project.getApplicantId()))
+			{
+                System.out.println(project.getApplicantId() + " - " + project.getApplicationStatus() + 
+               		 " - " +project.getProjectName());
+			}
+	   }
 }
 //public String viewProjectDetails(Project project){
 //    return "hi";
