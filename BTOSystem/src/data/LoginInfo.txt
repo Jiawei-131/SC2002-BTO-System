@@ -1,15 +1,3 @@
-T1234567J|password45
-T2234567J|password1
-T3234567J|password2
-T1234568J|password3
-T1234569J|nopassword
-T1234569D|Passwordd
-T1234562J|password2
-T2233445J|password3
-T1231233J|Password123
-T7654321J|passwordd
-T8765432J|passwordd
-T9876543J|passwordd
 T1213151J|password1
 T1553151J|password1
 T1212121J|password1
