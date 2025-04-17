@@ -140,7 +140,7 @@ public class ProjectApplicationDatabase implements FilePath,Database {
                     applications.add(new ProjectApplication(nric, maritalStatus, Integer.parseInt(age), applicationStatus, projectName, flatType, flatBooked));
                 }
             }
-            return null; // Return null if no matching application is found
+            return applications; // Return null if no matching application is found
     }
     
 //    public ProjectApplication getApplicationByApplicantId(String nric) {
