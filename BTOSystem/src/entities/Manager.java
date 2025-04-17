@@ -7,7 +7,6 @@ import java.util.Scanner;
 import entities.*;
 import handlers.ManagerProjectService;
 import util.GetInput;
-import util.Role;
 import controllers.AuthenticationController;
 import controllers.DateTimeController;
 import controllers.EnquiryController;
