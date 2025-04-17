@@ -126,7 +126,7 @@ public class ProjectApplicationDatabase implements FilePath,Database {
     
     public static List<ProjectApplication> getApplicationsByProjectName(String projectName) {
     	List<String> lines = Database.readFile(projectApplicationDatabaseFilePath);
-    	List<ProjectApplication> applications = null;
+    	List<ProjectApplication> applications = new ArrayList<>();
             for (String line : lines)
             {
             	String[] parts = line.split("\\|");

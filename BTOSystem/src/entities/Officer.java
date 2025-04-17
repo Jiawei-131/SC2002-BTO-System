@@ -110,7 +110,7 @@ public void viewApplications() {
 		System.out.println("\n ----- Your Applications -----");
 		for (OfficerApplication application : applications) {
 			System.out.println(application);
-			System.out.println("------------------");
+			System.out.println("------------------------------");
 		}
 	}
 }

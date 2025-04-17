@@ -76,7 +76,7 @@ public class OfficerApplicationDatabase implements FilePath,Database {
     
     public static List<OfficerApplication> getApplicationsByApplicantId(String applicantId) {
     	List<String> lines = Database.readFile(officerApplicationDatabaseFilePath);
-    	List<OfficerApplication> applications = null;
+    	List<OfficerApplication> applications = new ArrayList<>();
             for (String line : lines)
             {
             	String[] parts = line.split("\\|");
@@ -86,7 +86,7 @@ public class OfficerApplicationDatabase implements FilePath,Database {
                   applications.add(new OfficerApplication(applicantId, applicationStatus, projectName));
             	}
             }
-            return null; // Return null if no matching patient is found
+            return applications;
     }
     
     public OfficerApplication getApplicationByProjectName(String projectName) {
