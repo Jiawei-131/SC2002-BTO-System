@@ -1,4 +1,4 @@
-package util;
+package entities;
 
 public enum Role {
 APPLICANT,

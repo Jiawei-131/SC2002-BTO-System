@@ -13,6 +13,7 @@ import data.UserDatabase;
 import entities.Applicant;
 import entities.Manager;
 import entities.Officer;
+import entities.Role;
 import entities.User;
 import handlers.ApplicantActionHandler;
 import handlers.ManagerActionHandler;
