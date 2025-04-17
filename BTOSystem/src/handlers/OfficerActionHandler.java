@@ -143,7 +143,7 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
     	        case 2 -> { // view assigned projects applications
     	        	String projectName = officer.getActiveProject().getName();
     	        	List<ProjectApplication> applications = ProjectApplicationDatabase.getApplicationsByProjectName(projectName);
-    	        	if (applications == null) {
+    	        	if (applications.size() <= 0) {
     	        		System.out.println("There are no applications for this project.");
     	        	} else {
     	        		System.out.println("----- Applications for " + projectName + " -----");
@@ -153,7 +153,7 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
     	        			System.out.println("Age: " + application.getAge());
     	        			System.out.println("Flat Type: " + application.getFlatType());
     	        			System.out.println("Status: " + application.getApplicationStatus());
-    	        			System.out.println("-------------------------");
+    	        			System.out.println("------------------------------------");
     	        		}
     	        	}
     	        }
