@@ -55,6 +55,22 @@ public class ManagerProjectService {
 			}
 	   }
 	   
+	   public static Project getActiveProject(Manager manager)
+	   {
+		   List<Project> projects = ProjectDatabase.loadAllProjects();
+		   Project temp=null;
+		   for(Project project:projects)
+		   {
+				if(manager.getNric().equals(project.getManager()))
+				{
+					temp=project;
+					break;
+				}
+		   }
+		   return temp;
+	   }
+	   
+	   
 	   public static void showProject(Manager manager,int type)
 	   {
 		   List<Project> projects = ProjectDatabase.loadAllProjects();
@@ -107,8 +123,8 @@ public class ManagerProjectService {
 	   {
 		   List<ProjectApplication> projectApplications;
 		   Comparator<ProjectApplication> comparator=Comparator.comparing(ProjectApplication::getProjectName);
-	    	ProjectApplicationDatabase db=new ProjectApplicationDatabase();
-	    	projectApplications=db.readApplication();
+	    	ProjectApplicationDatabase ProjectApplicationdb=new ProjectApplicationDatabase();
+	    	projectApplications=ProjectApplicationdb.readApplication();
 	    	manager.displayMenu(manager.getReportFilterOptions());
 	    	int choice = GetInput.inputLoop("your Choice", sc, Integer::parseInt, i-> i<=4&&i>0);
 	    	switch(choice)

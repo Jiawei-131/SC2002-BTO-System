@@ -22,9 +22,7 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
     	case 3 ->{
     		return(PasswordReset.resetPassword(sc, currentUser, db));
     	}
-    	case 4->{
-    		handleFilterAction(currentUser,sc);
-    	}
+    	case 4->handleFilterAction(currentUser,sc);
     	case 5 ->{
         	return currentUser.logout();
     	}
@@ -89,9 +87,7 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
                     enquiryID = GetInput.getLineInput(sc, "your Enquiry ID");
                     applicant.deleteEnquiry(enquiryID, enquiryController);
                 }
-                case 5 -> {
-                    System.out.println("Returning to main menu...");
-                }
+                case 5 -> System.out.println("Returning to main menu...");
                 default -> View.invalidChoice();
             }
         } while (choice != 5);
@@ -195,6 +191,7 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
             	System.out.println("Successfully requested withdrawal of application.");
             }
         }
+        case 6->{}
         default -> View.invalidChoice();
 		}}
     	while(choice!=6);

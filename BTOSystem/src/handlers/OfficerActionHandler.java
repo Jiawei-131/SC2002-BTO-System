@@ -21,9 +21,7 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
     	case 3->{
     		return(PasswordReset.resetPassword(sc, currentUser, db));
     	}
-      	case 4->{
-    		handleFilterAction(currentUser,sc);
-    	}
+      	case 4->handleFilterAction(currentUser,sc);
     	case 5->{
         	return currentUser.logout();	
     	}

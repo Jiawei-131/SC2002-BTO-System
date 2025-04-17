@@ -26,4 +26,11 @@ public class DateTimeController {
     	 return inputDate.isAfter(currentDate);
 
     }
+    
+    public static boolean isActive(String d1, String d2)
+    {
+        LocalDate openingDate = LocalDate.parse(d1, FORMATTER);
+        LocalDate closingDate = LocalDate.parse(d2, FORMATTER);
+    	return (!currentDate.isBefore(openingDate) && !currentDate.isAfter(closingDate));
+    }
 }

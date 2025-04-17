@@ -26,6 +26,7 @@ public class ProjectApplicationDatabase implements FilePath,Database {
     	List<ProjectApplication> projectApplications =new ArrayList<>();
     	for(String application: applications)
     	{
+    		
             String[] parts = application.split("\\|");
             String applicantId = parts[0];
             String maritalStatus = parts[1];

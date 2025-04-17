@@ -10,47 +10,73 @@ import util.GetInput;
 import controllers.AuthenticationController;
 import controllers.DateTimeController;
 import controllers.EnquiryController;
+import controllers.ProjectController;
 import data.EnquiryDatabase;
 import data.ProjectApplicationDatabase;
+import data.ProjectDatabase;
 import view.View;
 public class Manager extends User {
     private Project assignedProject;
-    private boolean hasProject;
+    private boolean hasProject=false;
 	private boolean isVisible;
 	
+	//Constructor
     public Manager(String name, String nric, int age, String maritalStatus, String password, boolean isVisible,AuthenticationController ac,Role role) {
         super(name, nric, age, maritalStatus, password,ac,role);
         this.isVisible=isVisible;
     }
     
-
- 
     public void displayMenu(List<String> options) {
         View.menu(this,options);
     }
 
+    //Project related implementations
     public void createProject(Scanner sc) 
     {
-    	ManagerProjectService.createProject(this, sc);
-    	System.out.println("Project Created!");
+    	if(hasProject==true)
+    	{
+    		System.out.println("Already has an active project!");
+    	}
+    	else {
+        	ManagerProjectService.createProject(this, sc);
+        	System.out.println("Project Created!");
+    	}
     }
 
-    public void handleProject(Project project)
+    //Called at login to get active project for manager
+    public void getActiveProject()
     {
-    	assignedProject=project;
-    	hasProject=true;
+    	if(ProjectController.hasActiveProject(ProjectDatabase.loadAllProjects(), this))
+    	{
+    		hasProject=true;
+    		assignedProject=ManagerProjectService.getActiveProject(this);
+    	}
+    }
+    
+    //Print active project
+    public void viewActiveProject()
+    {
+    	if(hasProject==true)
+    	{
+    		View.displayProjectDetails(this, assignedProject);
+    	}
+    	else {
+    		System.out.println("You do not have any active project");
+    	}
     }
     
     public void editProject(Scanner sc) {
-        // TODO: edit project
     	ManagerProjectService.editProject(this, sc);
     }
 
     public void deleteProject(Scanner sc) {
-        // TODO: delete project and unassign project remove from db straight?
     	ManagerProjectService.deleteProject(this, sc);
-//    	assignedProject.Delete?
-    	hasProject=false;
+    	if(hasProject==true)
+    	{
+    		assignedProject=null;
+        	hasProject=false;
+    	}
+
     }
 
     public void toggleVisibility() {
@@ -62,8 +88,14 @@ public class Manager extends User {
         /* Able to view all created projects, including projects created by other 
     	HDB Manager, regardless of visibility setting. */
     	ManagerProjectService.showProject(this, type);
-}
+    }
+    public void generateReport(Scanner sc) {
+    	ManagerProjectService.generateReport(this,sc);
 
+    }
+
+    
+    //Approval implementation
     public void approveOfficerRegistration(Officer officer) {
         // TODO implement
     }
@@ -83,11 +115,10 @@ public class Manager extends User {
     public void rejectApplicantWithdrawal(ProjectApplication application) {
         // TODO implement
     }
+    
 
-    public void generateReport(Scanner sc) {
-    	ManagerProjectService.generateReport(this,sc);
-
-    }
+    
+    // MENU options
     public List<String> getMenuOptions() {
         return Arrays.asList(
             "1. Project Details",
@@ -110,13 +141,14 @@ public class Manager extends User {
     }
     public List<String> getProjectOptions() {
         return Arrays.asList(
-				"1. View All Project listings",
-				"2. View My Project listings",
-				"3. Create BTO Project listing",
-				"4. Delete BTO Project listing",
-				"5. Edit BTO Project listing ",
-				"6. Generate report",
-				"7. Back to Main Menu"
+        		"1. View All Project listings",
+        		"2. View My Project listings",
+        		"3. View My Active Project",
+        		"4. Create BTO Project listing",
+        		"5. Delete BTO Project listing",
+        		"6. Edit BTO Project listing ",
+        		"7. Generate report",
+        		"8. Back to Main Menu"
         );
     }
     public List<String> getEnquiryOptions() {
@@ -128,10 +160,6 @@ public class Manager extends User {
         );
     }
     
-    /*		"1. Project Name",
-			"2. Flat Type",
-			"3. Age",
-			"4. Marital Status"*/
     public List<String> getReportFilterOptions() {
         return Arrays.asList(
         		"1. Project Name",
@@ -156,6 +184,9 @@ public class Manager extends User {
 
         );
     }
+    
+    
+    //Enquiry Implementations
     public void viewAllEnquiries(EnquiryController enquiryController, int choice) {
         List<Enquiry> allEnquiries = enquiryController.getAllEnquiries();
         boolean found = false;

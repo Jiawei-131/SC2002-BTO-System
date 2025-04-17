@@ -26,9 +26,7 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
         case 4->{
         	return(PasswordReset.resetPassword(sc, currentUser, db));
         }
-      	case 5->{
-    		handleFilterAction(currentUser,sc);
-    	}
+      	case 5->handleFilterAction(currentUser,sc);
         case 6->{
     		return currentUser.logout();
     	}
@@ -56,6 +54,7 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
 			switch(choice) {
 				case 1,2 ->approveReject(sc,manager);//TODO Print list of officer applying and key in who to approve?
 				case 3 ->System.out.println("Not Done");//TODO Print list of Applicant withdraw and key in who to approve?
+				case 4->{}
 				default-> View.invalidChoice();
 			}
 		}while(choice!=4);
@@ -84,11 +83,12 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
 	
 /*	"1. View All Project listings",
 	"2. View My Project listings",
-	"3. Create BTO Project listing",
-	"4. Delete BTO Project listing",
-	"5. Edit BTO Project listing ",
-	"6. Generate report",
-	"7. Back to Main Menu"*/
+	"3. View My Active Project",
+	"4. Create BTO Project listing",
+	"5. Delete BTO Project listing",
+	"6. Edit BTO Project listing ",
+	"7. Generate report",
+	"8. Back to Main Menu"*/
    public void handleProjectAction(int choice,User currentUser, Scanner sc) {
 	    	Manager manager	=(Manager)currentUser;
 	    	do {
@@ -97,18 +97,18 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
 			switch(choice)
 			{
 			case 1,2->manager.viewProjects(choice);
-	        case 3-> manager.createProject(sc);
-	        //Edit BTO Projects, check if exists
-	        case 4 ->manager.deleteProject(sc);
-	        case 5 ->manager.editProject(sc);
-	        case 6 ->manager.generateReport(sc);
-	        case 7 -> {}
+			case 3->manager.viewActiveProject();
+	        case 4-> manager.createProject(sc);
+	        case 5 ->manager.deleteProject(sc);
+	        case 6 ->manager.editProject(sc);
+	        case 7 ->manager.generateReport(sc);
+	        case 8 -> {}
 	        default-> View.invalidChoice();
 			}}
-	    	while(choice!=7);
+	    	while(choice!=8);
 	    }
 	
-
+//TODO Implement
     private void approveReject(Scanner sc,Manager manager)
     {
  	    int choice = GetInput.inputLoop("""

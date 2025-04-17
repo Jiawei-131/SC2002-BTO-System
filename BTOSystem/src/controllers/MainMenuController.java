@@ -58,6 +58,7 @@ public static void mainMenu(Scanner sc,Map<String,String>users,PasswordHasher pa
         } 
 		else if (currentUser instanceof Manager) {
 			handler = new ManagerActionHandler();
+			((Manager) currentUser).getActiveProject();
         }
 		currentUser=handler.handleAction(choice, currentUser, sc,db);
     }

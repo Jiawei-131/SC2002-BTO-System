@@ -1,6 +1,7 @@
 package controllers;
 
 import entities.Applicant;
+import entities.Manager;
 import entities.Officer;
 import entities.Project;
 import data.ProjectDatabase;
@@ -77,5 +78,14 @@ public class ProjectController {
     public boolean checkEligibility(String projectName, Applicant applicant) {
         Project project = ProjectDatabase.findByName(projectName);
         return project != null && project.isEligible(applicant);
+    }
+    
+    public static boolean hasActiveProject(List<Project> allProjects,Manager manager) {
+        for (Project project : allProjects) {
+            if (manager.getNric().equals(project.getManager()) && DateTimeController.isActive(project.getOpeningDate(),project.getClosingDate())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
