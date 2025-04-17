@@ -13,12 +13,6 @@ public class ProjectDatabase implements Database,FilePath  {
 //    private UserDatabase userDB = new UserDatabase();
 
 	public static boolean save(Project project) {
-	    // Making sure Project Name is unique
-	    if (findByName(project.getName()) != null) {
-	        System.out.println("A project with the name '" + project.getName() + "' already exists.");
-	        return false;
-	    }
-
 	    try {
 	        StringBuilder officersData = new StringBuilder();
 	        if (!project.getOfficersInCharge().isEmpty()) {
@@ -31,23 +25,15 @@ public class ProjectDatabase implements Database,FilePath  {
 	        }
 
 	        String line = String.format("%s|%s|%d|%.2f|%d|%.2f|%s|%s|%s|%d|%s|%b",
-	                project.getName(),
-	                project.getNeighbourhood(),
-	                project.getNumberOfType1Units(),
-	                project.getType1SellingPrice(),
-	                project.getNumberOfType2Units(),
-	                project.getType2SellingPrice(),
-	                project.getOpeningDate(),
-	                project.getClosingDate(),
-	                project.getManager(), // should be NRIC ideally
-	                project.getOfficerSlot(),
-	                officersData.toString(),
-	                Project.isVisibleToApplicant()
-	        );
+	            project.getName(), project.getNeighbourhood(),
+	            project.getNumberOfType1Units(), project.getType1SellingPrice(),
+	            project.getNumberOfType2Units(), project.getType2SellingPrice(),
+	            project.getOpeningDate(), project.getClosingDate(),
+	            project.getManager(), project.getOfficerSlot(),
+	            officersData.toString(), Project.isVisibleToApplicant());
 
 	        Database.writeFile(projectDatabaseFilePath, line);
 	        return true;
-
 	    } catch (Exception e) {
 	        System.err.println("Error saving project: " + e.getMessage());
 	        return false;
