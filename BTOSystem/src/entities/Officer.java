@@ -6,14 +6,18 @@ import java.util.Scanner;
 
 import controllers.AuthenticationController;
 import controllers.EnquiryController;
+import controllers.ProjectController;
 import data.EnquiryDatabase;
+import data.OfficerApplicationDatabase;
+import data.ProjectDatabase;
+import handlers.ManagerProjectService;
 import util.Role;
 import view.View;
 public class Officer extends Applicant {
 private boolean isVisible;
-//private Project assignedProject;
+private Project assignedProject=null;
 private boolean registrationStatus;
-private boolean canRegister;
+private boolean canRegister=true;
 
 
 public Officer(String name, String nric, int age, String maritalStatus, String password, boolean isVisible,AuthenticationController ac,Role role)
@@ -21,6 +25,20 @@ public Officer(String name, String nric, int age, String maritalStatus, String p
     super(name, nric, age, maritalStatus, password,isVisible,ac,role);
 }
 
+public Project getActiveProject()
+{
+	ProjectController pc=new ProjectController();
+		   List<OfficerApplication> projects = OfficerApplicationDatabase.readApplication();
+		   for(OfficerApplication project:projects)
+		   {
+				if(this.getNric().equals(project.getApplicantId())&&project.getApplicationStatus().equals("Approved"))
+				{
+					assignedProject=pc.getProject(project.getProjectName());
+					setCanRegister(false);
+				}
+		   }
+	return assignedProject;
+}
 
 public void displayMenu(){
 View.menu(this,this.getMenuOptions());
@@ -99,14 +117,14 @@ public void generateReceipt(Applicant applicant)
 }
 public boolean getCanRegister()
 {
-    return true;
+    return canRegister;
 }
 
 public String getNric() {
     return this.nric;
 }
 
-public void setCanRegister(boolean canRegister)
+private void setCanRegister(boolean canRegister)
 {
     this.canRegister=canRegister;
 }
@@ -120,15 +138,32 @@ public List<String> getRoleOptions()
 }
 
 public List<String> getProjectOptions() {
-    return Arrays.asList(
-    		"1. View list of projects",
-		 	"2. Apply for project",
-    		"3. View applied projects",
-    		"4. Withdraw from BTO Application",
-    		"5. Generate Receipt",
-    		"6. Check Status",
-			"7. Back to Main Menu"
-    );
+	if(canRegister==false)
+	{
+		return Arrays.asList(
+			    String.format("Project Officer for %s", assignedProject.getName()),
+			    "1. View list of projects",
+			    "2. Apply for project",
+			    "3. View applied projects",
+			    "4. Withdraw from BTO Application",
+			    "5. Generate Receipt",
+			    "6. Check Status",
+			    "7. Back to Main Menu"
+			);
+
+	}
+	else {
+	    return Arrays.asList(
+	    		"1. View list of projects",
+			 	"2. Apply for project",
+	    		"3. View applied projects",
+	    		"4. Withdraw from BTO Application",
+	    		"5. Generate Receipt",
+	    		"6. Check Status",
+				"7. Back to Main Menu"
+	    );
+	}
+
 }
 //public List<String> getEnquiryOptions() {
 //    return Arrays.asList(

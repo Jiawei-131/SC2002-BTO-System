@@ -51,6 +51,7 @@ public static void mainMenu(Scanner sc,Map<String,String>users,PasswordHasher pa
 		ActionHandler handler = null;
 		if (currentUser instanceof Officer) {
 			handler=new OfficerActionHandler();
+			((Officer) currentUser).getActiveProject();
         } 
 		else if (currentUser instanceof Applicant) {
 			handler=new ApplicantActionHandler();

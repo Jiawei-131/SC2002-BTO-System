@@ -52,7 +52,7 @@ public class ManagerProjectService {
 		            }
 					default->{}
 					}
-				}while (choice != 9);
+				}while (choice != 10);
 
 			}
 	   }
@@ -101,6 +101,7 @@ public class ManagerProjectService {
 			}
 			else {
 				ProjectDatabase.delete(btoName);
+				System.out.println("BTO Project is deleted.");
 			}
 	   }
 	   

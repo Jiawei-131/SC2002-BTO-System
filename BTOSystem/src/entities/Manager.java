@@ -104,17 +104,22 @@ public class Manager extends User {
     public void approveOfficerRegistration(OfficerApplication application) {
         // TODO implement get officer slot if no slot show approval failed
     	ProjectController pc = new ProjectController();
-    	application.setApplicationStatus("Approval");
+    	application.setApplicationStatus("Approved");
     	OfficerApplicationDatabase.updateApplication(application);
-//    	pc.getProject(application.getProjectName()).addOfficer(application.getApplicantId());
-    	
+    	if(pc.assignOfficer(application.getProjectName(), application.getApplicantId())){
+    		System.out.println("Approved");
+    	}
+    	else {
+        	System.out.println("Approval failed");
+    	}
+
     }
     public void rejectOfficerRegistration(OfficerApplication application) {
         // TODO implement remove officer slot
     	ProjectController pc = new ProjectController();
     	application.setApplicationStatus("Rejected");
     	OfficerApplicationDatabase.updateApplication(application);
-//    	pc.getProject(application.getProjectName()).removeOfficer(application.getApplicantId());
+    	pc.removeOfficer(application.getProjectName(), application.getApplicantId());
     }
 
     public void approveApplication(ProjectApplication application) {
