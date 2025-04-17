@@ -147,16 +147,6 @@ public void generateReceipt(ProjectApplication application) {
 	
 }
 
-public void manageWithdrawal(ProjectApplication application, int decision) {
-	if (decision == 1) {
-		application.setApplicationStatus(ApplicationStatus.WITHDRAWN.getStatus());
-		ProjectApplicationDatabase.updateApplication(application);
-	} else {
-		application.setApplicationStatus(ApplicationStatus.WITHDRAWREJ.getStatus());
-		ProjectApplicationDatabase.updateApplication(application);
-	}
-}
-
 public void viewEnquiries(EnquiryController controller) {
     String myNRIC = this.getNric();
     List<Enquiry> enquiries = controller.getAllEnquiries();
@@ -272,8 +262,7 @@ public List<String> getProjectOfficerOptions() {
 			    "1. View assigned project details",
 			    "2. View applications",
 			    "3. Book Flat",
-			    "4. Manage Withdrawal Request",
-			    "5. Back to Main Menu"
+			    "4. Back to Main Menu"
 			);
 
 	}

@@ -111,7 +111,6 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
     public void handleProjectOfficerAction(int choice, User currentUser, Scanner sc) {
     	// project > officer
     	Officer officer	=(Officer)currentUser;
-    	int choices = officer.getCanRegister() ? 4 : 5;
     	
     	do {
     		officer	=(Officer)currentUser;
@@ -172,50 +171,12 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
     	        		System.out.println("Booking has not been requested.");
     	        	}
     	        }
-    	        case 4 -> { // manage assigned project applications that are pending withdrawal
-    	        	String projectName = officer.getActiveProject().getName();
-    	        	List<ProjectApplication> applications = ProjectApplicationDatabase.getApplicationsByProjectName(projectName);
-    	        	if (applications == null) {
-    	        		System.out.println("There are no applications for this project.");
-    	        	} else {
-    	        		System.out.println("----- Applications Pending Withdrawal -----");
-    	        		for (ProjectApplication application : applications) {
-    	        			if (application.getApplicationStatus().equals(ApplicationStatus.WITHDRAWREQ.getStatus())) {
-    	        				System.out.println("Applicant: " + application.getApplicantId());
-        	        			System.out.println("Marital Status: " + application.getMaritalStatus());
-        	        			System.out.println("Age: " + application.getAge());
-        	        			System.out.println("Flat Type: " + application.getFlatType());
-        	        			System.out.println("Status: " + application.getApplicationStatus());
-        	        			System.out.println("-------------------------");
-    	        			}
-    	        		}
-    	        		
-    	        		String applicantId = GetInput.getLineInput(sc, " the Applicant ID");
-	        			
-    	        		for (ProjectApplication application : applications) {
-    	        			if (application.getApplicantId().equals(applicantId) && 
-    	        					application.getApplicationStatus().equals(ApplicationStatus.WITHDRAWREQ.getStatus())) {
-    	        				int decision;
-    	        				do {
-    	        					decision = GetInput.getIntInput(sc, " your decision: \n1. Approve \n2. Reject");
-    	        				} while (decision != 1 && decision != 2);
-    	        				
-    	        				officer.manageWithdrawal(application, decision);
-    	        				break;
-    	        			}
-    	        		}
-    	        		
-    	        		System.out.println("Application not found.");
-    	        	}
-    	        }
-    	        case 5 -> System.out.println("Returning to main menu...");
+    	        case 4 -> System.out.println("Returning to main menu...");
     	        default -> View.invalidChoice();
     			}
     		}
-    		
-    		choices = officer.getCanRegister() ? 4 : 5;
     	}
-    	while(choice!=choices);
+    	while(choice!=4);
     }
 
 }
