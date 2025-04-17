@@ -1,14 +1,20 @@
 package handlers;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import controllers.EnquiryController;
+import data.ProjectApplicationDatabase;
+import data.ProjectDatabase;
 import data.UserDatabase;
 import entities.Manager;
 import entities.Officer;
+import entities.Project;
+import entities.ProjectApplication;
 import entities.User;
 import util.ActionHandler;
+import util.ApplicationStatus;
 import util.GetInput;
 import util.PasswordReset;
 import view.View;
@@ -17,7 +23,10 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
 	public User handleAction(int choice,User currentUser, Scanner sc,UserDatabase db){
         switch(choice) {
       // Officer || Applicant ? menu
-        case 1->    handleProjectAction(choice,currentUser,sc);
+        case 1->    {
+        	handleProjectAction(choice,currentUser,sc);
+//        	System.out.println("bruh");
+        }
     	case 2->	handleEnquiryAction(choice,currentUser,sc);
     	case 3->{
     		return(PasswordReset.resetPassword(sc, currentUser, db));
@@ -74,25 +83,139 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
 		switch(choice)
 		{
 		//Print all projects
-		case 1: 
-        break;
-        case 2:
-        break;
-        case 3:
-        break;
-        
-        case 4:
-        break;
-        case 5://TODO Generate Receipt
-        break;
-        case 6: officer.viewRegistrationStatus();
-        break;
-        case 7:
-        	break;
-        default: View.invalidChoice();
+		case 1 -> handleProjectApplicantAction(choice, currentUser, sc);
+        case 2 -> handleProjectOfficerAction(choice, currentUser, sc);
+        case 3 -> System.out.println("Returning to main menu...");
+        default -> View.invalidChoice();
 		}}
-    	while(choice!=7);
+    	while(choice!=3);
     }
     
+    public void handleProjectApplicantAction(int choice, User currentUser, Scanner sc) {
+    	// project > applicant
+    	do {
+    		Officer officer	=(Officer)currentUser;
+    		officer.displayMenu(officer.getProjectApplicantOptions());
+		choice=GetInput.getIntInput(sc, "your choice");
+		switch(choice)
+		{
+		//Print all projects
+		case 1 -> handleProjectApplicantAction(choice, currentUser, sc);
+        case 2 -> handleProjectOfficerAction(choice, currentUser, sc);
+        case 3 -> System.out.println("Returning to main menu...");
+        default -> View.invalidChoice();
+		}}
+    	while(choice!=3);
+    }
+    
+    public void handleProjectOfficerAction(int choice, User currentUser, Scanner sc) {
+    	// project > officer
+    	Officer officer	=(Officer)currentUser;
+    	int choices = officer.getCanRegister() ? 4 : 5;
+    	
+    	do {
+    		officer	=(Officer)currentUser;
+    		officer.displayMenu(officer.getProjectOfficerOptions());
+    		choice=GetInput.getIntInput(sc, "your choice");
+    		if (officer.getCanRegister()) { // if officer is unassigned
+    			switch(choice)
+    			{
+    			//Print all projects
+    			case 1 -> officer.viewAllProjects(); 
+    	        case 2 -> { // apply to handle project
+    	        	String projectName = GetInput.inputLoop("the Project Name",sc,s->s,s->ProjectDatabase.findByName(s)!=null);
+    	        	
+    	        	officer.applyForProject(projectName);
+    	        }
+    	        case 3 -> officer.viewApplications(); // view all officer applications
+    	        case 4 -> System.out.println("Returning to main menu...");
+    	        default -> View.invalidChoice();
+    			}
+    		} else { // if officer has an active project
+    			switch(choice)
+    			{
+    			//Print all projects
+    			case 1 -> {
+    				Project project = officer.getActiveProject();
+    				System.out.println("----- Assigned Project Details -----");
+    				System.out.println(project);
+    				System.out.println("------------------------");
+    			}
+    	        case 2 -> { // view assigned projects applications
+    	        	String projectName = officer.getActiveProject().getName();
+    	        	List<ProjectApplication> applications = ProjectApplicationDatabase.getApplicationsByProjectName(projectName);
+    	        	if (applications == null) {
+    	        		System.out.println("There are no applications for this project.");
+    	        	} else {
+    	        		System.out.println("----- Applications for " + projectName + " -----");
+    	        		for (ProjectApplication application : applications) {
+    	        			System.out.println("Applicant: " + application.getApplicantId());
+    	        			System.out.println("Marital Status: " + application.getMaritalStatus());
+    	        			System.out.println("Age: " + application.getAge());
+    	        			System.out.println("Flat Type: " + application.getFlatType());
+    	        			System.out.println("Status: " + application.getApplicationStatus());
+    	        			System.out.println("-------------------------");
+    	        		}
+    	        	}
+    	        }
+    	        case 3 -> { // book flat
+    	        	String applicantId = GetInput.getLineInput(sc,  " Applicant's NRIC");
+    	        	ProjectApplication application = ProjectApplicationDatabase.getApplicationByApplicantId(applicantId);
+    	        	
+    	        	if (application == null) {
+    	        		System.out.println("Application not found.");
+    	        	} else if (application.getApplicationStatus().equals(ApplicationStatus.BOOKREQ.getStatus())) { // include status check
+    	        		officer.bookFlat(application);
+    	        		System.out.println("Flat successfully booked.");
+    	        		officer.generateReceipt(application);
+    	        	} else {
+    	        		System.out.println("Booking has not been requested.");
+    	        	}
+    	        }
+    	        case 4 -> { // manage assigned project applications that are pending withdrawal
+    	        	String projectName = officer.getActiveProject().getName();
+    	        	List<ProjectApplication> applications = ProjectApplicationDatabase.getApplicationsByProjectName(projectName);
+    	        	if (applications == null) {
+    	        		System.out.println("There are no applications for this project.");
+    	        	} else {
+    	        		System.out.println("----- Applications Pending Withdrawal -----");
+    	        		for (ProjectApplication application : applications) {
+    	        			if (application.getApplicationStatus().equals(ApplicationStatus.WITHDRAWREQ.getStatus())) {
+    	        				System.out.println("Applicant: " + application.getApplicantId());
+        	        			System.out.println("Marital Status: " + application.getMaritalStatus());
+        	        			System.out.println("Age: " + application.getAge());
+        	        			System.out.println("Flat Type: " + application.getFlatType());
+        	        			System.out.println("Status: " + application.getApplicationStatus());
+        	        			System.out.println("-------------------------");
+    	        			}
+    	        		}
+    	        		
+    	        		String applicantId = GetInput.getLineInput(sc, " the Applicant ID");
+	        			
+    	        		for (ProjectApplication application : applications) {
+    	        			if (application.getApplicantId().equals(applicantId) && 
+    	        					application.getApplicationStatus().equals(ApplicationStatus.WITHDRAWREQ.getStatus())) {
+    	        				int decision;
+    	        				do {
+    	        					decision = GetInput.getIntInput(sc, " your decision: \n1. Approve \n2. Reject");
+    	        				} while (decision != 1 && decision != 2);
+    	        				
+    	        				officer.manageWithdrawal(application, decision);
+    	        				break;
+    	        			}
+    	        		}
+    	        		
+    	        		System.out.println("Application not found.");
+    	        	}
+    	        }
+    	        case 5 -> System.out.println("Returning to main menu...");
+    	        default -> View.invalidChoice();
+    			}
+    		}
+    		
+    		choices = officer.getCanRegister() ? 4 : 5;
+    	}
+    	while(choice!=choices);
+    }
 
 }

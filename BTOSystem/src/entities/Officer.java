@@ -9,8 +9,11 @@ import controllers.EnquiryController;
 import controllers.ProjectController;
 import data.EnquiryDatabase;
 import data.OfficerApplicationDatabase;
+import data.ProjectApplicationDatabase;
 import data.ProjectDatabase;
+import data.UserDatabase;
 import handlers.ManagerProjectService;
+import util.ApplicationStatus;
 import util.Role;
 import view.View;
 public class Officer extends Applicant {
@@ -78,7 +81,81 @@ public void viewRegistrationStatus()
 //public String viewEnquiry(Enquiry enquiryList)
 //{
 //
-//}
+
+public void viewAllProjects() {
+	List<Project> projects = this.sort();
+	
+	for (Project project : projects) {
+        if (Project.isVisibleToApplicant()) {
+            View.displayProjectDetails(this, project);
+        }
+    }
+	
+}
+
+
+public void applyForProject(String projectName) {
+	if (ProjectController.checkOfficerHandleEligibility(projectName, this)) {
+		OfficerApplication application = new OfficerApplication(this.nric, projectName);
+		OfficerApplicationDatabase.writeApplication(application);
+	}
+}
+
+public void viewApplications() {
+	List<OfficerApplication> applications = OfficerApplicationDatabase.getApplicationsByApplicantId(this.nric);
+	
+	if (applications == null) {
+		System.out.println("You have no past applications!");
+	} else {
+		System.out.println("\n ----- Your Applications -----");
+		for (OfficerApplication application : applications) {
+			System.out.println(application);
+			System.out.println("------------------");
+		}
+	}
+}
+
+public void bookFlat(ProjectApplication application) {
+	application.setApplicationStatus(ApplicationStatus.BOOKED.getStatus());
+	ProjectApplicationDatabase.updateApplication(application);
+	
+	Project project = ProjectDatabase.findByName(application.getProjectName());
+	
+	if (application.getFlatType().equals("2-Room")) {
+		project.setNumberOfType1Units(project.getNumberOfType1Units()-1);
+	} else {
+		project.setNumberOfType2Units(project.getNumberOfType2Units()-1);
+	}
+	ProjectDatabase.update(project);
+}
+
+public void generateReceipt(ProjectApplication application) {
+	Project project = ProjectDatabase.findByName(application.getProjectName());
+	AuthenticationController ac = new AuthenticationController();
+	
+	System.out.println("===== Receipt ======");
+	System.out.println("Project Details:");
+	System.out.println(project);
+	System.out.println("\n");
+	System.out.println("Applicant Name: " + UserDatabase.getUserById(application.getApplicantId(), ac).getUsername());
+	System.out.println("Applicant NRIC: " + application.getApplicantId());
+	System.out.println("Age: " + application.getAge());
+	System.out.println("Marital Status: " + application.getMaritalStatus());
+	System.out.println("Flat Type Booked: " + application.getFlatType());
+	System.out.println("===== END =====");
+	
+	
+}
+
+public void manageWithdrawal(ProjectApplication application, int decision) {
+	if (decision == 1) {
+		application.setApplicationStatus(ApplicationStatus.WITHDRAWN.getStatus());
+		ProjectApplicationDatabase.updateApplication(application);
+	} else {
+		application.setApplicationStatus(ApplicationStatus.WITHDRAWREJ.getStatus());
+		ProjectApplicationDatabase.updateApplication(application);
+	}
+}
 
 public void viewEnquiries(EnquiryController controller) {
     String myNRIC = this.getNric();
@@ -120,10 +197,6 @@ public void updateApplicantProfile(Applicant applicant)
 {
 
 }
-public void generateReceipt(Applicant applicant)
-{
-
-}
 public boolean getCanRegister()
 {
     return canRegister;
@@ -147,33 +220,73 @@ public List<String> getRoleOptions()
 }
 
 public List<String> getProjectOptions() {
+//	if(canRegister==false)
+//	{
+//		return Arrays.asList(
+//			    String.format("Project Officer for %s", assignedProject.getName()),
+//			    "1. View list of projects",
+//			    "2. Apply for project",
+//			    "3. View applied projects",
+//			    "4. Withdraw from BTO Application",
+//			    "5. Generate Receipt",
+//			    "6. Check Status",
+//			    "7. Back to Main Menu"
+//			);
+//
+//	}
+//	else {
+//	    return Arrays.asList(
+//	    		"1. View list of projects",
+//			 	"2. Apply for project",
+//	    		"3. View applied projects",
+//	    		"4. Withdraw from BTO Application",
+//	    		"5. Generate Receipt",
+//	    		"6. Check Status",
+//				"7. Back to Main Menu"
+//	    );
+//	}
+	return Arrays.asList(
+			"Please choose which role you want to access the system as:",
+			"1. Applicant",
+			"2. Officer",
+			"3. Back to Main Menu"
+			);
+
+}
+
+public List<String> getProjectApplicantOptions() {
+	return Arrays.asList(
+			"1. Applicant",
+			"2. Officer",
+			"3. Back to Main Menu"
+			);
+	
+	// maybe can just use applicants options and implementations?
+}
+
+public List<String> getProjectOfficerOptions() {
 	if(canRegister==false)
 	{
 		return Arrays.asList(
 			    String.format("Project Officer for %s", assignedProject.getName()),
-			    "1. View list of projects",
-			    "2. Apply for project",
-			    "3. View applied projects",
-			    "4. Withdraw from BTO Application",
-			    "5. Generate Receipt",
-			    "6. Check Status",
-			    "7. Back to Main Menu"
+			    "1. View assigned project details",
+			    "2. View applications",
+			    "3. Book Flat",
+			    "4. Manage Withdrawal Request",
+			    "5. Back to Main Menu"
 			);
 
 	}
 	else {
 	    return Arrays.asList(
 	    		"1. View list of projects",
-			 	"2. Apply for project",
-	    		"3. View applied projects",
-	    		"4. Withdraw from BTO Application",
-	    		"5. Generate Receipt",
-	    		"6. Check Status",
-				"7. Back to Main Menu"
+			 	"2. Apply for project", // apply as officer
+	    		"3. View applied projects", // see all applications as officer
+				"4. Back to Main Menu"
 	    );
 	}
-
 }
+
 //public List<String> getEnquiryOptions() {
 //    return Arrays.asList(
 //			"1. Submit Enquiry",

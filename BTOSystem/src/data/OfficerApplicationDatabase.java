@@ -73,6 +73,22 @@ public class OfficerApplicationDatabase implements FilePath,Database {
             }
             return null; // Return null if no matching patient is found
     }
+    
+    public static List<OfficerApplication> getApplicationsByApplicantId(String applicantId) {
+    	List<String> lines = Database.readFile(officerApplicationDatabaseFilePath);
+    	List<OfficerApplication> applications = null;
+            for (String line : lines)
+            {
+            	String[] parts = line.split("\\|");
+            	if (parts.length == 3 && parts[0].equals(applicantId)) { // Check if applicantId matches
+                  String applicationStatus = parts[1];
+                  String projectName = parts[2]; 
+                  applications.add(new OfficerApplication(applicantId, applicationStatus, projectName));
+            	}
+            }
+            return null; // Return null if no matching patient is found
+    }
+    
     public OfficerApplication getApplicationByProjectName(String projectName) {
     	List<String> lines = Database.readFile(officerApplicationDatabaseFilePath);
             for (String line : lines)

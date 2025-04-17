@@ -46,15 +46,16 @@ public class Applicant extends User {
     	ProjectApplicationDatabase.writeApplication(application);
     	appliedProject=projectName;
     	
-
-    	Project project = ProjectDatabase.findByName(projectName);
     	
-    	if (flatType == "2-Room") {
-    		project.setNumberOfType1Units(project.getNumberOfType1Units()-1);
-    	} else {
-    		project.setNumberOfType2Units(project.getNumberOfType2Units()-1);
-    	}
-    	ProjectDatabase.update(project);
+    	// quantity should only be updated when flat is successfully booked (officer action)
+//    	Project project = ProjectDatabase.findByName(projectName);
+//    	
+//    	if (flatType == "2-Room") {
+//    		project.setNumberOfType1Units(project.getNumberOfType1Units()-1);
+//    	} else {
+//    		project.setNumberOfType2Units(project.getNumberOfType2Units()-1);
+//    	}
+//    	ProjectDatabase.update(project);
     }
 
     
