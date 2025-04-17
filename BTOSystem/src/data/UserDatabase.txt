@@ -9,4 +9,3 @@ Mike|T6677889L|41|Single|O|true
 David|T8899001U|31|Married|O|true
 John|T1212121J|24|Single|M|true
 Aaron|T4455667S|50|Married|M|true
-
