@@ -84,7 +84,4 @@ public class ProjectApplication {
         this.flatBooked = flatBooked;
     }
 
-    public void bookFlat() {
-        // TODO: what does this do bruh
-    }
 }

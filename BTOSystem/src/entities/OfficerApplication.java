@@ -45,4 +45,9 @@ public class OfficerApplication {
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
 	}
+	
+	@Override
+	public String toString() {
+		return "Project Name:" + this.projectName + "\nStatus: " + this.applicationStatus;
+	}
 }

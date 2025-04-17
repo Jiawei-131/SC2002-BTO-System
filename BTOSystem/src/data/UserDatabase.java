@@ -53,7 +53,7 @@ public class UserDatabase implements Database,FilePath{
         Database.updateFile(loginFilePath,newLines);
     }
     
-    public User getUserById(String nric,AuthenticationController ac) {
+    public static User getUserById(String nric,AuthenticationController ac) {
     	List<String> lines = Database.readFile(userDatabaseFilePath);
     	List<String> linesLogin = Database.readFile(loginFilePath);
     	 String password=null;

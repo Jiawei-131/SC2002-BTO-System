@@ -214,4 +214,11 @@ public class Project {
 	public void setIsVisible(boolean b) {
 		Project.visibleToApplicant = b;
 	}
+	
+	@Override
+	public String toString() {
+		return "Project Name:" + this.name + "\nNeighbourhood: " + this.neighbourhood + "\n2-Room Units Available: " + this.numberOfType1Units
+				 + "\nSelling Price: " + this.type1SellingPrice + "\n3-Room Units Available: " + this.numberOfType2Units + "\nSelling Price: " + this.type2SellingPrice
+				 + "\nOpening Date: " + this.openingDate + "\nClosing Date: " + this.closingDate;
+	}
 }
