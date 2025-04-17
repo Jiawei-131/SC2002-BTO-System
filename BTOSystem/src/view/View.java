@@ -94,10 +94,10 @@ public class View {
         System.out.println("Application Period: " + project.getOpeningDate() + 
             " to " + project.getClosingDate());
         System.out.println("Manager: " + project.getManager());
-        System.out.println("Officers: " + project.getOfficersInCharge().size() + 
+        System.out.println("Officers: " + project.getOfficerNRICs().size() + 
             "/" + project.getOfficerSlot());
-        for (Officer officer : project.getOfficersInCharge()) {
-            System.out.println("  - " + officer.getUsername());
+        for (String officerNRIC : project.getOfficerNRICs()) {
+            System.out.println("  - " + officerNRIC);
         }
         System.out.println("Visibility: " + 
             (Project.isVisibleToApplicant() ? "Visible to applicants" : "Hidden from applicants"));

@@ -15,11 +15,11 @@ public class ProjectDatabase implements Database,FilePath  {
 	public static boolean save(Project project) {
 	    try {
 	        StringBuilder officersData = new StringBuilder();
-	        if (!project.getOfficersInCharge().isEmpty()) {
-	            for (Officer officer : project.getOfficersInCharge()) {
-	                if (officersData.length() > 0) officersData.append(";");
-	                officersData.append(officer.toString());
-	            }
+	        if (!project.getOfficerNRICs().isEmpty()) {
+	        	for (String officerNRIC : project.getOfficerNRICs()) {
+	        	    if (officersData.length() > 0) officersData.append(";");
+	        	    officersData.append(officerNRIC);
+	        	}
 	        } else {
 	            officersData.append("null");
 	        }
@@ -52,11 +52,12 @@ public class ProjectDatabase implements Database,FilePath  {
 	            found = true;
 
 	            StringBuilder officersData = new StringBuilder();
-	            if (!project.getOfficersInCharge().isEmpty()) {
-	                for (Officer officer : project.getOfficersInCharge()) {
-	                    if (officersData.length() > 0) officersData.append(";");
-	                    officersData.append(officer.toString());
-	                }
+	            if (!project.getOfficerNRICs().isEmpty()) {
+	            	for (String officerNRIC : project.getOfficerNRICs()) {
+	            	    if (officersData.length() > 0) officersData.append(";");
+	            	    officersData.append(officerNRIC);
+	            	}
+
 	            } else {
 	                officersData.append("null");
 	            }

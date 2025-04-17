@@ -39,17 +39,17 @@ public class ProjectController {
     }
 
     // Staff Management
-    public boolean assignOfficer(String projectName, Officer officer) {
+    public boolean assignOfficer(String projectName, String officerNRIC) {
         Project project = ProjectDatabase.findByName(projectName);
-        if (project != null && project.addOfficer(officer)) {
+        if (project != null && project.addOfficer(officerNRIC)) {
             return projectDB.update(project);
         }
         return false;
     }
 
-    public boolean removeOfficer(String projectName, Officer officer) {
+    public boolean removeOfficer(String projectName, String officerNRIC) {
         Project project = ProjectDatabase.findByName(projectName);
-        if (project != null && project.removeOfficer(officer)) {
+        if (project != null && project.removeOfficer(officerNRIC)) {
             return projectDB.update(project);
         }
         return false;

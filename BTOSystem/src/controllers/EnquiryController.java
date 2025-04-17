@@ -22,10 +22,11 @@ public class EnquiryController {
 	    String managerNRIC = project.getManager();
 	    String officerNRIC = "None";
 
-	    if (!project.getOfficersInCharge().isEmpty()) {
-	        Officer officer = project.getOfficersInCharge().get(0);
-	        officerNRIC = officer.getNric();
+	    List<String> officerNRICs = project.getOfficerNRICs();
+	    if (!officerNRICs.isEmpty()) {
+	        officerNRIC = officerNRICs.get(0);
 	    }
+
 
 	    Enquiry enquiry = new Enquiry(
 	        projectName,

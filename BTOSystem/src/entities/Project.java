@@ -23,7 +23,7 @@ public class Project {
 
 	// Staff assignments
 	private String managerData;
-	private List<Officer> officersInCharge;
+	private List<String> officerNRICs;
 	private int officerSlot;
 
 	// Visibility and applications
@@ -36,7 +36,7 @@ public class Project {
 
 	// Constructors
 	public Project() {
-		this.officersInCharge = new ArrayList<>();
+		this.officerNRICs = new ArrayList<>();
 		this.enquiryList = new ArrayList<>();
 		this.applicantList = new ArrayList<>();
 	}
@@ -59,29 +59,22 @@ public class Project {
 	}
 
 	// Staff Management
-	public boolean addOfficer(Officer officer) {
-		if (officersInCharge.size() >= officerSlot) {
-			return false;
-		}
-		if (officersInCharge.contains(officer)) {
-			return false;
-		}
-		officersInCharge.add(officer);
-		return true;
+	public boolean addOfficer(String officerNRIC) {
+	    if (officerNRICs.size() >= officerSlot) return false;
+	    if (officerNRICs.contains(officerNRIC)) return false;
+	    officerNRICs.add(officerNRIC);
+	    return true;
 	}
 
-	public boolean removeOfficer(Officer officer) {
-		if (!officersInCharge.contains(officer)) {
-			return false;
-		}
-		officersInCharge.remove(officer);
-		return true;
+	public boolean removeOfficer(String officerNRIC) {
+	    return officerNRICs.remove(officerNRIC);
 	}
+
 
 	public void setOfficerSlot(int slot) {
 		this.officerSlot = Math.min(slot, MAX_OFFICERS);
-		while (officersInCharge.size() > officerSlot) {
-			officersInCharge.remove(officersInCharge.size() - 1);
+		while (officerNRICs.size() > officerSlot) {
+			officerNRICs.remove(officerNRICs.size() - 1);
 		}
 	}
 
@@ -186,10 +179,13 @@ public class Project {
 	public int getOfficerSlot() {
 		return officerSlot;
 	}
-
-	public List<Officer> getOfficersInCharge() {
-		return officersInCharge;
+	public List<String> getOfficerNRICs() {
+	    return officerNRICs;
 	}
+	public void setOfficerNRICs(List<String> nrics) {
+	    this.officerNRICs = nrics;
+	}
+
 
 	public static boolean isVisibleToApplicant() {
 		return visibleToApplicant;
