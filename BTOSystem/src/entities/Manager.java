@@ -102,24 +102,42 @@ public class Manager extends User {
     
     //Approval implementation
     public void approveOfficerRegistration(OfficerApplication application) {
-        // TODO implement
+        // TODO implement get officer slot if no slot show approval failed
+    	ProjectController pc = new ProjectController();
     	application.setApplicationStatus("Approval");
     	OfficerApplicationDatabase.updateApplication(application);
+//    	pc.getProject(application.getProjectName()).addOfficer(application.getApplicantId());
+    	
     }
     public void rejectOfficerRegistration(OfficerApplication application) {
-        // TODO implement
+        // TODO implement remove officer slot
+    	ProjectController pc = new ProjectController();
     	application.setApplicationStatus("Rejected");
     	OfficerApplicationDatabase.updateApplication(application);
+//    	pc.getProject(application.getProjectName()).removeOfficer(application.getApplicantId());
     }
 
     public void approveApplication(ProjectApplication application) {
-    	application.setApplicationStatus("Successful");
-    	ProjectApplicationDatabase.updateApplication(application);
+    	ProjectController pc = new ProjectController();
+    	if(application.getFlatType().equals("2-Room")&&pc.getProject(application.getProjectName()).getNumberOfType1Units()>0) {
+        	application.setApplicationStatus("Successful");
+        	ProjectApplicationDatabase.updateApplication(application);
+    	}
+    	else if(application.getFlatType().equals("3-Room")&&pc.getProject(application.getProjectName()).getNumberOfType2Units()>0)
+    	{
+        	application.setApplicationStatus("Successful");
+        	ProjectApplicationDatabase.updateApplication(application);
+    	}
+    	else{
+    		System.out.println("Approval Failed not enough supply of the flat");
+    	}
     }
 
     public void rejectApplication(ProjectApplication application) {
+    	ProjectController pc = new ProjectController();
     	application.setApplicationStatus("Unsuccessful");
     	ProjectApplicationDatabase.updateApplication(application);
+//    	pc.getProject(application.getProjectName()).addOfficer(application.getApplicantId());
     }
 
     public void approveApplicantWithdrawal(ProjectApplication application) {
