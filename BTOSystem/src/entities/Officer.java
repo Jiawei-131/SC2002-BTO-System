@@ -246,9 +246,12 @@ public List<String> getProjectOptions() {
 
 public List<String> getProjectApplicantOptions() {
 	return Arrays.asList(
-			"1. Applicant",
-			"2. Officer",
-			"3. Back to Main Menu"
+			"1. View list of projects",
+		 	"2. Apply for project",
+    		"3. View applied project",
+    		"4. Request Flat Booking",
+    		"5. Withdraw from BTO Application",
+			"6. Back to Main Menu"
 			);
 	
 	// maybe can just use applicants options and implementations?
