@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import controllers.EnquiryController;
+import controllers.ProjectController;
 import data.ProjectApplicationDatabase;
 import data.ProjectDatabase;
 import data.UserDatabase;
@@ -106,13 +107,15 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
             case 2->{
             	if (ProjectApplicationDatabase.getApplicationByApplicantId(applicant.getNric()) != null) {
             		System.out.println("You have an existing application!");
+            		break;
             	} if (applicant.getMaritalStatus().equals("Single") && applicant.getAge() < 35) {
         			System.out.println("Ineligible applicant. No projects available.");
+        			break;
         		} else {
             		String flatType;
                 	String projectName=GetInput.inputLoop("the Project Name",sc,s->s,s->ProjectDatabase.findByName(s)!=null);
                 	
-                	if (officer.getActiveProject() != null && officer.getActiveProject().getName().equals(projectName)) {
+                	if (!ProjectController.checkOfficerApplicantEligibility(projectName, officer)) {
                 		System.out.println("You cannot apply for a project you are handling.");
                 		break;
                 	}
@@ -218,7 +221,13 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
     	        case 2 -> { // apply to handle project
     	        	String projectName = GetInput.inputLoop("the Project Name",sc,s->s,s->ProjectDatabase.findByName(s)!=null);
     	        	
+    	        	if (!ProjectController.checkOfficerHandleEligibility(projectName, officer)) {
+                		System.out.println("You cannot apply for this project. You have an existing application as an applicant.");
+                		break;
+                	}
+    	        	
     	        	officer.applyForProject(projectName);
+    	        	System.out.println("Successfully applied for project.");
     	        }
     	        case 3 -> officer.viewApplications(); // view all officer applications
     	        case 4 -> System.out.println("Returning to main menu...");
