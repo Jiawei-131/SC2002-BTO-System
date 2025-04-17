@@ -171,7 +171,7 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
         	} else if (application.getApplicationStatus().equals(ApplicationStatus.WITHDRAWN.getStatus())) {
         		System.out.println("This application has been withdrawn.");
         	} else { // status is {successful, withdrawal rejected}
-        		applicant.requestWithdrawal();
+        		applicant.requestFlatBooking();
         		System.out.println("Successfully requested booking.");
         	}
         }
