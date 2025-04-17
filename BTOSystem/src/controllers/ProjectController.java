@@ -4,6 +4,8 @@ import entities.Applicant;
 import entities.Manager;
 import entities.Officer;
 import entities.Project;
+import entities.ProjectApplication;
+import data.ProjectApplicationDatabase;
 import data.ProjectDatabase;
 import data.UserDatabase;
 import java.util.List;
@@ -87,6 +89,32 @@ public class ProjectController {
             }
         }
         return false;
+    }
+    
+    // Officer Eligibility Checks
+    public static boolean checkOfficerApplicantEligibility(String projectName, Officer officer) {
+    	// check if officer can apply to project as applicant
+        Project project = ProjectDatabase.findByName(projectName);
+        
+        List<String> officers = project.getOfficerNRICs();
+        for (String officerNRIC : officers) {
+        	if (officerNRIC.equals(officer.getNric())) {
+        		return false;
+        	}
+        }
+        
+        return true;
+    }
+    
+    public static boolean checkOfficerHandleEligibility(String projectName, Officer officer) {
+    	// check if officer can apply to handle project
+        ProjectApplication application = ProjectApplicationDatabase.getApplicationByApplicantId(officer.getNric());
+        
+        if (application != null && application.getProjectName().equals(projectName)) {
+        	return false;
+        }
+        
+        return true;
     }
     
 }
