@@ -1,3 +1,4 @@
 T1234589J|Single|25|Pending|Serangoon Streets|2-Room|false
 T1234549J|Single|25|Pending|YCK Huts|2-Room|false
 T1234569J|Single|25|Withdrawn|Bishan Heights|2-Room|false
+T1213151J|Single|40|Pending|Clementi Crest|2-Room|false

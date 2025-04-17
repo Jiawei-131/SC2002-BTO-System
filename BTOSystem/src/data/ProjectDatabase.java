@@ -119,6 +119,14 @@ public class ProjectDatabase implements Database,FilePath  {
                 managerData, officerSlot
             );
             
+
+            if (!officersData.equals("null")) {
+                String[] officerArray = officersData.split(";");
+                for (String officer : officerArray) {
+                    project.addOfficer(officer.trim());
+                }
+            }
+            
             project.setVisibleToApplicant(isVisible);
             return project;
         } catch (Exception e) {
