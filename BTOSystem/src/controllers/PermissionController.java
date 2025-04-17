@@ -1,7 +1,7 @@
 package controllers;
 import java.util.*;
-import entities.User;	
-import entities.Role;
+import entities.User;
+import util.Role;
 
 public class PermissionController {
 	private Map<String,Set<String>> rolePermissions;

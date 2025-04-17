@@ -7,6 +7,7 @@ import java.util.Scanner;
 import controllers.AuthenticationController;
 import controllers.EnquiryController;
 import data.EnquiryDatabase;
+import util.Role;
 import view.View;
 public class Officer extends Applicant {
 private boolean isVisible;

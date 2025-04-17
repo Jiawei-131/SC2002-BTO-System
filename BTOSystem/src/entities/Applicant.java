@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.Arrays;
 import java.util.List;
 import util.ApplicationStatus;
+import util.Role;
 import data.*;
 
 import controllers.AuthenticationController;

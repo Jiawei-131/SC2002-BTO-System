@@ -9,7 +9,6 @@ import controllers.AuthenticationController;
 import entities.Applicant;
 import entities.Officer;
 import entities.Manager;
-import entities.Role;
 import util.*;
 
 
