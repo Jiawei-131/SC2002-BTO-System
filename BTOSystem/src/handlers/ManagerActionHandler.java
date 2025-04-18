@@ -20,7 +20,21 @@ import entities.User;
 import util.*;
 import view.View;
 
+/**
+ * Handles the actions performed by a Manager in the system.
+ * The Manager is responsible for handling project actions, approval actions,
+ * enquiries, and password resets.
+ */
 public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInput {
+    /**
+     * Handles the action chosen by the manager from the action menu.
+     * 
+     * @param choice The action choice made by the manager.
+     * @param currentUser The current logged-in manager.
+     * @param sc The scanner for taking user input.
+     * @param db The user database for saving changes.
+     * @return The updated user object after handling the action.
+     */
 	public User handleAction(int choice,User currentUser, Scanner sc,UserDatabase db){
         switch(choice) {
       //Manager Officer menu
@@ -55,6 +69,13 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
 		"3.	Approve or reject Applicant's request to withdraw the application.",
 		"4. Back to Main Menu"
 			"""*/
+    /**
+     * Handles the approval and rejection actions for officers and applicants.
+     * 
+     * @param choice The choice made by the manager for the approval action.
+     * @param currentUser The current logged-in manager.
+     * @param sc The scanner for taking user input.
+     */
 	private void handleApprovalAction(int choice,User currentUser, Scanner sc) {
 		Manager manager	=(Manager)currentUser;
 		do {
@@ -76,6 +97,13 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
 		"3. Reply to enquiry",
 		"4. Delete enquiry",
 		"5. Back to Main Menu" */
+    /**
+     * Handles the enquiry actions like viewing and replying to enquiries related to projects.
+     * 
+     * @param choice The choice made by the manager for the enquiry action.
+     * @param currentUser The current logged-in manager.
+     * @param sc The scanner for taking user input.
+     */
 	public void handleEnquiryAction(int choice,User currentUser, Scanner sc) {
 		Manager manager	=(Manager)currentUser;
 		final EnquiryController enquiryController = new EnquiryController();
@@ -99,6 +127,13 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
 	"6. Edit BTO Project listing ",
 	"7. Generate report",
 	"8. Back to Main Menu"*/
+	  /**
+     * Handles the project management actions like viewing, creating, editing, and deleting projects.
+     * 
+     * @param choice The choice made by the manager for the project action.
+     * @param currentUser The current logged-in manager.
+     * @param sc The scanner for taking user input.
+     */
    public void handleProjectAction(int choice,User currentUser, Scanner sc) {
 	    	Manager manager	=(Manager)currentUser;
 	    	do {
@@ -118,6 +153,12 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
 	    	while(choice!=8);
 	    }
    
+   /**
+    * Approves or rejects an officer's registration for the active project.
+    * 
+    * @param sc The scanner for taking user input.
+    * @param manager The manager who is approving or rejecting the officer's registration.
+    */
     private void approveReject(Scanner sc,Manager manager)
     {
 try {
@@ -162,6 +203,12 @@ try {
     }
     }
     
+    /**
+     * Approves or rejects an applicant's BTO application.
+     * 
+     * @param sc The scanner for taking user input.
+     * @param manager The manager who is approving or rejecting the applicant's BTO application.
+     */
     private void approveRejectApplicant(Scanner sc,Manager manager)
     {
     	try {
@@ -206,6 +253,12 @@ try {
         System.out.println(e.getMessage());
     }
     }
+    /**
+     * Approves or rejects an applicant's request to withdraw their application.
+     * 
+     * @param sc The scanner for taking user input.
+     * @param manager The manager who is approving or rejecting the withdrawal request.
+     */
     private void approveRejectWithdrawl(Scanner sc,Manager manager)
     {
     	try {

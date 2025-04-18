@@ -15,8 +15,18 @@ import entities.ProjectApplication;
 import util.GetInput;
 import util.RegistrationFailedException;
 import view.View;
-
+/**
+ * A service class that handles various project-related operations for managers.
+ * This includes creating, editing, displaying, and deleting projects, as well as generating reports.
+ */
 public class ManagerProjectService {
+    /**
+     * Allows a manager to edit the details of an existing BTO project.
+     * The manager must have access to the project in order to make changes.
+     * 
+     * @param manager The manager making the edits
+     * @param sc The scanner used to collect input from the user
+     */
 	   public static void editProject(Manager manager,Scanner sc)
 	   {
 		   try {
@@ -62,6 +72,12 @@ public class ManagerProjectService {
 		    }
 	   }
 	   
+	    /**
+	     * Retrieves the active project associated with the specified manager.
+	     * 
+	     * @param manager The manager whose active project is to be retrieved
+	     * @return The active project for the manager, or null if none exists
+	     */
 	   public static Project getActiveProject(Manager manager)
 	   {
 		   List<Project> projects = ProjectDatabase.loadAllProjects();
@@ -77,7 +93,13 @@ public class ManagerProjectService {
 		   return temp;
 	   }
 	   
-	   
+	    /**
+	     * Displays a list of projects based on the manager's type.
+	     * If the type is 1, it shows all projects. If the type is 2, it shows only the manager's created projects.
+	     * 
+	     * @param manager The manager requesting the project display
+	     * @param type The type of projects to display (1 for all, 2 for manager's projects)
+	     */
 	   public static void showProject(Manager manager,int type)
 	   {
 		   List<Project> projects = ProjectDatabase.loadAllProjects();
@@ -95,7 +117,13 @@ public class ManagerProjectService {
 				}
 			}
 	   }
-	   
+	    /**
+	     * Allows a manager to delete a BTO project.
+	     * The manager must have access to the project to delete it.
+	     * 
+	     * @param manager The manager performing the deletion
+	     * @param sc The scanner used to collect input from the user
+	     */
 	   public static void deleteProject(Manager manager,Scanner sc)
 	   {
 	   	String btoName=GetInput.getLineInput(sc, "the BTO Name");
@@ -109,7 +137,13 @@ public class ManagerProjectService {
 				System.out.println("BTO Project is deleted.");
 			}
 	   }
-	   
+	    /**
+	     * Allows a manager to create a new BTO project.
+	     * The manager provides the necessary details for the new project.
+	     * 
+	     * @param manager The manager creating the project
+	     * @param sc The scanner used to collect input from the user
+	     */
 	   public static void createProject(Manager manager,Scanner sc) {
 		   try {
 		   ProjectController pc= new ProjectController();
@@ -131,7 +165,13 @@ public class ManagerProjectService {
 		    }
 	    	
 	   }
-	   
+	    /**
+	     * Generates a report of project applications for the manager.
+	     * The report can be filtered by various criteria such as project name, flat type, applicant age, or marital status.
+	     * 
+	     * @param manager The manager generating the report
+	     * @param sc The scanner used to collect input from the user
+	     */
 	   public static void generateReport(Manager manager,Scanner sc)
 	   {
 		   try {

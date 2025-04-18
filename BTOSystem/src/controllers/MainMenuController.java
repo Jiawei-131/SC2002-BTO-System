@@ -19,8 +19,21 @@ import handlers.ManagerActionHandler;
 import handlers.OfficerActionHandler;
 import util.*;
 //Handles flow from main menu to user specific menus
+/**
+ * Controller that handles the main flow of the system from the main menu
+ * to the user-specific menu and actions based on login and role.
+ */
 public class MainMenuController implements GetInput,FilePath {
-	
+    /**
+     * Entry point of the main menu controller that allows a user to log in or register,
+     * and based on their role, redirects them to their respective action handlers.
+     *
+     * @param sc Scanner object to capture user input
+     * @param users A map of NRICs to hashed passwords
+     * @param passwordHasher Utility class for password hashing and verification
+     * @param db The UserDatabase to retrieve user information
+     * @param ac The AuthenticationController for validating credentials
+     */
 public static void mainMenu(Scanner sc,Map<String,String>users,PasswordHasher passwordHasher,UserDatabase db,AuthenticationController ac)
 {
 	

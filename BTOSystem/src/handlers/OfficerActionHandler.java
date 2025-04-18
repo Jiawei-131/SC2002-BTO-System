@@ -21,8 +21,26 @@ import util.GetInput;
 import util.PasswordReset;
 import util.RegistrationFailedException;
 import view.View;
-
+/**
+ * This class handles the actions performed by an Officer user in the system. It implements
+ * the ActionHandler interface and provides methods to manage projects, handle enquiries,
+ * perform password resets, and more.
+ * <p>
+ * The class uses various helper methods to delegate the specific actions for project management, 
+ * enquiry management, and officer functionalities. It also includes mechanisms for user 
+ * authentication and input validation.
+ * </p>
+ */
 public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInput {
+    /**
+     * Handles the action chosen by the officer based on the input choice.
+     * 
+     * @param choice The user's choice from the action menu.
+     * @param currentUser The current logged-in user (Officer).
+     * @param sc The Scanner object for user input.
+     * @param db The UserDatabase object for retrieving and updating user data.
+     * @return The current User object after the action is performed.
+     */
 	public User handleAction(int choice,User currentUser, Scanner sc,UserDatabase db){
         switch(choice) {
       // Officer || Applicant ? menu
@@ -50,6 +68,14 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
 			"4. Delete Enquiry",
 			"5. Back to Main Menu"*/
 
+    /**
+     * Handles the enquiry-related actions for the officer, allowing them to view, reply, 
+     * or manage enquiries.
+     * 
+     * @param choice The user's choice from the enquiry actions menu.
+     * @param currentUser The current logged-in officer user.
+     * @param sc The Scanner object for user input.
+     */
 	public void handleEnquiryAction(int choice, User currentUser, Scanner sc) {
 //		View.menu(currentUser,((Officer)currentUser).getEnquiryOptions());
 	    Officer officer = (Officer) currentUser;
@@ -78,6 +104,15 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
     		"5. Generate Receipt",
     		"6. Check Status",
 			"7. Back to Main Menu"*/
+	
+    /**
+     * Handles project-related actions for the officer, including viewing, applying to projects,
+     * and managing project applications.
+     * 
+     * @param choice The user's choice from the project actions menu.
+     * @param currentUser The current logged-in officer user.
+     * @param sc The Scanner object for user input.
+     */
     public void handleProjectAction(int choice,User currentUser, Scanner sc) {
     	do {
     		Officer officer	=(Officer)currentUser;
@@ -94,6 +129,14 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
     	while(choice!=3);
     }
     
+    /**
+     * Handles actions related to projects that applicants can perform, such as viewing projects, 
+     * applying for projects, and managing their applications.
+     * 
+     * @param choice The user's choice from the applicant project actions menu.
+     * @param currentUser The current logged-in applicant user.
+     * @param sc The Scanner object for user input.
+     */
     public void handleProjectApplicantAction(int choice, User currentUser, Scanner sc) {
     	// project > applicant
     	try {
@@ -209,7 +252,15 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
             System.out.println(e.getMessage());
         }
     }
-    
+
+    /**
+     * Handles actions related to projects that officers can perform, such as viewing and managing
+     * project applications, booking flats, and generating receipts.
+     * 
+     * @param choice The user's choice from the officer project actions menu.
+     * @param currentUser The current logged-in officer user.
+     * @param sc The Scanner object for user input.
+     */
     public void handleProjectOfficerAction(int choice, User currentUser, Scanner sc) {
     	// project > officer
     	Officer officer	=(Officer)currentUser;

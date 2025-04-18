@@ -11,9 +11,20 @@ import data.*;
 import entities.User;
 import util.*;
 import view.View;
-
+/**
+ * Handles actions specific to an Applicant user, such as project applications and enquiries.
+ */
 public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordReset {
     private final EnquiryController enquiryController = new EnquiryController();
+    /**
+     * Handles the main menu selection for an Applicant.
+     *
+     * @param choice       The menu choice selected by the user.
+     * @param currentUser  The current user object.
+     * @param sc           The scanner used for input.
+     * @param db           The user database.
+     * @return             The updated user object, or null if logged out.
+     */
 	public User handleAction(int choice,User currentUser, Scanner sc,UserDatabase db){
         switch(choice) {
       //Manager Officer menu
@@ -31,35 +42,13 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
 		return currentUser;
 	}
 	
-//	public void handleEnquiryAction(int choice,User currentUser, Scanner sc) {
-//		String enquiry;
-//		int enquiryID;
-//		Applicant applicant	=(Applicant)currentUser;
-//    	do {
-//    	applicant.displayMenu(applicant.getEnquiryOptions());
-//    	choice = GetInput.getIntInput(sc, "your choice");
-//		switch(choice)
-//		{
-//		case 1->{
-//				enquiry=GetInput.getLineInput(sc,"Your Enquiry");
-//				applicant.createEnquiry(enquiry);
-//		}
-//        case 2 ->	applicant.viewEnquiry();
-//        //TODO Implement Edit Enquiry
-//        case 3 ->{
-//        	 enquiryID =GetInput.getIntInput(sc,"your EnquiryID");
-//        	 enquiry= GetInput.getLineInput(sc,"your new enquiry");
-//        	 applicant.editEnquiry(enquiryID, enquiry);
-//        }
-//        //TODO Implement Delete Enquiry
-//        case 4->{
-//				enquiryID=GetInput.getIntInput(sc,"your Enquiry ID");
-//				applicant.deleteEnquiry(enquiryID);
-//        }
-//        default -> View.invalidChoice();
-//		}}
-//    	while(choice!=5);
-//	}
+    /**
+     * Handles enquiry-related actions for the Applicant.
+     *
+     * @param choice       The menu choice for enquiry actions.
+     * @param currentUser  The currently logged-in user.
+     * @param sc           The scanner used for input.
+     */
     public void handleEnquiryAction(int choice, User currentUser, Scanner sc) {
         String enquiry;
         String enquiryID;
@@ -94,6 +83,14 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
     }
 	
 	
+    /**
+     * Handles project-related actions for the Applicant such as applying, viewing,
+     * requesting bookings and withdrawals.
+     *
+     * @param choice       The menu choice for project actions.
+     * @param currentUser  The currently logged-in user.
+     * @param sc           The scanner used for input.
+     */
     public void handleProjectAction(int choice,User currentUser, Scanner sc) {
     	  try {
     	do {

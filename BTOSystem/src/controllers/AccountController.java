@@ -9,8 +9,25 @@ import view.View;
 import java.util.Scanner;
 import data.UserDatabase;
 
+/**
+ * Handles account-related operations such as login and registration.
+ */
 public class AccountController implements GetInput,PasswordReset,FilePath{
 	//Handles login process
+	
+	/**
+	 * Handles the login process for a user. Prompts for NRIC and password,
+	 * verifies them against stored credentials, and returns the authenticated user.
+	 * If the user logs in with a default password, prompts for a password reset.
+	 *
+	 * @param choice user's menu choice input during retry prompts
+	 * @param sc Scanner object for reading user input
+	 * @param users Map of NRIC to hashed passwords
+	 * @param passwordHasher PasswordHasher utility for verifying passwords
+	 * @param db UserDatabase instance for retrieving user data
+	 * @param ac AuthenticationController instance for validation logic
+	 * @return the logged-in User object
+	 */
 	public static User loginProcess(int choice,Scanner sc,Map<String,String>users,PasswordHasher passwordHasher,UserDatabase db,AuthenticationController ac)
 	{
 		User currentUser = null;
@@ -62,7 +79,17 @@ public class AccountController implements GetInput,PasswordReset,FilePath{
 
         return currentUser;
 	}
-	
+
+	/**
+	 * Handles user registration. Prompts for user details, validates inputs,
+	 * hashes password, stores login and user information into respective files.
+	 * Also handles role-based registration, including admin password checks for Officer/Manager roles.
+	 *
+	 * @param db UserDatabase instance for writing user data
+	 * @param sc Scanner object for reading user input
+	 * @param users Map of existing users to validate uniqueness of NRIC
+	 * @param passwordHasher PasswordHasher utility for hashing passwords
+	 */
 	public static void register(UserDatabase db, Scanner sc, Map<String, String> users,PasswordHasher passwordHasher) {
 		try {
 	    String name = GetInput.inputLoop("your Name", sc, s -> s, AuthenticationController::validName);
