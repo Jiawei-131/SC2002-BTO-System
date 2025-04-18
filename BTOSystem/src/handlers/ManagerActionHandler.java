@@ -120,6 +120,7 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
    
     private void approveReject(Scanner sc,Manager manager)
     {
+try {
     	List<OfficerApplication> officerApplications =OfficerApplicationDatabase.readApplication();
     	List<String> nricList = new ArrayList<>();
     	if(manager.getActiveProject()==null)
@@ -156,10 +157,14 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
     	     		}
             }
     	}
+    }catch (RegistrationFailedException e) {
+        System.out.println(e.getMessage());
+    }
     }
     
     private void approveRejectApplicant(Scanner sc,Manager manager)
     {
+    	try {
     	List<ProjectApplication> ProjectApplications =ProjectApplicationDatabase.readApplication();
     	List<String> nricList = new ArrayList<>();
     	if(manager.getActiveProject()==null)
@@ -197,9 +202,13 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
     	     		}
             }
     	}
+    }catch (RegistrationFailedException e) {
+        System.out.println(e.getMessage());
+    }
     }
     private void approveRejectWithdrawl(Scanner sc,Manager manager)
     {
+    	try {
     	List<ProjectApplication> ProjectApplications =ProjectApplicationDatabase.readApplication();
     	List<String> nricList = new ArrayList<>();
     	if(manager.getActiveProject()==null)
@@ -237,5 +246,8 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
     	     		}
             }
     	}
+    	}catch (RegistrationFailedException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

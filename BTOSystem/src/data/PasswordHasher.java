@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class PasswordHasher {
 
-    public String hashPassword(String password) {
+    public static String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] hashedBytes = md.digest(password.getBytes());
@@ -28,7 +28,7 @@ public class PasswordHasher {
         }
     }
      
-    public boolean verifyPassword( String inputPassword, String storedHash) {
+    public static boolean verifyPassword( String inputPassword, String storedHash) {
         String inputHash = hashPassword(inputPassword);
         return inputHash.equals(storedHash);
     }

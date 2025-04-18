@@ -2,6 +2,7 @@ package controllers;
 
 import entities.User;
 import view.View;
+import data.PasswordHasher;
 import data.UserDatabase;
 import java.util.Map;
 import java.util.Objects;
@@ -19,7 +20,7 @@ public class AuthenticationController {
     
     public static boolean passwordCheck(String password,User user)
     {
-    	if(!Objects.equals(password, user.getPassword()))
+    	if(!PasswordHasher.verifyPassword(password, user.getPassword()))
 		{
     		System.out.println("Wrong password, Try again!");
     		return false;
@@ -59,11 +60,12 @@ public class AuthenticationController {
     
     public static boolean isDefaultPassword(String password)
     {
-    	return defaultPassword.equals(password.toLowerCase());
+    	return PasswordHasher.verifyPassword(password,PasswordHasher.hashPassword(defaultPassword));
+//    	return defaultPassword.equals(password.toLowerCase());
     }
     
     public static boolean isValidPassword(String password,User user) {
-    	if(password.length()<8 || password.equals(user.getPassword())||isDefaultPassword(password)) {
+    	if(password.length()<8 || PasswordHasher.verifyPassword(password,user.getPassword())||isDefaultPassword(password)) {
     		View.validPassword();
     		return false;
     	}
@@ -79,7 +81,7 @@ public class AuthenticationController {
     
     public static boolean isAdmin(String password)
     {
-    	if (password.equals(adminPassword)){
+    	if (PasswordHasher.verifyPassword(password, PasswordHasher.hashPassword(adminPassword))){
     		return true;
     	}
     	return false;
@@ -87,7 +89,7 @@ public class AuthenticationController {
     
     
     public static User resetPassword(User currentUser,UserDatabase db,String password) {
-        return(currentUser.changePassword(password, db));
+        return(currentUser.changePassword(PasswordHasher.hashPassword(password), db));
     }
     
     public static boolean checkNRIC(String nric)

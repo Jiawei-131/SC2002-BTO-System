@@ -19,6 +19,7 @@ import util.ActionHandler;
 import util.ApplicationStatus;
 import util.GetInput;
 import util.PasswordReset;
+import util.RegistrationFailedException;
 import view.View;
 
 public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInput {
@@ -95,6 +96,7 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
     
     public void handleProjectApplicantAction(int choice, User currentUser, Scanner sc) {
     	// project > applicant
+    	try {
     	do {
         	Applicant applicant	=(Applicant)currentUser;
         	Officer officer = (Officer)currentUser;
@@ -203,12 +205,15 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
             default -> View.invalidChoice();
     		}}
         	while(choice!=6);
+    	}catch (RegistrationFailedException e) {
+            System.out.println(e.getMessage());
+        }
     }
     
     public void handleProjectOfficerAction(int choice, User currentUser, Scanner sc) {
     	// project > officer
     	Officer officer	=(Officer)currentUser;
-    	
+    	try {
     	do {
     		officer	=(Officer)currentUser;
     		officer.displayMenu(officer.getProjectOfficerOptions());
@@ -280,6 +285,9 @@ public class OfficerActionHandler implements ActionHandler,PasswordReset,GetInpu
     		}
     	}
     	while(choice!=4);
+    	}catch (RegistrationFailedException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }

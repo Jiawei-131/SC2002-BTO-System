@@ -95,6 +95,7 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
 	
 	
     public void handleProjectAction(int choice,User currentUser, Scanner sc) {
+    	  try {
     	do {
     	Applicant applicant	=(Applicant)currentUser;
     	applicant.displayMenu(applicant.getProjectOptions());
@@ -195,7 +196,11 @@ public class ApplicantActionHandler implements ActionHandler,GetInput,PasswordRe
         default -> View.invalidChoice();
 		}}
     	while(choice!=6);
+    }catch (RegistrationFailedException e) {
+        System.out.println(e.getMessage());
     }
+    }
+    
 
     
 

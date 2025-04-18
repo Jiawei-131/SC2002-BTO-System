@@ -13,11 +13,13 @@ import entities.Manager;
 import entities.Project;
 import entities.ProjectApplication;
 import util.GetInput;
+import util.RegistrationFailedException;
 import view.View;
 
 public class ManagerProjectService {
 	   public static void editProject(Manager manager,Scanner sc)
 	   {
+		   try {
 		   	ProjectController pc= new ProjectController();
 			String btoName=GetInput.getLineInput(sc, "the BTO Name");
 	        Project project = ProjectDatabase.findByName(btoName);
@@ -53,8 +55,11 @@ public class ManagerProjectService {
 					default->{}
 					}
 				}while (choice != 10);
-
 			}
+			}
+		   catch (RegistrationFailedException e) {
+		        System.out.println(e.getMessage());
+		    }
 	   }
 	   
 	   public static Project getActiveProject(Manager manager)
@@ -106,6 +111,7 @@ public class ManagerProjectService {
 	   }
 	   
 	   public static void createProject(Manager manager,Scanner sc) {
+		   try {
 		   ProjectController pc= new ProjectController();
 			String btoName=GetInput.inputLoop("the BTO Name", sc, s->s, s->pc.getProject(s)==null);
 			String neighbourhood=GetInput.getLineInput(sc, "the neighbourhood");
@@ -120,11 +126,15 @@ public class ManagerProjectService {
 			Project project = new Project(btoName, neighbourhood,unitType1,unitType1Price, unitType2,unitType2Price,
 	    			openDate, closeDate,manager.getNric(),availableSlots);
 			ProjectDatabase.save(project);
+		   }catch (RegistrationFailedException e) {
+		        System.out.println(e.getMessage());
+		    }
 	    	
 	   }
 	   
 	   public static void generateReport(Manager manager,Scanner sc)
 	   {
+		   try {
 		   List<ProjectApplication> projectApplications;
 		   Comparator<ProjectApplication> comparator=Comparator.comparing(ProjectApplication::getProjectName);
 	    	ProjectApplicationDatabase ProjectApplicationdb=new ProjectApplicationDatabase();
@@ -156,5 +166,9 @@ public class ManagerProjectService {
 	        			""", projectApplication.getProjectName(),projectApplication.getApplicantId(),projectApplication.getAge(),projectApplication.getMaritalStatus(), projectApplication.getFlatType(), projectApplication.getApplicationStatus());
 	    	}
 	    	
-	   }
+	   }catch (RegistrationFailedException e) {
+	        System.out.println(e.getMessage());
+	    }
+   }
+	   
 }

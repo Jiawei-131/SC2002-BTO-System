@@ -64,6 +64,7 @@ public class AccountController implements GetInput,PasswordReset,FilePath{
 	}
 	
 	public static void register(UserDatabase db, Scanner sc, Map<String, String> users,PasswordHasher passwordHasher) {
+		try {
 	    String name = GetInput.inputLoop("your Name", sc, s -> s, AuthenticationController::validName);
 	    String nric = GetInput.inputLoop("your NRIC", sc, s -> s, s ->
 	        AuthenticationController.checkNRIC(s) && AuthenticationController.nricExists(s, users)
@@ -93,6 +94,9 @@ public class AccountController implements GetInput,PasswordReset,FilePath{
 	    }
 	    else Database.writeFile(userDatabaseFilePath,name, nric, String.valueOf(age), maritalStatus, "A","true");
 	    System.out.println("Registration Successful");
+	}catch (RegistrationFailedException e) {
+        System.out.println(e.getMessage());
+    }
 	}
 
 	
