@@ -14,7 +14,6 @@ public class BTOSystem implements FilePath {
     	PasswordHasher passwordHasher = new PasswordHasher(); 
     	UserDatabase db= new UserDatabase();
     	AuthenticationController ac = new AuthenticationController();
-    	PermissionController pc= new PermissionController();
     	Scanner sc = new Scanner(System.in);
 
     	 Map<String,String>users;

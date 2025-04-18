@@ -13,10 +13,6 @@ import java.util.Scanner;
 import controllers.EnquiryController;
 
 public class View {
-	
-	private EnquiryController controller;
-    private Scanner scanner;
-	
 	public View() {
 	}
 	
@@ -46,7 +42,7 @@ public class View {
         System.out.println("===================================");
         System.out.println(" Welcome, " + user.getUsername());
         System.out.printf(" Role: %s \n", user.getRole());
-        System.out.printf(" Filter Setting: %s \n", user.getFilter());
+        System.out.printf(" Filter Setting: %s \n", user.getFilterDescription());
         System.out.println("===================================");
 	}
 	

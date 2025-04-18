@@ -35,7 +35,7 @@ public static void mainMenu(Scanner sc,Map<String,String>users,PasswordHasher pa
         	currentUser=AccountController.loginProcess(choice, sc, users, passwordHasher, db, ac);
             choice=3;
         }
-        case 2->AccountController.register(db,sc,users);
+        case 2->AccountController.register(db,sc,users,passwordHasher);
         case 3->{
         	View.exit();
         	System.exit(0);

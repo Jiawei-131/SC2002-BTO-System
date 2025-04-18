@@ -38,15 +38,13 @@ public class AccountController implements GetInput,PasswordReset,FilePath{
         }
 		String password = GetInput.getLineInput(sc, "your Password");
 		String storedHash = users.get(nric); 
-        String hashedPassword = passwordHasher.hashPassword(password);  //Not used rn
-        while (!Objects.equals(users.get(nric), password)) {
+        while (!passwordHasher.verifyPassword( password, storedHash)) {
         	View.promptRetry("Incorrect password");
             choice = GetInput.getIntInput(sc, "your choice");
             switch(choice)
             {
             case 1->{
                 password = GetInput.getLineInput(sc, "your Password");
-                hashedPassword = passwordHasher.hashPassword(password); //Not used rn
             }
             case 2->{
             	View.exit();
@@ -65,7 +63,7 @@ public class AccountController implements GetInput,PasswordReset,FilePath{
         return currentUser;
 	}
 	
-	public static void register(UserDatabase db, Scanner sc, Map<String, String> users) {
+	public static void register(UserDatabase db, Scanner sc, Map<String, String> users,PasswordHasher passwordHasher) {
 	    String name = GetInput.inputLoop("your Name", sc, s -> s, AuthenticationController::validName);
 	    String nric = GetInput.inputLoop("your NRIC", sc, s -> s, s ->
 	        AuthenticationController.checkNRIC(s) && AuthenticationController.nricExists(s, users)
@@ -80,10 +78,20 @@ public class AccountController implements GetInput,PasswordReset,FilePath{
 	    String maritalStatus = (maritalStatusChoice == 1) ? "Single" : "Married";
 	    
 	    String password = GetInput.inputLoop("your Password", sc, s -> s, AuthenticationController::isValidPassword);
-
-	    Database.writeFile(loginFilePath,nric, password);
-	    Database.writeFile(userDatabaseFilePath,name, nric, String.valueOf(age), maritalStatus, "A","true");
-
+	    int roleChoice = GetInput.inputLoop("""
+	            Role:
+	            1. Applicant
+	            2. Officer
+	            3. Manager
+	            """, sc, Integer::parseInt, i -> i>0&&i<=3);
+	    Database.writeFile(loginFilePath,nric, passwordHasher.hashPassword(password));
+	    if(roleChoice!=1)
+	    {
+	    	String adminpassword = GetInput.inputLoop("the admin Password ", sc, s -> s, s -> AuthenticationController.isValidPassword(s) && AuthenticationController.isAdmin(s));
+	    	if(roleChoice==2)Database.writeFile(userDatabaseFilePath,name, nric, String.valueOf(age), maritalStatus, "O","true");
+	    	else if(roleChoice==3)Database.writeFile(userDatabaseFilePath,name, nric, String.valueOf(age), maritalStatus, "M","true");
+	    }
+	    else Database.writeFile(userDatabaseFilePath,name, nric, String.valueOf(age), maritalStatus, "A","true");
 	    System.out.println("Registration Successful");
 	}
 

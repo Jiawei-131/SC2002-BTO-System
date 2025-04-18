@@ -12,6 +12,7 @@ public class AuthenticationController {
 //    private User currentUser;
     private Map<String,User>users;
     private static final String defaultPassword="password";
+    private static final String adminPassword="adminpassword";
     public AuthenticationController() {
     	
     }
@@ -75,6 +76,15 @@ public class AuthenticationController {
     	}
     	return true;
     }
+    
+    public static boolean isAdmin(String password)
+    {
+    	if (password.equals(adminPassword)){
+    		return true;
+    	}
+    	return false;
+    }
+    
     
     public static User resetPassword(User currentUser,UserDatabase db,String password) {
         return(currentUser.changePassword(password, db));

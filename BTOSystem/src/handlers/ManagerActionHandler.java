@@ -117,8 +117,7 @@ public class ManagerActionHandler implements ActionHandler,PasswordReset,GetInpu
 			}}
 	    	while(choice!=8);
 	    }
-	
-//TODO Implement
+   
     private void approveReject(Scanner sc,Manager manager)
     {
     	List<OfficerApplication> officerApplications =OfficerApplicationDatabase.readApplication();

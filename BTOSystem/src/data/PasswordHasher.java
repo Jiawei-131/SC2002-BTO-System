@@ -28,7 +28,7 @@ public class PasswordHasher {
         }
     }
      
-    public boolean verifyPassword(String userId, String inputPassword, String storedHash) {
+    public boolean verifyPassword( String inputPassword, String storedHash) {
         String inputHash = hashPassword(inputPassword);
         return inputHash.equals(storedHash);
     }
