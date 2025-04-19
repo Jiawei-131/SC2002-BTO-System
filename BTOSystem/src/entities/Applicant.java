@@ -92,7 +92,7 @@ public class Applicant extends User {
                 System.out.println("Ineligible applicant. No projects available.");
             } else {
                 for (Project project : projects) {
-                    if (Project.isVisibleToApplicant() && project.getNumberOfType1Units() > 0) {
+                    if (project.isVisibleToApplicant() && project.getNumberOfType1Units() > 0) {
                         View.displayProjectDetails(applicant, project);
                     }
                 }
@@ -102,7 +102,7 @@ public class Applicant extends User {
                 System.out.println("Ineligible applicant. No projects available.");
             } else {
                 for (Project project : projects) {
-                    if (Project.isVisibleToApplicant()) {
+                    if (project.isVisibleToApplicant()) {
                         View.displayProjectDetails(applicant, project);
                     }
                 }
@@ -166,7 +166,7 @@ public class Applicant extends User {
     public void createEnquiry(String projectName, String text, EnquiryController enquiryController) {
         Project project = ProjectDatabase.findByName(projectName);
 
-        if (project == null || !Project.isVisibleToApplicant()) {
+        if (project == null || !project.isVisibleToApplicant()) {
             System.out.println("You can only enquire about visible projects.");
             return;
         }

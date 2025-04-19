@@ -121,7 +121,7 @@ public class View {
      * @param project The project whose details are displayed.
      */
     public static void displayProjectDetails(User user, Project project) {
-        if (user instanceof Applicant && !Project.isVisibleToApplicant()) {
+        if (user instanceof Applicant && !project.isVisibleToApplicant()) {
             System.out.println("You do not have access to view this project.");
             return;
         }
@@ -161,7 +161,7 @@ public class View {
             System.out.println("  - " + officerNRIC);
         }
         System.out.println("Visibility: " +
-            (Project.isVisibleToApplicant() ? "Visible to applicants" : "Hidden from applicants"));
+            (project.isVisibleToApplicant() ? "Visible to applicants" : "Hidden from applicants"));
     }
 
     /**
@@ -173,7 +173,7 @@ public class View {
         System.out.println("\n=== All Projects ===");
         for (Project project : projects) {
             System.out.println(project.getName() + " - " + project.getNeighbourhood() +
-                " (" + (Project.isVisibleToApplicant() ? "Visible" : "Hidden") + ")");
+                " (" + (project.isVisibleToApplicant() ? "Visible" : "Hidden") + ")");
         }
     }
 }

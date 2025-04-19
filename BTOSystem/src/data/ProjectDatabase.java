@@ -39,7 +39,7 @@ public class ProjectDatabase implements Database, FilePath {
                 project.getNumberOfType2Units(), project.getType2SellingPrice(),
                 project.getOpeningDate(), project.getClosingDate(),
                 project.getManager(), project.getOfficerSlot(),
-                officersData.toString(), Project.isVisibleToApplicant());
+                officersData.toString(), project.isVisibleToApplicant());
 
             Database.writeFile(projectDatabaseFilePath, line);
             return true;
@@ -81,7 +81,8 @@ public class ProjectDatabase implements Database, FilePath {
                     project.getNumberOfType2Units(), project.getType2SellingPrice(),
                     project.getOpeningDate(), project.getClosingDate(),
                     project.getManager(), project.getOfficerSlot(),
-                    officersData.toString(), Project.isVisibleToApplicant());
+                    officersData.toString(), project.isVisibleToApplicant()
+);
             }
             updatedLines.add(line);
         }

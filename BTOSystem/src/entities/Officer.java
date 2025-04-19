@@ -94,7 +94,7 @@ public class Officer extends Applicant {
     public void viewAllProjects() {
         List<Project> projects = this.sort();
         for (Project project : projects) {
-            if (Project.isVisibleToApplicant()) {
+            if (project.isVisibleToApplicant()) {
                 View.displayProjectDetails(this, project);
             }
         }

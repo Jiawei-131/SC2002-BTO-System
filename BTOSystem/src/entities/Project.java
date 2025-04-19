@@ -30,7 +30,7 @@ public class Project {
     private int officerSlot;
 
     // Visibility and applications
-    private static boolean visibleToApplicant;
+    private boolean visibleToApplicant;
     private List<Enquiry> enquiryList;
     private List<ProjectApplication> applicantList;
 
@@ -86,7 +86,7 @@ public class Project {
         this.openingDate = openingDate;
         this.closingDate = closingDate;
         this.officerSlot = Math.min(officerSlot, MAX_OFFICERS);
-        Project.visibleToApplicant = visibleToApplicant;
+        this.visibleToApplicant = visibleToApplicant;
     }
     
     
@@ -257,12 +257,12 @@ public class Project {
         this.officerNRICs = nrics;
     }
 
-    public static boolean isVisibleToApplicant() {
+    public boolean isVisibleToApplicant() {
         return visibleToApplicant;
     }
 
     public void setVisibleToApplicant(boolean visible) {
-        Project.visibleToApplicant = visible;
+        this.visibleToApplicant = visible;
     }
 
     public List<Enquiry> getEnquiryList() {
@@ -282,8 +282,9 @@ public class Project {
     }
 
     public void setIsVisible(boolean b) {
-        Project.visibleToApplicant = b;
+        this.visibleToApplicant = b;
     }
+
 
     /**
      * Returns a string representation of the Project object, displaying key project details.

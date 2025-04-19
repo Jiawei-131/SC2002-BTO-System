@@ -136,7 +136,7 @@ public class ProjectController {
     public boolean toggleVisibility(String projectName) {
         Project project = ProjectDatabase.findByName(projectName);
         if (project != null) {
-            project.setVisibleToApplicant(!Project.isVisibleToApplicant());
+            project.setVisibleToApplicant(!project.isVisibleToApplicant());
             return projectDB.update(project);
         }
         return false;
