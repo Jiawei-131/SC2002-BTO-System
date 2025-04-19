@@ -64,6 +64,7 @@ public class ManagerProjectService {
 		            }
 					default->{}
 					}
+					pc.updateProject(project);
 				}while (choice != 10);
 			}
 			}
