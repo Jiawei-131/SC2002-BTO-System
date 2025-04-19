@@ -3,7 +3,6 @@ package data;
 import entities.Enquiry;
 import util.Database;
 import util.FilePath;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +11,6 @@ import java.util.List;
  * Includes functionality to save, update, delete, find, and load enquiries from a file-based database.
  */
 public class EnquiryDatabase implements Database, FilePath {
-
     /**
      * Saves an enquiry to the database.
      * 

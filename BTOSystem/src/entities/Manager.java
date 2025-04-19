@@ -150,7 +150,7 @@ public class Manager extends User {
      */
     public void approveOfficerRegistration(OfficerApplication application) {
         ProjectController pc = new ProjectController();
-        application.setApplicationStatus("Approved");
+        application.setApplicationStatus(ApplicationStatus.SUCCESSFUL.getStatus());
         OfficerApplicationDatabase.updateApplication(application);
         if (pc.assignOfficer(application.getProjectName(), application.getApplicantId())) {
             System.out.println("Approved");
@@ -166,7 +166,7 @@ public class Manager extends User {
      */
     public void rejectOfficerRegistration(OfficerApplication application) {
         ProjectController pc = new ProjectController();
-        application.setApplicationStatus("Rejected");
+        application.setApplicationStatus(ApplicationStatus.UNSUCCESSFUL.getStatus());
         OfficerApplicationDatabase.updateApplication(application);
         pc.removeOfficer(application.getProjectName(), application.getApplicantId());
     }
@@ -179,10 +179,10 @@ public class Manager extends User {
     public void approveApplication(ProjectApplication application) {
         ProjectController pc = new ProjectController();
         if (application.getFlatType().equals("2-Room") && pc.getProject(application.getProjectName()).getNumberOfType1Units() > 0) {
-            application.setApplicationStatus("Successful");
+            application.setApplicationStatus(ApplicationStatus.SUCCESSFUL.getStatus());
             ProjectApplicationDatabase.updateApplication(application);
         } else if (application.getFlatType().equals("3-Room") && pc.getProject(application.getProjectName()).getNumberOfType2Units() > 0) {
-            application.setApplicationStatus("Successful");
+            application.setApplicationStatus(ApplicationStatus.SUCCESSFUL.getStatus());
             ProjectApplicationDatabase.updateApplication(application);
         } else {
             System.out.println("Approval Failed: not enough supply of the flat");
@@ -196,7 +196,7 @@ public class Manager extends User {
      */
     public void rejectApplication(ProjectApplication application) {
         ProjectController pc = new ProjectController();
-        application.setApplicationStatus("Unsuccessful");
+        application.setApplicationStatus(ApplicationStatus.UNSUCCESSFUL.getStatus());
         ProjectApplicationDatabase.updateApplication(application);
     }
 
@@ -206,7 +206,7 @@ public class Manager extends User {
      * @param application The ProjectApplication to approve withdrawal for.
      */
     public void approveApplicantWithdrawal(ProjectApplication application) {
-        application.setApplicationStatus("Withdrawn");
+        application.setApplicationStatus(ApplicationStatus.WITHDRAWN.getStatus());
         ProjectApplicationDatabase.updateApplication(application);
     }
 
@@ -216,7 +216,7 @@ public class Manager extends User {
      * @param application The ProjectApplication to reject withdrawal for.
      */
     public void rejectApplicantWithdrawal(ProjectApplication application) {
-        application.setApplicationStatus("Withdrawn Rejected");
+        application.setApplicationStatus(ApplicationStatus.WITHDRAWREJ.getStatus());
         ProjectApplicationDatabase.updateApplication(application);
     }
 
