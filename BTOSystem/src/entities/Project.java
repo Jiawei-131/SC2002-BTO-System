@@ -64,10 +64,18 @@ public class Project {
      * @param managerNRIC The NRIC of the project manager.
      * @param officerSlot The number of officer slots available for the project.
      */
+	public Project(String name, String neighbourhood, int numberOfType1Units, double type1SellingPrice,
+			int numberOfType2Units, double type2SellingPrice, String openingDate, String closingDate,
+			String managerNRIC, int officerSlot) {
+		this(name, neighbourhood, numberOfType1Units, type1SellingPrice, numberOfType2Units, type2SellingPrice,
+				openingDate, closingDate, managerNRIC, officerSlot, true); // default visibility
+	}
+
+    // Constructor with visibleToApplicant parameter
     public Project(String name, String neighbourhood, int numberOfType1Units, double type1SellingPrice,
-            int numberOfType2Units, double type2SellingPrice, String openingDate, String closingDate,
-            String managerNRIC, int officerSlot) {
-        this();
+                   int numberOfType2Units, double type2SellingPrice, String openingDate, String closingDate,
+                   String managerNRIC, int officerSlot, boolean visibleToApplicant) {
+        this(); // calls default constructor
         this.name = name;
         this.managerData = managerNRIC;
         this.neighbourhood = neighbourhood;
@@ -78,10 +86,10 @@ public class Project {
         this.openingDate = openingDate;
         this.closingDate = closingDate;
         this.officerSlot = Math.min(officerSlot, MAX_OFFICERS);
-        Project.visibleToApplicant = true;
+        Project.visibleToApplicant = visibleToApplicant;
     }
-
-    // Staff Management Methods
+    
+    
 
     /**
      * Adds an officer to the project if there is space and the officer is not already added.
