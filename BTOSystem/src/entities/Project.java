@@ -72,6 +72,23 @@ public class Project {
 	}
 
     // Constructor with visibleToApplicant parameter
+    /**
+     * Constructor that initializes the project with the provided details.
+     * The number of officer slots is constrained by a maximum limit (MAX_OFFICERS),
+     * and the visibility of the project to applicants is set to true.
+     *
+     * @param name The name of the project.
+     * @param neighbourhood The neighbourhood where the project is located.
+     * @param numberOfType1Units The number of Type 1 units available in the project.
+     * @param type1SellingPrice The selling price of each Type 1 unit.
+     * @param numberOfType2Units The number of Type 2 units available in the project.
+     * @param type2SellingPrice The selling price of each Type 2 unit.
+     * @param openingDate The opening date for applications.
+     * @param closingDate The closing date for applications.
+     * @param managerNRIC The NRIC of the project manager.
+     * @param officerSlot The number of officer slots available for the project.
+     * @param visibleToApplicant Whether the project is visible to applicants.
+     */
     public Project(String name, String neighbourhood, int numberOfType1Units, double type1SellingPrice,
                    int numberOfType2Units, double type2SellingPrice, String openingDate, String closingDate,
                    String managerNRIC, int officerSlot, boolean visibleToApplicant) {
