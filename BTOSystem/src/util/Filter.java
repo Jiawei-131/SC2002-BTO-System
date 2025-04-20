@@ -70,10 +70,12 @@ public interface Filter {
             }
             case 2 -> {
                 setComparator(Comparator.comparingInt(Project::getNumberOfType1Units));
+                setPredicate(p -> true);
                 setFilterDescription("Number of 2-Room Units");
             }
             case 3 -> {
                 setComparator(Comparator.comparingInt(Project::getNumberOfType2Units));
+                setPredicate(p -> true);
                 setFilterDescription("Number of 3-Room Units");
             }
             case 4 -> {
