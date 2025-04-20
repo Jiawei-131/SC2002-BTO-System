@@ -23,7 +23,7 @@ import util.*;
  * Controller that handles the main flow of the system from the main menu
  * to the user-specific menu and actions based on login and role.
  */
-public class MainMenuController implements GetInput,FilePath {
+public class MainMenuController implements GetInput {
     /**
      * Entry point of the main menu controller that allows a user to log in or register,
      * and based on their role, redirects them to their respective action handlers.
