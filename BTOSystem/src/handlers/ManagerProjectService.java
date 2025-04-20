@@ -103,7 +103,7 @@ public class ManagerProjectService {
 	     */
 	   public static void showProject(Manager manager,int type)
 	   {
-		   List<Project> projects = ProjectDatabase.loadAllProjects();
+		   List<Project> projects = manager.sort();
 			for(Project project:projects)
 			{
 				if(type==1)//Print all project
