@@ -40,6 +40,11 @@ public interface Filter {
      */
     void setComparator(Comparator<Project> comp);
     
+    /**
+     * Sets the predicate used to filter projects.
+     *
+     * @param predicate the comparator to set.
+     */
     void setPredicate(Predicate<Project> predicate);
 
     /**

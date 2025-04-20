@@ -224,6 +224,11 @@ public abstract class User implements Filter {
         return comparator;
     }
     
+    /**
+     * Gets the predicate used for filter projects.
+     * 
+     * @return The predicate used to filter projects
+     */
     public Predicate<Project> getPredicate() {
         return predicate;
     }
@@ -238,6 +243,11 @@ public abstract class User implements Filter {
         this.comparator = comp;
     }
     
+    /**
+     * Sets the predicate to be used for filter projects.
+     * 
+     * @param pred The predicate to set
+     */
     public void setPredicate(Predicate<Project> pred) {
     	this.predicate=pred;
     }
