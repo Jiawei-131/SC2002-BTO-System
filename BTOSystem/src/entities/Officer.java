@@ -216,15 +216,6 @@ public class Officer extends Applicant {
     }
 
     /**
-     * Updates the officer's profile information.
-     *
-     * @param applicant The applicant whose profile is to be updated.
-     */
-    public void updateApplicantProfile(Applicant applicant) {
-        // Implementation needed
-    }
-
-    /**
      * Retrieves whether the officer can register for a project.
      *
      * @return true if the officer can register, false otherwise.

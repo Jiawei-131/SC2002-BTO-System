@@ -1,6 +1,9 @@
 package util;
 
 import java.util.Comparator;
+import java.util.Scanner;
+import java.util.function.Predicate;
+
 import entities.Project;
 
 /**
@@ -36,6 +39,8 @@ public interface Filter {
      * @param comp the comparator to set.
      */
     void setComparator(Comparator<Project> comp);
+    
+    void setPredicate(Predicate<Project> predicate);
 
     /**
      * Sets the filter based on a user choice, adjusting the comparator and filter description.
@@ -50,8 +55,11 @@ public interface Filter {
      *               Any other value defaults to alphabetical sorting.
      */
     default void setFilter(int choice) {
+    	Scanner sc=new Scanner(System.in);
         switch (choice) {
             case 1 -> {
+            	String filter=GetInput.getLineInput(sc, "the filter description");
+            	setPredicate(p -> p.getName().toLowerCase().contains(filter.toLowerCase()));
                 setComparator(Comparator.comparing(Project::getNeighbourhood));
                 setFilterDescription("Neighbourhood");
             }
@@ -65,16 +73,21 @@ public interface Filter {
             }
             case 4 -> {
                 setComparator(Comparator.comparing(Project::getOpeningDate));
+                setPredicate(p -> true);
                 setFilterDescription("Opening Date");
             }
             case 5 -> {
                 setComparator(Comparator.comparing(Project::getClosingDate));
+                setPredicate(p -> true);
                 setFilterDescription("Closing Date");
             }
             default -> {
                 setComparator(Comparator.comparing(Project::getName));
+                setPredicate(p -> true);
                 setFilterDescription("Alphabetical");
             }
         }
     }
+
+	
 }

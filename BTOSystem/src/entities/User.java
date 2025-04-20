@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 /**
  * Abstract class representing a user in the system.
@@ -21,6 +22,7 @@ public abstract class User implements Filter {
 
     private String filterDescription = "Alphabetical";
     private Comparator<Project> comparator = Comparator.comparing(Project::getName);
+    private Predicate<Project> predicate=project->true;
     private String name;
     protected String nric;
     protected int age;
@@ -72,6 +74,7 @@ public abstract class User implements Filter {
      */
     public List<Project> sort() {
         return ProjectDatabase.loadAllProjects().stream()
+        		.filter(getPredicate())
                 .sorted(comparator)
                 .toList();
     }
@@ -220,6 +223,10 @@ public abstract class User implements Filter {
     public Comparator<Project> getComparator() {
         return comparator;
     }
+    
+    public Predicate<Project> getPredicate() {
+        return predicate;
+    }
 
     /**
      * Sets the comparator to be used for sorting projects.
@@ -229,6 +236,10 @@ public abstract class User implements Filter {
     @Override
     public void setComparator(Comparator<Project> comp) {
         this.comparator = comp;
+    }
+    
+    public void setPredicate(Predicate<Project> pred) {
+    	this.predicate=pred;
     }
 
     /**
@@ -257,7 +268,8 @@ public abstract class User implements Filter {
                 "2. 2-Room Types",
                 "3. 3-Room Types",
                 "4. Opening Date",
-                "5. Closing Date"
+                "5. Closing Date",
+                "6. Default setting"
         );
     }
 

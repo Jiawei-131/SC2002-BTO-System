@@ -18,7 +18,7 @@ public interface ActionHandler {
 	{
 		currentUser.displayMenu(currentUser.getSortOptions());
 		try {
-			currentUser.setFilter(GetInput.inputLoop("your choice", sc, Integer::parseInt, i->i>0&&i<6));
+			currentUser.setFilter(GetInput.inputLoop("your choice", sc, Integer::parseInt, i->i>0&&i<=6));
 		} catch (RegistrationFailedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
