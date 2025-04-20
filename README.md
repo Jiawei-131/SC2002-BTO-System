@@ -40,6 +40,9 @@ This Java-based CLI system simulates a Building and Town Ownership (BTO) applica
 - **UML Class Diagrams**: Refer to the UML class diagrams for an overview of the class relationships.
 - **UML Sequence Diagrams**: Check the sequence diagrams for the execution flow and interaction between components.
 - **JavaDoc**: Use the JavaDoc for detailed logic and method descriptions in the code.
+- **BTO_Test_Case.xlsx**: 
+  - Refer to the testcase Excel file to understand the system's intended behavior.
+  - Contains test cases and expected results for various system functionalities.
 
 ## Acknowledgements
 ### Contributors
