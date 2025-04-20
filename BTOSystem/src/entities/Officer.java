@@ -52,7 +52,7 @@ public class Officer extends Applicant {
         ProjectController pc = new ProjectController();
         List<OfficerApplication> projects = OfficerApplicationDatabase.readApplication();
         for (OfficerApplication project : projects) {
-            if (this.getNric().equals(project.getApplicantId()) && project.getApplicationStatus().equals("Approved")) {
+            if (this.getNric().equals(project.getApplicantId()) && project.getApplicationStatus().equals(ApplicationStatus.SUCCESSFUL.getStatus())) {
                 assignedProject = pc.getProject(project.getProjectName());
                 setCanRegister(false);
             }
