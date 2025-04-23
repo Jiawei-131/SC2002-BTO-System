@@ -179,11 +179,23 @@ public class Manager extends User {
     public void approveApplication(ProjectApplication application) {
         ProjectController pc = new ProjectController();
         if (application.getFlatType().equals("2-Room") && pc.getProject(application.getProjectName()).getNumberOfType1Units() > 0) {
-            application.setApplicationStatus(ApplicationStatus.SUCCESSFUL.getStatus());
-            ProjectApplicationDatabase.updateApplication(application);
+        	if(application.getApplicationStatus().equals(ApplicationStatus.PENDING.getStatus()))
+        	{
+                application.setApplicationStatus(ApplicationStatus.SUCCESSFUL.getStatus());
+                ProjectApplicationDatabase.updateApplication(application);
+        	}
+        	else {
+        		System.out.println("Applicant has already been approved");
+        	}
         } else if (application.getFlatType().equals("3-Room") && pc.getProject(application.getProjectName()).getNumberOfType2Units() > 0) {
-            application.setApplicationStatus(ApplicationStatus.SUCCESSFUL.getStatus());
-            ProjectApplicationDatabase.updateApplication(application);
+        	if(application.getApplicationStatus().equals(ApplicationStatus.PENDING.getStatus()))
+        	{
+                application.setApplicationStatus(ApplicationStatus.SUCCESSFUL.getStatus());
+                ProjectApplicationDatabase.updateApplication(application);
+        	}
+        	else {
+        		System.out.println("Applicant has already been approved");
+        	}
         } else {
             System.out.println("Approval Failed: not enough supply of the flat");
         }
